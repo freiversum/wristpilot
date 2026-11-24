@@ -110,18 +110,21 @@ class WinRTPeripheral(Peripheral):
         from winrt.windows.devices.bluetooth.genericattributeprofile import GattWriteOption
         try:
             request = await args.get_request_async()
-            if request is None:
-                return
-            data = bytes(request.value)
-            if request.option == GattWriteOption.WRITE_WITH_RESPONSE:
+            data = bytes(request.value) if request is not None else None
+            if request is not None and request.option == GattWriteOption.WRITE_WITH_RESPONSE:
                 request.respond()
-            reply = await self.on_write(data)
-            if reply:
-                await self.notify(reply)
         except Exception as e:
             log.warning("WinRT write: %s", e)
+            data = None
         finally:
+            # Complete the write before notifying: Windows holds notifications back while a
+            # request on the same connection is still deferred.
             deferral.complete()
+        if data is None:
+            return
+        reply = await self.on_write(data)
+        if reply:
+            await self.notify(reply)
 
     async def _handle_read(self, args, deferral) -> None:
         try:
@@ -138,9 +141,16 @@ class WinRTPeripheral(Peripheral):
         if self.status_char is None:
             return
         try:
-            await self.status_char.notify_value_async(_buffer(data))
+            results = await self.status_char.notify_value_async(_buffer(data))
         except Exception as e:
-            log.debug("WinRT notify: %s", e)
+            log.warning("WinRT notify: %s", e)
+            return
+        for r in results or ():
+            status = getattr(r, "status", None)
+            if status is not None and int(status) != 0:   # GattCommunicationStatus.SUCCESS
+                log.warning("WinRT notify to %s: status %s, protocol error %s",
+                            getattr(getattr(r, "subscribed_client", None), "session", None) and
+                            r.subscribed_client.session.device_id.id, status, getattr(r, "protocol_error", None))
 
     async def stop(self) -> None:
         for obj, kind, token in self._tokens:

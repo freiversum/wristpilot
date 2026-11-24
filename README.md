@@ -68,6 +68,13 @@ is needed; settings and the log live in `%APPDATA%\Zwindoor\`. A checksum file
 Requirement: a Bluetooth adapter that supports the peripheral role (most current Intel adapters
 do). The program is not code-signed yet, so Windows SmartScreen may warn on the first start.
 
+<p align="center">
+  <img src="docs/screenshots/windows-tray.png" alt="ZWindoor Bridge menu in the Windows notification area: status of Bluetooth, watch and Zwift, switches for the remote, OpenBikeControl and the Companion link, test actions, log and quit" width="70%">
+</p>
+
+The menu shows the state of Bluetooth, the watch and Zwift, and the last action. *Test actions*
+sends a command as if the watch had sent it, once Bluetooth is running.
+
 ### Bridge on Linux
 
 Use [Tretlager](https://github.com/freiversum/tretlager). It includes the bridge and types into

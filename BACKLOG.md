@@ -24,3 +24,8 @@
 - [ ] Put the privacy policy online and fill in the placeholders (`<CONTACT>`, store links)
 - [ ] Connect IQ Store: upload the beta, test on a real watch, then submit for review
 - [ ] Code-sign the Windows .exe
+
+## Windows bridge
+
+- [ ] *Test actions* do nothing while Bluetooth is not running – run them anyway (keyboard path) or grey the menu out
+- [ ] WinRT advertises the computer name instead of "ZWindoor"; the watch finds the bridge by service UUID, but the device list shows the computer name – check on the watch

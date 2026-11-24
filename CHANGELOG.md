@@ -16,6 +16,8 @@ All notable changes to this project are documented in this file. The format is b
 - Error messages name the underlying cause when a Bluetooth module cannot be loaded.
 - Windows build: the pywinrt projection tables are packed into the .exe (`--include-package-data=winrt`).
 - *Quit* in the tray menu did nothing after Bluetooth had failed to start ("Event loop is closed").
+- Windows bridge: acknowledgements and state updates did not reach the watch. The write request is
+  now completed before the notification goes out, and failed notifications are logged.
 
 ## [0.1.0] - 2026-11-24
 
