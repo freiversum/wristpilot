@@ -15,6 +15,7 @@ import os
 import subprocess
 import sys
 import time
+import webbrowser
 from pathlib import Path
 
 from zwindoor_bridge import __version__, actions
@@ -33,6 +34,7 @@ RED = (229, 72, 77)
 TEXTS = {
     "en": {
         "bt_ok": "Bluetooth: ready", "bt_err": "Bluetooth: {}", "bt_start": "Bluetooth: starting …",
+        "bt_setup": "Set up a Bluetooth adapter …", "bt_retry": "Start Bluetooth again",
         "watch_on": "Watch: connected", "watch_off": "Watch: not connected",
         "zwift_front": "Zwift: in front", "zwift_back": "Zwift: running in the background",
         "zwift_off": "Zwift: not running", "obc_on": "OpenBikeControl app connected",
@@ -52,6 +54,7 @@ TEXTS = {
     },
     "de": {
         "bt_ok": "Bluetooth: bereit", "bt_err": "Bluetooth: {}", "bt_start": "Bluetooth: startet …",
+        "bt_setup": "Bluetooth-Adapter einrichten …", "bt_retry": "Bluetooth neu starten",
         "watch_on": "Uhr: verbunden", "watch_off": "Uhr: nicht verbunden",
         "zwift_front": "Zwift: im Vordergrund", "zwift_back": "Zwift: läuft im Hintergrund",
         "zwift_off": "Zwift: läuft nicht", "obc_on": "OpenBikeControl-App verbunden",
@@ -70,6 +73,8 @@ TEXTS = {
         "login_failed": "Anmeldung fehlgeschlagen: {}",
     },
 }
+
+SETUP_URL = "https://github.com/freiversum/zwindoor#bridge-on-windows-1011"
 
 TEST_ACTIONS = [  # (action, value) shown in the "Test actions" submenu
     (actions.STEER_LEFT, 1), (actions.STEER_RIGHT, 1), (actions.UP, 1), (actions.U_TURN, 1),
@@ -225,8 +230,12 @@ class TrayApp:
         tests = [Item(a.name_de if self.lang == "de" else a.name,
                       (lambda act, val: lambda _i, _it: self.runner.test_action(act, val))(act, val))
                  for act, val in TEST_ACTIONS if (a := actions.find(act, val))]
+        bluetooth = []
+        if self.runner.error:   # no adapter, wrong driver …: point to the guide, retry after fixing it
+            bluetooth = [Item(self.t["bt_setup"], lambda _i, _it: webbrowser.open(SETUP_URL)),
+                         Item(self.t["bt_retry"], lambda _i, _it: self.retry_bluetooth())]
         return Menu(
-            *status, Menu.SEPARATOR,
+            *status, *bluetooth, Menu.SEPARATOR,
             Item(self.t["enabled"], self._toggle("enabled"), checked=self._checked("enabled")),
             Item(self.t["front"], self._toggle("bring_to_front"), checked=self._checked("bring_to_front")),
             Item(self.t["obc"], self._toggle("obc"), checked=self._checked("obc")),
@@ -250,6 +259,12 @@ class TrayApp:
                 self.runner.update_config(companion=True)
             self.refresh()
         sign_in(self.store, self.t, done)
+
+    def retry_bluetooth(self) -> None:
+        self.runner.stop()
+        self.runner.error = ""
+        self.runner.start_thread()
+        self.refresh()
 
     def _open_log(self) -> None:
         if sys.platform == "win32":

@@ -96,3 +96,14 @@ def test_parse_redirect():
     assert zwiftapi.parse_redirect(url, "abc") == "XYZ"
     with pytest.raises(zwiftapi.ZwiftApiError):
         zwiftapi.parse_redirect(url, "other")
+
+
+def test_bluetooth_setup_items_only_on_error():
+    pytest.importorskip("pystray")
+    r = FakeRunner()
+    app = TrayApp(r, lang="en")
+    texts = [item.text for item in app.menu().items]
+    assert "Set up a Bluetooth adapter …" not in texts
+    r.error = "no USB Bluetooth adapter with the WinUSB driver found"
+    texts = [item.text for item in app.menu().items]
+    assert "Set up a Bluetooth adapter …" in texts and "Start Bluetooth again" in texts

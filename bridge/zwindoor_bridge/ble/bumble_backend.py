@@ -78,7 +78,10 @@ class BumblePeripheral(Peripheral):
         try:
             self.transport = await open_transport(self.transport_spec)
         except Exception as e:  # no adapter, wrong driver, adapter in use …
-            raise PeripheralError(f"cannot open the Bluetooth adapter {self.transport_spec!r}: {e}") from e
+            log.warning("Bumble: cannot open %s: %s", self.transport_spec, e)
+            if self.transport_spec.startswith("usb"):
+                raise PeripheralError("no USB Bluetooth adapter with the WinUSB driver found") from e
+            raise PeripheralError(f"cannot open the Bluetooth adapter {self.transport_spec}") from e
 
         P = Characteristic.Properties
         command = Characteristic(protocol.COMMAND_UUID, P.WRITE | P.WRITE_WITHOUT_RESPONSE,
