@@ -2,6 +2,10 @@
 
 Your Garmin watch or Edge bike computer as a remote for Zwift.
 
+<p align="center">
+  <img src="docs/screenshots/zwindoor-hero.png" alt="ZWindoor on a Garmin AMOLED and a MIP watch: turn left, turn right, Ride On and power-up" width="100%">
+</p>
+
 Turn left or right at the next junction, go straight on, make a U-turn, give a Ride On or fire
 your power-up – with the buttons of your watch, without letting go of the handlebar. Emotes, the
 camera view and workout controls are one swipe away. Every command is confirmed on your wrist:
@@ -17,6 +21,19 @@ trademark of Zwift, Inc.
 | Watches with MIP display | fēnix 7 Pro family (7X Pro, 7 Pro, 7S Pro, with and without Wi-Fi) | four bold fields that stay readable in sunlight |
 | Watches with AMOLED display | fēnix 8, 8 Pro, 9, 9 Pro, fēnix E, epix Pro (Gen 2) | coloured buttons next to the physical keys |
 | Edge bike computers | Edge 530, 540, 550, 830, 840, 850, 1030 (incl. Plus and Bontrager), 1040, 1050, 1060, Explore 2, Explore 3, Edge MTB | big tiles in portrait mode |
+
+<table>
+<tr>
+<td width="33%"><img src="docs/screenshots/watch-amoled-ride.png" alt="Ride page on a fēnix 8: junction ahead, right turn not possible, draft power-up ready, 12 Ride Ons"></td>
+<td width="33%"><img src="docs/screenshots/watch-mip-ride.png" alt="Ride page on a fēnix 7X Pro with four bold fields for the MIP display"></td>
+<td width="33%"><img src="docs/screenshots/edge-ride.png" alt="Ride page on an Edge 1040 with big tiles"></td>
+</tr>
+<tr>
+<td align="center">AMOLED watches</td>
+<td align="center">MIP watches</td>
+<td align="center">Edge bike computers</td>
+</tr>
+</table>
 
 ## How it works
 

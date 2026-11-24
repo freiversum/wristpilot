@@ -167,8 +167,12 @@ class BridgeRunner:
         self.thread.start()
 
     def stop(self, timeout: float = 5.0) -> None:
-        if self.loop and self._stop:
-            self.loop.call_soon_threadsafe(self._stop.set)
+        # After a fatal start error (e.g. no Bluetooth) the loop has already finished and is closed.
+        if self.loop and self._stop and not self.loop.is_closed():
+            try:
+                self.loop.call_soon_threadsafe(self._stop.set)
+            except RuntimeError:
+                pass
         if self.thread and self.thread is not threading.current_thread():
             self.thread.join(timeout)
         self.thread = None

@@ -14,6 +14,8 @@ All notable changes to this project are documented in this file. The format is b
   rename it. The bridge now has its own small backend on the WinRT `GattServiceProvider` API
   (pywinrt), which needs no admin rights; bless is only used on macOS.
 - Error messages name the underlying cause when a Bluetooth module cannot be loaded.
+- Windows build: the pywinrt projection tables are packed into the .exe (`--include-package-data=winrt`).
+- *Quit* in the tray menu did nothing after Bluetooth had failed to start ("Event loop is closed").
 
 ## [0.1.0] - 2026-11-24
 

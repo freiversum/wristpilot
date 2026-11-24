@@ -200,3 +200,29 @@ def test_slugs_are_unique():
     slugs = [actions.slug(a) for a in actions.ACTIONS]
     assert len(slugs) == len(set(slugs))
     assert "ride-on" in slugs and "straight-on" in slugs
+
+
+def test_runner_stop_after_failed_start():
+    """Quit must work when Bluetooth failed at start (the loop is already closed)."""
+    from zwindoor_bridge.ble import Peripheral, PeripheralError
+    from zwindoor_bridge.runner import BridgeRunner
+    from zwindoor_bridge.sinks import RecordingSink
+
+    class Broken(Peripheral):
+        def __init__(self, on_write, info, adapter=""):
+            super().__init__(on_write, info)
+
+        async def start(self):
+            raise PeripheralError("no Bluetooth adapter found")
+
+        async def notify(self, data):
+            pass
+
+        async def stop(self):
+            pass
+
+    r = BridgeRunner(Config(), sink=RecordingSink(), peripheral_factory=Broken)
+    r.start_thread()
+    r.thread.join(5)
+    assert r.error == "no Bluetooth adapter found" and not r.running
+    r.stop()   # must not raise

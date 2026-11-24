@@ -269,8 +269,10 @@ class TrayApp:
             pass
 
     def quit(self, icon) -> None:
-        self.runner.stop()
-        icon.stop()
+        try:
+            self.runner.stop()
+        finally:
+            icon.stop()   # always leave, even if stopping the bridge failed
 
     def run(self) -> None:
         import pystray
