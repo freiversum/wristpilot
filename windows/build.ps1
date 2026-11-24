@@ -17,6 +17,7 @@ $venvPy = ".venv-build\Scripts\python.exe"
 & $venvPy -m pip install "..\bridge[tray]" nuitka ordered-set zstandard
 
 & $venvPy make_ico.py
+& $venvPy ..\bridge\tools\fetch_rtk_firmware.py   # Realtek firmware for Bumble (UB500 and similar)
 
 $version = (& $venvPy -c "import zwindoor_bridge; print(zwindoor_bridge.__version__)").Trim()
 
@@ -34,6 +35,12 @@ $version = (& $venvPy -c "import zwindoor_bridge; print(zwindoor_bridge.__versio
   --include-package=winrt `
   --include-package-data=winrt `
   --include-package=zeroconf `
+  --include-package=bumble `
+  --include-package-data=bumble `
+  --include-module=usb1 `
+  --include-package=libusb_package `
+  --include-package-data=libusb_package `
+  --include-data-dir=..\bridge\zwindoor_bridge\firmware=zwindoor_bridge\firmware `
   --include-package=pystray `
   --include-module=zwiftlogin `
   --enable-plugin=tk-inter `

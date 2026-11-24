@@ -37,11 +37,21 @@ class Peripheral:
 
 
 def default_peripheral(on_write: OnWrite, info: bytes, adapter: str = "") -> Peripheral:
+    """Pick the backend. An adapter with a colon is a Bumble transport ("usb:0", "hci-socket:1").
+
+    Windows uses Bumble on a dedicated adapter by default: the Windows stack advertises with a
+    private address, which Garmin watches do not connect to ("winrt" selects it anyway)."""
+    if adapter and ":" in adapter:
+        from .bumble_backend import BumblePeripheral
+        return BumblePeripheral(on_write, info, transport=adapter)
     if sys.platform.startswith("linux"):
         from .bluez import BluezPeripheral
         return BluezPeripheral(on_write, info, adapter=adapter)
     if sys.platform == "win32":
-        from .winrt_backend import WinRTPeripheral
-        return WinRTPeripheral(on_write, info)
+        if adapter == "winrt":
+            from .winrt_backend import WinRTPeripheral
+            return WinRTPeripheral(on_write, info)
+        from .bumble_backend import BumblePeripheral
+        return BumblePeripheral(on_write, info, transport=adapter)
     from .bless_backend import BlessPeripheral   # macOS (CoreBluetooth)
     return BlessPeripheral(on_write, info)

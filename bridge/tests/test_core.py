@@ -226,3 +226,24 @@ def test_runner_stop_after_failed_start():
     r.thread.join(5)
     assert r.error == "no Bluetooth adapter found" and not r.running
     r.stop()   # must not raise
+
+
+def test_adapter_with_colon_selects_bumble():
+    from zwindoor_bridge.ble import default_peripheral
+    from zwindoor_bridge.ble.bumble_backend import BumblePeripheral
+
+    async def on_write(_data):
+        return None
+    p = default_peripheral(on_write, b"info", adapter="hci-socket:1")
+    assert isinstance(p, BumblePeripheral) and p.transport_spec == "hci-socket:1"
+
+
+def test_bumble_advertising_fits_and_carries_uuid_and_name():
+    pytest.importorskip("bumble")
+    from zwindoor_bridge.ble.bumble_backend import advertising_data
+    from zwindoor_bridge.protocol import SERVICE_UUID
+    data = advertising_data("ZWindoor")
+    assert len(data) <= 31
+    assert bytes.fromhex(SERVICE_UUID.replace("-", ""))[::-1] in data
+    assert b"ZWindoor" in data
+    assert len(advertising_data("A very long bridge name")) <= 31

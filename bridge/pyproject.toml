@@ -19,10 +19,12 @@ dependencies = [
   "winrt-Windows.Foundation.Collections>=3.0; sys_platform == 'win32'",
   "winrt-Windows.Storage.Streams>=3.0; sys_platform == 'win32'",
   "zeroconf>=0.130; sys_platform == 'win32'",
+  "bumble>=0.0.236; sys_platform == 'win32'",
 ]
 
 [project.optional-dependencies]
 uinput = ["evdev"]
+bumble = ["bumble>=0.0.236"]   # dedicated adapter on Linux (--adapter hci-socket:N or usb:N)
 tray = ["pystray", "Pillow"]
 test = ["pytest", "pytest-asyncio"]
 

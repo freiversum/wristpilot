@@ -28,4 +28,5 @@
 ## Windows bridge
 
 - [ ] *Test actions* do nothing while Bluetooth is not running – run them anyway (keyboard path) or grey the menu out
-- [ ] WinRT advertises the computer name instead of "ZWindoor"; the watch finds the bridge by service UUID, but the device list shows the computer name – check on the watch
+- [ ] **Blocker: the fēnix does not connect to the Windows bridge.** Windows advertises a GATT server with a resolvable private address, and the watch refuses to connect to private addresses of unbonded devices (verified 2026-11-24 with the same USB adapter on Linux: public address connects, privacy on does not). Connect IQ has no bonding API. Options: own BLE stack on a dedicated USB adapter (Bumble + WinUSB), or drop Windows for now
+- [ ] Windows also interleaves a Microsoft CDP beacon ("Share across devices") on the same address; the watch then misses the service UUID. Name "BOX11EN" only comes in the scan response, which the watch ignores

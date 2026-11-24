@@ -6,6 +6,13 @@ All notable changes to this project are documented in this file. The format is b
 
 ## [Unreleased]
 
+### Fixed
+- Windows bridge: Garmin watches could not connect. Windows advertises GATT servers with a private
+  address, which the watches refuse for devices they are not bonded with. The bridge now runs its own
+  Bluetooth stack (Bumble) on a dedicated USB adapter with the WinUSB driver and advertises with the
+  adapter's public address. Realtek adapters such as the TP-Link UB500 get their firmware from the
+  bridge. On Linux, `--adapter hci-socket:N` or `usb:N` selects the same backend.
+
 ## [0.1.1] - 2026-11-24
 
 ### Fixed
