@@ -4,7 +4,7 @@
 
 - [ ] AMOLED layout on a real AMOLED watch (fēnix 8/9 or epix Pro); so far only checked in the simulator
 - [ ] Edge app on a real Edge bike computer; so far only checked in the simulator (1040, 540, 1050)
-- [ ] Windows bridge on real hardware: peripheral role of the Bluetooth adapter, SendInput into ZwiftApp.exe, firewall prompt for the Companion port (21587)
+- [ ] Windows bridge on real hardware: SendInput into ZwiftApp.exe, firewall prompt for the Companion port (21587)
 - [ ] Keep the connection for 60 minutes, measure latency from button press to acknowledgement on the watch
 - [ ] Heart rate broadcast of the watch to Zwift alongside the ZWindoor connection
 - [ ] Keyboard "straight on": the up arrow opens Zwift's action menu since 2025 – check in the game
@@ -27,6 +27,8 @@
 
 ## Windows bridge
 
+- [ ] Support Intel USB adapters in the Windows build (Bumble has a driver, firmware not bundled yet)
+- [ ] A setup helper that installs WinUSB for the adapter, so users do not need Zadig
 - [ ] *Test actions* do nothing while Bluetooth is not running – run them anyway (keyboard path) or grey the menu out
-- [ ] **Blocker: the fēnix does not connect to the Windows bridge.** Windows advertises a GATT server with a resolvable private address, and the watch refuses to connect to private addresses of unbonded devices (verified 2026-11-24 with the same USB adapter on Linux: public address connects, privacy on does not). Connect IQ has no bonding API. Options: own BLE stack on a dedicated USB adapter (Bumble + WinUSB), or drop Windows for now
-- [ ] Windows also interleaves a Microsoft CDP beacon ("Share across devices") on the same address; the watch then misses the service UUID. Name "BOX11EN" only comes in the scan response, which the watch ignores
+- [x] **Blocker: the fēnix does not connect to the Windows bridge.** Windows advertises a GATT server with a resolvable private address, and the watch refuses to connect to private addresses of unbonded devices (verified 2026-11-24 with the same USB adapter on Linux: public address connects, privacy on does not). Connect IQ has no bonding API. Solved in 0.2.0 with Bumble on a dedicated USB adapter (WinUSB); tested in a Windows 11 VM with a TP-Link UB500 and the fēnix 7X Pro
+- [x] Windows also interleaves a Microsoft CDP beacon ("Share across devices") on the same address; the watch then misses the service UUID. Name "BOX11EN" only comes in the scan response, which the watch ignores (no longer relevant with Bumble)

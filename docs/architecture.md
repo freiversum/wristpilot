@@ -12,7 +12,7 @@ Garmin watch / Edge (Connect IQ, BLE central)
    |  GATT write: command [seq, action, value]
    v
 zwindoor_bridge (Python core: protocol, action table, engine, acknowledgements)
-   |  BLE peripheral: BlueZ over D-Bus (Linux) | WinRT GattServiceProvider (Windows)
+   |  BLE peripheral: BlueZ over D-Bus (Linux) | Bumble on a dedicated USB adapter (Windows)
    |
    +-- Output A: keyboard  -> Zwift window
    |     Windows: SendInput (scan codes)
@@ -23,6 +23,22 @@ zwindoor_bridge (Python core: protocol, action table, engine, acknowledgements)
    +-- GATT notify: acknowledgement, bridge state, game state -> watch
 ```
 
+## Why Windows needs its own adapter
+
+Windows advertises GATT servers with a resolvable private address that changes. Garmin watches
+refuse to connect to private addresses of devices they are not bonded with, and Connect IQ has no
+bonding API. A test on 2026-11-24 with the same USB adapter on Linux confirmed it: with the public
+address the fēnix 7X Pro connects at once, with privacy switched on it never does. Windows also
+interleaves a Microsoft beacon ("Share across devices") on the same address, which hides the
+service UUID from the watch.
+
+On Windows the bridge therefore runs [Bumble](https://github.com/google/bumble), a Bluetooth host
+stack in Python, on a second USB adapter with the WinUSB driver. Bumble talks HCI to the adapter,
+loads the Realtek firmware itself (bundled from linux-firmware, see
+`bridge/tools/fetch_rtk_firmware.py`) and advertises with the adapter's public address. The name
+and the 128-bit service UUID both go into the advertising packet, because the watch ignores scan
+responses.
+
 ## Components
 
 | Path | Content |
@@ -32,7 +48,7 @@ zwindoor_bridge (Python core: protocol, action table, engine, acknowledgements)
 | `bridge/zwindoor_bridge/engine.py` | handles commands: focus check, bring Zwift to the front, typing, acknowledgement |
 | `bridge/zwindoor_bridge/keys.py` | logical key names to X11 keysyms, Windows scan codes and evdev codes |
 | `bridge/zwindoor_bridge/sinks/` | keyboard outputs: `windows.py` (SendInput), `xtest.py` (X11/XWayland, Wine), `uinput.py` |
-| `bridge/zwindoor_bridge/ble/` | GATT peripheral: `bluez.py` (BlueZ over dbus-fast), `winrt_backend.py` (Windows, WinRT API via pywinrt), `bless_backend.py` (macOS) |
+| `bridge/zwindoor_bridge/ble/` | GATT peripheral: `bluez.py` (BlueZ over dbus-fast), `bumble_backend.py` (own BLE stack on a dedicated USB adapter, default on Windows), `winrt_backend.py` (Windows API, kept for tests: Garmin watches do not connect to it), `bless_backend.py` (macOS) |
 | `bridge/zwindoor_bridge/obc.py`, `announce.py` | OpenBikeControl server and its mDNS announcement (Avahi on Linux, python-zeroconf on Windows) |
 | `bridge/zwindoor_bridge/companion.py`, `pb.py`, `zwiftapi.py` | Zwift Companion link, minimal protobuf codec, Zwift web calls |
 | `bridge/zwindoor_bridge/config.py` | settings as JSON (`%APPDATA%\Zwindoor\config.json`, `~/.config/zwindoor/config.json`) |

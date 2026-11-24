@@ -47,7 +47,8 @@ or as a keyboard. ZWindoor therefore has two parts:
 
 The bridge exists in two forms with the same core:
 
-- **ZWindoor Bridge for Windows** – a small program in the notification area, a single .exe.
+- **ZWindoor Bridge for Windows** – a small program in the notification area, a single .exe. It
+  needs a second USB Bluetooth adapter of its own (about 10 euros, see below).
 - **Built into [Tretlager](https://github.com/freiversum/tretlager)** – the Zwift manager for
   Linux, on its page *Watch remote*.
 
@@ -65,11 +66,27 @@ Download `ZWindoorBridge.exe` from the
 is needed; settings and the log live in `%APPDATA%\Zwindoor\`. A checksum file
 (`SHA256SUMS.txt`) is attached to every release.
 
-Requirement: a Bluetooth adapter that supports the peripheral role (most current Intel adapters
-do). The program is not code-signed yet, so Windows SmartScreen may warn on the first start.
+The program is not code-signed yet, so Windows SmartScreen may warn on the first start.
+
+**You need a second, dedicated USB Bluetooth adapter.** Windows advertises Bluetooth services
+with a changing private address, and Garmin watches do not connect to such addresses. The bridge
+therefore runs its own Bluetooth stack ([Bumble](https://github.com/google/bumble)) on a USB
+adapter that it uses exclusively, with the adapter's fixed address. Your built-in Bluetooth stays
+free for headphones, controllers and the like.
+
+- Tested: TP-Link UB500 (Realtek RTL8761BU, about 10 euros). Other adapters with the Realtek
+  RTL8761B chip should work too; the bridge loads their firmware itself.
+- One-time setup: plug in the adapter, start [Zadig](https://zadig.akeo.ie/), choose
+  *Options* | *List All Devices*, select the adapter (for the UB500: USB ID `2357 0604`), set
+  the driver to **WinUSB** and click *Replace Driver*. Windows then no longer uses this adapter
+  for its own Bluetooth.
+- Start the bridge, or choose *Start Bluetooth again* in its menu if it was already running.
+
+To give the adapter back to Windows, open the Device Manager, find it under *Universal Serial
+Bus devices*, choose *Uninstall device* with *Attempt to remove the driver*, and plug it in again.
 
 <p align="center">
-  <img src="docs/screenshots/windows-tray.png" alt="ZWindoor Bridge menu in the Windows notification area: status of Bluetooth, watch and Zwift, switches for the remote, OpenBikeControl and the Companion link, test actions, log and quit" width="70%">
+  <img src="docs/screenshots/windows-tray.png" alt="ZWindoor Bridge menu in the Windows notification area with a connected watch: status of Bluetooth, watch and Zwift, last action Ride On, switches for the remote, OpenBikeControl and the Companion link, test actions, log and quit" width="70%">
 </p>
 
 The menu shows the state of Bluetooth, the watch and Zwift, and the last action. *Test actions*

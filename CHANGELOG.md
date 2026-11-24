@@ -6,6 +6,17 @@ All notable changes to this project are documented in this file. The format is b
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-11-24
+
+### Changed
+- **The Windows bridge needs a dedicated USB Bluetooth adapter** with the WinUSB driver (set up
+  once with Zadig, see the README). The built-in Bluetooth of the computer stays free.
+
+### Added
+- Tray menu: *Set up a Bluetooth adapter* (opens the guide) and *Start Bluetooth again* while
+  Bluetooth is not running.
+- The advertising packet carries the name "ZWindoor", so the watch's device list shows it.
+
 ### Fixed
 - Windows bridge: Garmin watches could not connect. Windows advertises GATT servers with a private
   address, which the watches refuse for devices they are not bonded with. The bridge now runs its own
