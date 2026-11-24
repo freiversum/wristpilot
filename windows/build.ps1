@@ -23,8 +23,6 @@ $version = (& $venvPy -c "import zwindoor_bridge; print(zwindoor_bridge.__versio
 
 & $venvPy -m nuitka `
   --onefile `
-  --low-memory `
-  --mingw64 `
   --assume-yes-for-downloads `
   --windows-console-mode=disable `
   --windows-icon-from-ico=zwindoor.ico `
@@ -37,6 +35,8 @@ $version = (& $venvPy -c "import zwindoor_bridge; print(zwindoor_bridge.__versio
   --include-package=winrt `
   --include-package-data=winrt `
   --include-package=zeroconf `
+  --noinclude-custom-mode=bumble:bytecode `
+  --noinclude-custom-mode=cryptography:bytecode `
   --include-module=bumble.transport.usb `
   --include-module=bumble.drivers.rtk `
   --include-module=bumble.drivers.intel `
