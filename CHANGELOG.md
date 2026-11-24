@@ -6,6 +6,15 @@ All notable changes to this project are documented in this file. The format is b
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-11-24
+
+### Fixed
+- Windows bridge: Bluetooth did not start ("the Python package 'bless' is missing"). bless 0.2.6/0.3.0
+  import the unpublished package `pysetupdi` on Windows and open the Bluetooth adapter directly to
+  rename it. The bridge now has its own small backend on the WinRT `GattServiceProvider` API
+  (pywinrt), which needs no admin rights; bless is only used on macOS.
+- Error messages name the underlying cause when a Bluetooth module cannot be loaded.
+
 ## [0.1.0] - 2026-11-24
 
 First release.
@@ -26,7 +35,7 @@ First release.
 - Watch app: junction indicator on the ride page with directions not on offer greyed out, name of
   the power-up, number of Ride Ons received, short tick at a junction (can be turned off).
 - Bridge core `zwindoor_bridge` 0.1.0: GATT service for the watch (BlueZ over dbus-fast on Linux,
-  bless on Windows/macOS), commands as OpenBikeControl button IDs, acknowledgement and state by
+  bless on macOS; WinRT on Windows since 0.1.1), commands as OpenBikeControl button IDs, acknowledgement and state by
   notification, keep-alive ping, keyboard outputs SendInput (scan codes), XTest (Wine/XWayland)
   and uinput, focus check and bringing the Zwift window to the front, camera cycling, custom key
   per action, command line with `--dry-run`.
@@ -59,5 +68,6 @@ First release.
   feedback is now a tone, and the menu item is called "Vibration / tone".
 - Edge with touch: the workout hint says "Hold to skip" instead of "hold DOWN: skip".
 
-[Unreleased]: https://github.com/freiversum/zwindoor/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/freiversum/zwindoor/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/freiversum/zwindoor/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/freiversum/zwindoor/releases/tag/v0.1.0

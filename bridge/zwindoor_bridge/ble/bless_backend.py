@@ -1,4 +1,4 @@
-"""GATT server through `bless` – used on Windows (WinRT GattServiceProvider) and macOS.
+"""GATT server through `bless` – used on macOS only (Windows has its own WinRT backend).
 
 bless calls the write handler synchronously from its own thread on Windows; the handler hands
 the bytes to our loop and the reply goes out as a notification.
@@ -28,7 +28,7 @@ class BlessPeripheral(Peripheral):
             from bless import (BlessServer, GATTAttributePermissions as Perm,
                                GATTCharacteristicProperties as Prop)
         except ImportError as e:
-            raise PeripheralError("the Python package 'bless' is missing") from e
+            raise PeripheralError(f"the Python package 'bless' cannot be loaded ({e})") from e
         self.loop = asyncio.get_running_loop()
         self.server = BlessServer(name=self.local_name, loop=self.loop)
         self.server.read_request_func = self._read

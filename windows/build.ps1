@@ -31,7 +31,6 @@ $version = (& $venvPy -c "import zwindoor_bridge; print(zwindoor_bridge.__versio
   --product-version=$version `
   --file-description="Garmin watch remote for Zwift" `
   --include-package=zwindoor_bridge `
-  --include-package=bless `
   --include-package=winrt `
   --include-package=zeroconf `
   --include-package=pystray `

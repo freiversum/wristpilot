@@ -12,7 +12,7 @@ Garmin watch / Edge (Connect IQ, BLE central)
    |  GATT write: command [seq, action, value]
    v
 zwindoor_bridge (Python core: protocol, action table, engine, acknowledgements)
-   |  BLE peripheral: BlueZ over D-Bus (Linux) | bless / WinRT (Windows)
+   |  BLE peripheral: BlueZ over D-Bus (Linux) | WinRT GattServiceProvider (Windows)
    |
    +-- Output A: keyboard  -> Zwift window
    |     Windows: SendInput (scan codes)
@@ -32,7 +32,7 @@ zwindoor_bridge (Python core: protocol, action table, engine, acknowledgements)
 | `bridge/zwindoor_bridge/engine.py` | handles commands: focus check, bring Zwift to the front, typing, acknowledgement |
 | `bridge/zwindoor_bridge/keys.py` | logical key names to X11 keysyms, Windows scan codes and evdev codes |
 | `bridge/zwindoor_bridge/sinks/` | keyboard outputs: `windows.py` (SendInput), `xtest.py` (X11/XWayland, Wine), `uinput.py` |
-| `bridge/zwindoor_bridge/ble/` | GATT peripheral: `bluez.py` (BlueZ over dbus-fast), `bless_backend.py` (Windows/macOS) |
+| `bridge/zwindoor_bridge/ble/` | GATT peripheral: `bluez.py` (BlueZ over dbus-fast), `winrt_backend.py` (Windows, WinRT API via pywinrt), `bless_backend.py` (macOS) |
 | `bridge/zwindoor_bridge/obc.py`, `announce.py` | OpenBikeControl server and its mDNS announcement (Avahi on Linux, python-zeroconf on Windows) |
 | `bridge/zwindoor_bridge/companion.py`, `pb.py`, `zwiftapi.py` | Zwift Companion link, minimal protobuf codec, Zwift web calls |
 | `bridge/zwindoor_bridge/config.py` | settings as JSON (`%APPDATA%\Zwindoor\config.json`, `~/.config/zwindoor/config.json`) |

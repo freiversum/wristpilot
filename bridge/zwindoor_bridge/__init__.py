@@ -7,4 +7,4 @@ forwards the command to trainer apps that speak OpenBikeControl.
 The same core runs in two shells: a small Windows tray program and a page in Tretlager (Linux).
 """
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"

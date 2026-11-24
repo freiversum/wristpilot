@@ -4,13 +4,20 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "zwindoor-bridge"
-version = "0.1.0"
+version = "0.1.1"
 description = "Bridge between a Garmin watch (Connect IQ) and Zwift: GATT peripheral, keyboard output, OpenBikeControl"
 license = "GPL-3.0-or-later"
 requires-python = ">=3.11"
 dependencies = [
   "dbus-fast>=2.0; sys_platform == 'linux'",
-  "bless>=0.2.6; sys_platform != 'linux'",
+  "bless>=0.2.6; sys_platform == 'darwin'",
+  "winrt-runtime>=3.0; sys_platform == 'win32'",
+  "winrt-Windows.Devices.Bluetooth>=3.0; sys_platform == 'win32'",
+  "winrt-Windows.Devices.Bluetooth.GenericAttributeProfile>=3.0; sys_platform == 'win32'",
+  "winrt-Windows.Devices.Enumeration>=3.0; sys_platform == 'win32'",
+  "winrt-Windows.Foundation>=3.0; sys_platform == 'win32'",
+  "winrt-Windows.Foundation.Collections>=3.0; sys_platform == 'win32'",
+  "winrt-Windows.Storage.Streams>=3.0; sys_platform == 'win32'",
   "zeroconf>=0.130; sys_platform == 'win32'",
 ]
 

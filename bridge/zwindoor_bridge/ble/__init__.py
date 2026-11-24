@@ -40,5 +40,8 @@ def default_peripheral(on_write: OnWrite, info: bytes, adapter: str = "") -> Per
     if sys.platform.startswith("linux"):
         from .bluez import BluezPeripheral
         return BluezPeripheral(on_write, info, adapter=adapter)
-    from .bless_backend import BlessPeripheral
+    if sys.platform == "win32":
+        from .winrt_backend import WinRTPeripheral
+        return WinRTPeripheral(on_write, info)
+    from .bless_backend import BlessPeripheral   # macOS (CoreBluetooth)
     return BlessPeripheral(on_write, info)
