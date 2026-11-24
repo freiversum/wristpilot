@@ -22,4 +22,5 @@ jobs:
         working-directory: windows
         env:
           PYTHONPATH: ../bridge
+          PYSTRAY_BACKEND: dummy   # no display on the runner
         run: python -m pytest -q test_tray.py
