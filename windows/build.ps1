@@ -24,6 +24,7 @@ $version = (& $venvPy -c "import zwindoor_bridge; print(zwindoor_bridge.__versio
 & $venvPy -m nuitka `
   --onefile `
   --low-memory `
+  --mingw64 `
   --assume-yes-for-downloads `
   --windows-console-mode=disable `
   --windows-icon-from-ico=zwindoor.ico `
