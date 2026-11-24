@@ -6,7 +6,7 @@
 set -euo pipefail
 here="$(cd "$(dirname "$0")/.." && pwd)"
 dest="${1:-$here/../tretlager/tretlager/zwindoor}"
-rsync -a --delete --exclude __pycache__ --exclude __main__.py "$here/bridge/zwindoor_bridge/" "$dest/"
+rsync -a --delete --exclude __pycache__ --exclude __main__.py --exclude firmware/ "$here/bridge/zwindoor_bridge/" "$dest/"
 cat > "$dest/VENDORED.md" <<TXT
 # Vendored: ZWindoor bridge core
 
