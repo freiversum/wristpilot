@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "zwindoor-bridge"
+version = "0.1.0"
+description = "Bridge between a Garmin watch (Connect IQ) and Zwift: GATT peripheral, keyboard output, OpenBikeControl"
+license = "GPL-3.0-or-later"
+requires-python = ">=3.11"
+dependencies = [
+  "dbus-fast>=2.0; sys_platform == 'linux'",
+  "bless>=0.2.6; sys_platform != 'linux'",
+  "zeroconf>=0.130; sys_platform == 'win32'",
+]
+
+[project.optional-dependencies]
+uinput = ["evdev"]
+tray = ["pystray", "Pillow"]
+test = ["pytest", "pytest-asyncio"]
+
+[project.scripts]
+zwindoor-bridge = "zwindoor_bridge.__main__:main"
+
+[tool.setuptools.packages.find]
+include = ["zwindoor_bridge*"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+testpaths = ["tests"]

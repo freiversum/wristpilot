@@ -1,0 +1,11 @@
+.venv/
+.venv-build/
+__pycache__/
+.pytest_cache/
+windows/dist/
+windows/*.build/
+windows/*.onefile-build/
+watch/bin/
+developer_key*
+watch/dist/
+_intern/

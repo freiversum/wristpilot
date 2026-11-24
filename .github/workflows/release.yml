@@ -1,0 +1,42 @@
+name: Release
+
+# Builds the Windows bridge (one .exe via Nuitka) for a version tag and attaches it to the
+# GitHub release. The watch app is published through the Connect IQ Store, not here.
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  windows-bridge:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Build ZWindoorBridge.exe
+        shell: pwsh
+        run: ./windows/build.ps1
+      - name: Checksum
+        shell: pwsh
+        run: |
+          $h = (Get-FileHash windows/dist/ZWindoorBridge.exe -Algorithm SHA256).Hash.ToLower()
+          "$h  ZWindoorBridge.exe" | Out-File -Encoding ascii windows/dist/SHA256SUMS.txt
+          Get-Content windows/dist/SHA256SUMS.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ZWindoorBridge
+          path: |
+            windows/dist/ZWindoorBridge.exe
+            windows/dist/SHA256SUMS.txt
+      - name: Attach to release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            windows/dist/ZWindoorBridge.exe
+            windows/dist/SHA256SUMS.txt

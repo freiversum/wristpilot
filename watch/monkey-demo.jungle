@@ -1,0 +1,64 @@
+project.manifest = manifest.xml
+
+# Demo build for store screenshots: fake connection and game state (source-demo/Build.mc).
+# MIP devices (fenix 7 Pro family): four bold fields, 40 px icon (resources/).
+base.sourcePath = source;source-demo;source-style-mip
+
+# AMOLED devices: coloured discs next to the buttons, larger launcher icon.
+fenix843mm.sourcePath = source;source-demo;source-style-amoled
+fenix843mm.resourcePath = $(fenix843mm.resourcePath);resources-icon60
+fenix943mm.sourcePath = source;source-demo;source-style-amoled
+fenix943mm.resourcePath = $(fenix943mm.resourcePath);resources-icon60
+fenix9pro43mm.sourcePath = source;source-demo;source-style-amoled
+fenix9pro43mm.resourcePath = $(fenix9pro43mm.resourcePath);resources-icon60
+fenixe.sourcePath = source;source-demo;source-style-amoled
+fenixe.resourcePath = $(fenixe.resourcePath);resources-icon60
+epix2pro42mm.sourcePath = source;source-demo;source-style-amoled
+epix2pro42mm.resourcePath = $(epix2pro42mm.resourcePath);resources-icon60
+epix2pro47mm.sourcePath = source;source-demo;source-style-amoled
+epix2pro47mm.resourcePath = $(epix2pro47mm.resourcePath);resources-icon60
+epix2pro51mm.sourcePath = source;source-demo;source-style-amoled
+epix2pro51mm.resourcePath = $(epix2pro51mm.resourcePath);resources-icon60
+fenix847mm.sourcePath = source;source-demo;source-style-amoled
+fenix847mm.resourcePath = $(fenix847mm.resourcePath);resources-icon65
+fenix8pro47mm.sourcePath = source;source-demo;source-style-amoled
+fenix8pro47mm.resourcePath = $(fenix8pro47mm.resourcePath);resources-icon65
+fenix947mm.sourcePath = source;source-demo;source-style-amoled
+fenix947mm.resourcePath = $(fenix947mm.resourcePath);resources-icon65
+fenix9pro47mm.sourcePath = source;source-demo;source-style-amoled
+fenix9pro47mm.resourcePath = $(fenix9pro47mm.resourcePath);resources-icon65
+fenix9pro51mm.sourcePath = source;source-demo;source-style-amoled
+fenix9pro51mm.resourcePath = $(fenix9pro51mm.resourcePath);resources-icon65
+
+# Edge bike computers: tile layout (source-style-edge), launcher icon per size.
+edge530.sourcePath = source;source-demo;source-style-edge
+edge530.resourcePath = $(edge530.resourcePath);resources-icon35
+edge540.sourcePath = source;source-demo;source-style-edge
+edge540.resourcePath = $(edge540.resourcePath);resources-icon35
+edge830.sourcePath = source;source-demo;source-style-edge
+edge830.resourcePath = $(edge830.resourcePath);resources-icon35
+edge840.sourcePath = source;source-demo;source-style-edge
+edge840.resourcePath = $(edge840.resourcePath);resources-icon35
+edge550.sourcePath = source;source-demo;source-style-edge
+edge550.resourcePath = $(edge550.resourcePath);resources-icon56
+edge850.sourcePath = source;source-demo;source-style-edge
+edge850.resourcePath = $(edge850.resourcePath);resources-icon56
+edge1030.sourcePath = source;source-demo;source-style-edge
+edge1030.resourcePath = $(edge1030.resourcePath);resources-icon36
+edge1030plus.sourcePath = source;source-demo;source-style-edge
+edge1030plus.resourcePath = $(edge1030plus.resourcePath);resources-icon36
+edge1030bontrager.sourcePath = source;source-demo;source-style-edge
+edge1030bontrager.resourcePath = $(edge1030bontrager.resourcePath);resources-icon36
+edge1040.sourcePath = source;source-demo;source-style-edge
+edge1050.sourcePath = source;source-demo;source-style-edge
+edge1050.resourcePath = $(edge1050.resourcePath);resources-icon68
+edge1060.sourcePath = source;source-demo;source-style-edge
+edge1060.resourcePath = $(edge1060.resourcePath);resources-icon62
+edgeexplore2.sourcePath = source;source-demo;source-style-edge
+edgeexplore2.resourcePath = $(edgeexplore2.resourcePath);resources-icon36
+edgeexplore3.sourcePath = source;source-demo;source-style-edge
+edgeexplore3.resourcePath = $(edgeexplore3.resourcePath);resources-icon39
+edgeexplore3plus.sourcePath = source;source-demo;source-style-edge
+edgeexplore3plus.resourcePath = $(edgeexplore3plus.resourcePath);resources-icon39
+edgemtb.sourcePath = source;source-demo;source-style-edge
+edgemtb.resourcePath = $(edgemtb.resourcePath);resources-icon36
