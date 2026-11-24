@@ -19,9 +19,9 @@
 
 ## Release
 
-- [ ] Publish the Windows bridge as a GitHub release
-- [ ] Tretlager release with the *Watch remote* page
-- [ ] Put the privacy policy online and fill in the placeholders (`<CONTACT>`, store links)
+- [x] Publish the Windows bridge as a GitHub release
+- [x] Tretlager release with the *Watch remote* page
+- [x] Put the privacy policy online and fill in the placeholders (`<CONTACT>`, store links)
 - [ ] Connect IQ Store: upload the beta, test on a real watch, then submit for review
 - [ ] Code-sign the Windows .exe
 

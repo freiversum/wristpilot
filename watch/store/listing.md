@@ -25,7 +25,7 @@ ZWindoor turns your Garmin watch or Edge bike computer into a remote for indoor 
 
 REQUIRES A COMPANION PROGRAM ON YOUR COMPUTER
 The watch cannot control Zwift directly. ZWindoor connects over Bluetooth to the free ZWindoor Bridge on the computer that runs Zwift, which turns your button presses into Zwift's keyboard shortcuts. Download and setup: https://linuxundich.de/en/projects/zwindoor/
-- Windows 10/11: ZWindoor Bridge (small tray program). The computer's Bluetooth adapter must support the peripheral role (most current Intel adapters do).
+- Windows 10/11: ZWindoor Bridge (small tray program) with a second USB Bluetooth adapter of its own, e.g. TP-Link UB500 (about 10 euros). Windows' own Bluetooth uses changing addresses that Garmin watches do not connect to.
 - Linux: built into Tretlager (Zwift on Linux).
 Without the bridge the app only shows "Searching bridge".
 
@@ -70,7 +70,7 @@ ZWindoor macht deine Garmin-Uhr oder deinen Edge-Radcomputer zur Fernbedienung f
 
 BRAUCHT EIN PROGRAMM AUF DEM COMPUTER
 Die Uhr kann Zwift nicht direkt steuern. ZWindoor verbindet sich per Bluetooth mit der kostenlosen ZWindoor Bridge auf dem Rechner, auf dem Zwift läuft. Die Bridge macht aus deinen Tastendrücken Zwifts Tastenkürzel. Download und Einrichtung: https://linuxundich.de/projekte/zwindoor/
-- Windows 10/11: ZWindoor Bridge (kleines Programm im Infobereich). Der Bluetooth-Adapter muss die Peripheral-Rolle beherrschen (aktuelle Intel-Adapter können das).
+- Windows 10/11: ZWindoor Bridge (kleines Programm im Infobereich) mit einem zweiten, eigenen USB-Bluetooth-Stick, z. B. TP-Link UB500 (rund 10 Euro). Das Bluetooth von Windows nutzt wechselnde Adressen, mit denen sich Garmin-Uhren nicht verbinden.
 - Linux: in Tretlager eingebaut (Zwift unter Linux).
 Ohne Bridge zeigt die App nur „Suche Bridge“.
 
