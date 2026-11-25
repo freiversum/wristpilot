@@ -6,16 +6,19 @@ All notable changes to this project are documented in this file. The format is b
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-11-25
+
 ### Added
 - Watch app: **turn protection**, on by default. Turns, straight on and the U-turn need a second
   action: *press twice* (the same button, tap or swipe again within 2 s; the first press shows
   "Turn left? Again to send") or *hold* (hold until the ring is full, 0.6 s; U-turn and menu at
   1.5 s). Ride On and power-up stay instant. Menu: *Turn protection*.
-- Watch app: **race mode** with two layouts, chosen in the menu: *power-up only* (one big
-  power-up, START and BACK fire it) and *power-up + Ride On* (DOWN gives a Ride On). No turns, no
-  U-turn, and holding BACK does not exit. Watches (MIP, AMOLED) and Edge.
+- Watch app: **race mode** with two layouts, chosen in the menu: *power-up only* (BACK and DOWN
+  fire the power-up) and *power-up + Ride On* (DOWN gives a Ride On); UP and START change lanes
+  (see steering). No turns, no U-turn. Watches (MIP, AMOLED) and Edge.
 - Watch app: **party mode** for group rides: UP wave, START Ride On, DOWN elbow flick, BACK
-  power-up; held: Hammer Time, Nice, photo (no exit). Edge: tiles for wave, Ride On, elbow flick,
+  power-up; held: Hammer Time, Nice, photo; holding the screen also takes a photo (on the
+  fēnix 7 Pro, firmware 27.18, holding BACK and DOWN belongs to the system). Edge: tiles for wave, Ride On, elbow flick,
   power-up, Nice, Hammer Time and bell. With the Companion link the Ride Ons received are shown.
 - **Steering:** the bridge offers Zwift a virtual Elite Sterzo Smart over DIRCON (Windows, Linux,
   Tretlager); pair it once in Zwift under *Steering*. On the race page UP and START change lanes
@@ -140,7 +143,8 @@ First release.
   feedback is now a tone, and the menu item is called "Vibration / tone".
 - Edge with touch: the workout hint says "Hold to skip" instead of "hold DOWN: skip".
 
-[Unreleased]: https://github.com/freiversum/wristpilot/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/freiversum/wristpilot/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/freiversum/wristpilot/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/freiversum/wristpilot/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/freiversum/wristpilot/compare/v0.1.1...v0.2.0
 [0.1.1]: https://github.com/freiversum/wristpilot/compare/v0.1.0...v0.1.1
