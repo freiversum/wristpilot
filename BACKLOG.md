@@ -69,7 +69,12 @@ Before the ride: set `companion_capture` (see docs/architecture.md), afterwards 
 ## Ideas (2026-11-24)
 
 - [x] **Party mode** for group rides (2026-11-25, variant P1a: gestures on UP/START/DOWN, power-up on
-  BACK; mockup `_intern/mockups/party-mode.html`); checked in the simulator (MIP, AMOLED, Edge)
+  BACK; mockup `_intern/mockups/party-mode.html`); checked in the simulator (MIP, AMOLED, Edge) and on
+  the fēnix 7X Pro: short presses and START hold work, holding BACK (app switcher) and DOWN (music
+  controls) is taken by firmware 27.18, so photo also sits on "hold the screen"
+- [ ] Firmware hot keys: holding DOWN (music) and BACK (app switcher) never reach the app on the fēnix
+  7X Pro 27.18. Check whether *Settings* > *System* > *Hot Keys* can free them, and whether straight
+  on (hold DOWN) and skip interval (hold DOWN) need another button path for button-only use
 - [ ] **Choose the ride page automatically** (Christoph, 2026-11-25): workout -> Workout page, group
   ride -> party, race -> race, free ride -> normal. Only possible with the Companion link: record a
   group ride, a race and a workout with `companion_capture` and look for the event/subgroup id and

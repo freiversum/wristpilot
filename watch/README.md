@@ -132,8 +132,14 @@ Ride Ons received and the power-up field its type.
 | START | Ride On | Hammer Time |
 | DOWN | Elbow flick | Nice |
 | BACK | Power-up | Photo (no exit) |
-| Touch | tap a field (top left wave, top right Ride On, bottom left elbow, bottom right power-up) | – |
+| Touch | tap a field (top left wave, top right Ride On, bottom left elbow, bottom right power-up) | hold the screen: photo |
 | Edge | LAP wave · START Ride On (hold: Hammer Time) · UP elbow · DOWN power-up · ENTER Nice; tiles: wave, Ride On, elbow, power-up, Nice, Hammer Time, bell | |
+
+**Holds the firmware takes:** on the fēnix 7X Pro with firmware 27.18, holding BACK opens the
+system's app switcher and holding DOWN opens the music controls; the app never sees these holds.
+There, Nice and photo are reached through the Actions page (photo also by holding the screen),
+straight on by swiping up, skipping an interval by holding the bottom of the screen. The hot keys
+can probably be changed on the watch (*Settings* > *System* > *Hot Keys*, not checked yet).
 
 ### Edge bike computers
 

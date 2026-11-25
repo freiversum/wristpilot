@@ -27,7 +27,8 @@
 // (Edge: every key but BACK), DOWN gives a Ride On in the "power-up + Ride On" variant, holding
 // BACK does not exit (only the menu does).
 // Party mode (Settings.partyOn(), group rides): UP wave (hold: menu), START Ride On (hold: Hammer
-// Time), DOWN elbow flick (hold: Nice), BACK power-up (hold: photo, no exit). Touch: tap a field.
+// Time), DOWN elbow flick (hold: Nice), BACK power-up (hold: photo, no exit). Touch: tap a field,
+// hold the screen = photo (some firmware takes the BACK and DOWN holds for itself).
 // Edge: LAP wave, START Ride On (hold: Hammer Time), UP elbow, DOWN power-up, ENTER Nice.
 
 import Toybox.Lang;
@@ -475,7 +476,9 @@ class MainDelegate extends WatchUi.InputDelegate {
         var xy = clickEvent.getCoordinates();
         var page = view.page;
         if (page == Settings.PAGE_RIDE && partyOn()) {
-            return true;
+            // Holding BACK (photo) and DOWN (Nice) is taken by the firmware on some watches
+            // (fenix 7 Pro 27.x: app switcher, music controls); holding the screen always works.
+            $.gRemote.send(Actions.PHOTO);
         } else if (page == Settings.PAGE_RIDE && raceOn()) {
             var ra = view.raceActionAt(xy[0], xy[1]);
             if (ra != null) {
