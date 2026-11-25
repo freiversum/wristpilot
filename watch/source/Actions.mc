@@ -49,7 +49,7 @@ module Actions {
             case RIDE_ON:  return [Protocol.ACT_EMOTE, Protocol.EMOTE_RIDE_ON, Rez.Strings.ActRideOn, COLOR_GREEN, :thumb];
             case ELBOW:    return [Protocol.ACT_EMOTE, Protocol.EMOTE_ELBOW, Rez.Strings.ActElbow, COLOR_CYAN, :elbow];
             case WAVE:     return [Protocol.ACT_EMOTE, Protocol.EMOTE_WAVE, Rez.Strings.ActWave, COLOR_CYAN, :wave];
-            case NICE:     return [Protocol.ACT_EMOTE, Protocol.EMOTE_NICE, Rez.Strings.ActNice, COLOR_GREEN, :thumb];
+            case NICE:     return [Protocol.ACT_EMOTE, Protocol.EMOTE_NICE, Rez.Strings.ActNice, COLOR_GREEN, :star];
             case HAMMER:   return [Protocol.ACT_EMOTE, Protocol.EMOTE_HAMMER, Rez.Strings.ActHammer, COLOR_ORANGE, :hammer];
             case BELL:     return [Protocol.ACT_BELL, Protocol.VAL_PRESS, Rez.Strings.ActBell, COLOR_YELLOW, :bell];
             case PHOTO:    return [Protocol.ACT_SCREENSHOT, Protocol.SHOT_PHOTO, Rez.Strings.ActPhoto, COLOR_VIOLET, :photo];

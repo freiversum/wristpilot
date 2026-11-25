@@ -47,6 +47,9 @@ module Icons {
             // motion lines
             dc.drawLine(x - 0.95 * r, y - 0.6 * r, x - 0.75 * r, y - 0.2 * r);
             dc.drawLine(x - 0.95 * r, y - 0.05 * r, x - 0.75 * r, y + 0.35 * r);
+        } else if (sym == :star) {
+            poly(dc, x, y, r, [[0.0, -1.0], [0.24, -0.33], [0.95, -0.31], [0.38, 0.12], [0.59, 0.81],
+                [0.0, 0.4], [-0.59, 0.81], [-0.38, 0.12], [-0.95, -0.31], [-0.24, -0.33]]);
         } else if (sym == :hammer) {
             dc.fillRoundedRectangle(x - 0.85 * r, y - 0.9 * r, 1.7 * r, 0.55 * r, 0.1 * r);
             dc.fillRectangle(x - 0.14 * r, y - 0.4 * r, 0.28 * r, 1.4 * r);

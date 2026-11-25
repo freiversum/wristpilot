@@ -14,6 +14,11 @@ All notable changes to this project are documented in this file. The format is b
 - Watch app: **race mode** with two layouts, chosen in the menu: *power-up only* (one big
   power-up, START and BACK fire it) and *power-up + Ride On* (DOWN gives a Ride On). No turns, no
   U-turn, and holding BACK does not exit. Watches (MIP, AMOLED) and Edge.
+- Watch app: **party mode** for group rides: UP wave, START Ride On, DOWN elbow flick, BACK
+  power-up; held: Hammer Time, Nice, photo (no exit). Edge: tiles for wave, Ride On, elbow flick,
+  power-up, Nice, Hammer Time and bell. With the Companion link the Ride Ons received are shown.
+- Watch app: one menu item *Ride page* (normal, race: power-up, race: + Ride On, party) instead of
+  a separate race switch. "Nice" has its own star icon (it shared the thumb with Ride On).
 
 ## [0.3.0] - 2026-11-25
 

@@ -1,5 +1,5 @@
 // The one view of the app. Draws, depending on the connection and the current page:
-// connect screen, "Ride" (four quadrants, MIP layout) or the race page in race mode,
+// connect screen, "Ride" (four quadrants, MIP layout), the race or the party page,
 // "Actions" (8 tiles), "Workout", plus the feedback overlay on top.
 // All coordinates are designed for 280 x 280 and scaled with the screen width.
 
@@ -75,7 +75,9 @@ class MainView extends WatchUi.View {
             drawActions(dc);
         } else if (page == Settings.PAGE_WORKOUT) {
             drawWorkout(dc);
-        } else if (Settings.race() != Settings.RACE_OFF) {
+        } else if (Settings.partyOn()) {
+            drawParty(dc, now);
+        } else if (Settings.raceOn()) {
             drawRace(dc, now);
         } else {
             drawRide(dc, now);
@@ -279,6 +281,151 @@ class MainView extends WatchUi.View {
         dc.drawText(cx, Style.EDGE ? (h * 0.11).toNumber() - 2 : (48 * s).toNumber(), Graphics.FONT_XTINY,
             WatchUi.loadResource(Rez.Strings.LblRace), Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
         drawStatus(dc, now);
+    }
+
+    // --- Party page (group rides) ------------------------------------------------
+    // Like the ride page, the action sits where its button is: UP wave, START Ride On, DOWN elbow
+    // flick, BACK power-up. Edge: tiles (wave, Ride On / elbow, power-up / Nice, Hammer, bell).
+
+    const PARTY_FIELDS = [Actions.WAVE, Actions.RIDE_ON, Actions.ELBOW, Actions.POWERUP];
+
+    hidden function partyTiles() {
+        var top = (h * 0.11).toNumber();
+        var gap = (w * 0.025).toNumber();
+        var w2 = (w - 3 * gap) / 2;
+        var w3 = (w - 4 * gap) / 3;
+        var rowH = (h - top - 4 * gap) / 3;
+        var y1 = top + gap;
+        var y2 = y1 + rowH + gap;
+        var y3 = y2 + rowH + gap;
+        return [
+            [Actions.WAVE, gap, y1, w2, rowH], [Actions.RIDE_ON, 2 * gap + w2, y1, w2, rowH],
+            [Actions.ELBOW, gap, y2, w2, rowH], [Actions.POWERUP, 2 * gap + w2, y2, w2, rowH],
+            [Actions.NICE, gap, y3, w3, rowH], [Actions.HAMMER, 2 * gap + w3, y3, w3, rowH],
+            [Actions.BELL, 3 * gap + 2 * w3, y3, w3, rowH]
+        ];
+    }
+
+    // Which party action a touch at (x, y) means (null = none).
+    function partyActionAt(x, y) {
+        if (Style.EDGE) {
+            var tiles = partyTiles();
+            for (var i = 0; i < tiles.size(); i++) {
+                var t = tiles[i];
+                if (x >= t[1] && x < t[1] + t[3] && y >= t[2] && y < t[2] + t[4]) {
+                    return t[0];
+                }
+            }
+            return null;
+        }
+        if (y < divY) {
+            return (x < cx) ? Actions.WAVE : Actions.RIDE_ON;
+        }
+        return (x < cx) ? Actions.ELBOW : Actions.POWERUP;
+    }
+
+    // [colour, label] of a party action; the power-up shows its type with a Companion link.
+    hidden function partyLook(a) {
+        var r = $.gRemote;
+        var info = Actions.info(a);
+        var col = info[3];
+        var label = WatchUi.loadResource(info[2]);
+        if (a == Actions.POWERUP && r.linked()) {
+            label = r.powerupLabel();
+            if ((r.game & Protocol.GAME_POWERUP) == 0) {
+                col = Actions.COLOR_GREY;
+            }
+        } else if (a == Actions.RIDE_ON && r.linked() && r.rideOns > 0) {
+            label = label + " · " + r.rideOns.toString();
+        }
+        if (Style.AMOLED) {
+            // softer AMOLED colours, like the ride page
+            if (col == Actions.COLOR_CYAN) {
+                col = A_CYAN;
+            } else if (col == Actions.COLOR_GREEN) {
+                col = A_GREEN;
+            } else if (col == Actions.COLOR_ORANGE) {
+                col = A_ORANGE;
+            } else if (col == Actions.COLOR_GREY) {
+                col = A_GREY;
+            }
+        }
+        return [col, label];
+    }
+
+    function drawParty(dc, now) {
+        if (Style.EDGE) {
+            var tiles = partyTiles();
+            var rad = (w * 0.04).toNumber();
+            for (var i = 0; i < tiles.size(); i++) {
+                var t = tiles[i];
+                var look = partyLook(t[0]);
+                var small = i >= 4;
+                dc.setColor(look[0], Graphics.COLOR_TRANSPARENT);
+                dc.setPenWidth(2);
+                dc.drawRoundedRectangle(t[1], t[2], t[3], t[4], rad);
+                dc.setPenWidth(1);
+                var iconR = (t[4] < t[3] ? t[4] : t[3]) * (small ? 0.20 : 0.24);
+                Icons.draw(dc, Actions.info(t[0])[4], t[1] + t[3] / 2, t[2] + t[4] * 0.40, iconR, look[0]);
+                dc.setColor(look[0], Graphics.COLOR_TRANSPARENT);
+                dc.drawText(t[1] + t[3] / 2, t[2] + t[4] * 0.80, small ? Graphics.FONT_XTINY : Graphics.FONT_TINY,
+                    look[1], Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+            }
+        } else if (Style.AMOLED) {
+            // [x, y, disc radius, icon radius, label y] per field, at its button
+            var spots = [[cx - 82 * s, cy - 20 * s, 32 * s, 17 * s, cy + 24 * s],
+                         [cx + 72 * s, cy - 62 * s, 32 * s, 17 * s, cy - 16 * s],
+                         [cx - 50 * s, cy + 62 * s, 26 * s, 13 * s, cy + 98 * s],
+                         [cx + 68 * s, cy + 58 * s, 30 * s, 16 * s, cy + 98 * s]];
+            for (var i = 0; i < PARTY_FIELDS.size(); i++) {
+                var a = PARTY_FIELDS[i];
+                var p = spots[i];
+                var look = partyLook(a);
+                dc.setColor(tintOf(look[0]), Graphics.COLOR_TRANSPARENT);
+                dc.fillCircle(p[0], p[1], p[2]);
+                Icons.draw(dc, Actions.info(a)[4], p[0], p[1], p[3], look[0]);
+                dc.setColor(look[0], Graphics.COLOR_TRANSPARENT);
+                dc.drawText(p[0], p[4], Graphics.FONT_XTINY, look[1], Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+            }
+        } else {
+            // MIP: four fields as on the ride page, bold labels
+            dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
+            dc.setPenWidth(3);
+            dc.drawLine(cx, (58 * s).toNumber(), cx, h);
+            dc.drawLine(0, divY, w, divY);
+            dc.setPenWidth(1);
+            var dx = 66 * s;
+            var pos = [[cx - dx, cy - 46 * s, cy - 4 * s], [cx + dx, cy - 46 * s, cy - 4 * s],
+                       [cx - 58 * s, divY + 62 * s, divY + 26 * s], [cx + 58 * s, divY + 62 * s, divY + 26 * s]];
+            for (var i = 0; i < PARTY_FIELDS.size(); i++) {
+                var a = PARTY_FIELDS[i];
+                var look = partyLook(a);
+                Icons.draw(dc, Actions.info(a)[4], pos[i][0], pos[i][1], 22 * s, look[0]);
+                var text = look[1];
+                var font = Graphics.FONT_XTINY;
+                if (!(a == Actions.POWERUP && $.gRemote.linked())) {
+                    text = text.toUpper();
+                    font = text.length() > 8 ? Graphics.FONT_XTINY : Graphics.FONT_TINY;
+                }
+                drawLabel(dc, pos[i][0], pos[i][2], font, text);
+            }
+        }
+        dc.setColor(Actions.COLOR_VIOLET, Graphics.COLOR_TRANSPARENT);
+        dc.drawText(cx, Style.EDGE ? (h * 0.11).toNumber() - 2 : (48 * s).toNumber(), Graphics.FONT_XTINY,
+            WatchUi.loadResource(Rez.Strings.LblParty), Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+        drawStatus(dc, now);
+    }
+
+    // Dark tint behind an AMOLED colour.
+    hidden function tintOf(col) {
+        if (col == A_CYAN) {
+            return TINT_CYAN;
+        } else if (col == A_GREEN) {
+            return TINT_GREEN;
+        } else if (col == A_ORANGE) {
+            return TINT_ORANGE;
+        }
+        return TINT_GREY;
     }
 
     // --- Ride, AMOLED style -------------------------------------------------

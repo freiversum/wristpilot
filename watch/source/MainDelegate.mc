@@ -26,6 +26,9 @@
 // Race mode (Settings.race()): the Ride page has no turns. BACK and START fire the power-up
 // (Edge: every key but BACK), DOWN gives a Ride On in the "power-up + Ride On" variant, holding
 // BACK does not exit (only the menu does).
+// Party mode (Settings.partyOn(), group rides): UP wave (hold: menu), START Ride On (hold: Hammer
+// Time), DOWN elbow flick (hold: Nice), BACK power-up (hold: photo, no exit). Touch: tap a field.
+// Edge: LAP wave, START Ride On (hold: Hammer Time), UP elbow, DOWN power-up, ENTER Nice.
 
 import Toybox.Lang;
 import Toybox.System;
@@ -160,11 +163,16 @@ class MainDelegate extends WatchUi.InputDelegate {
     // --- Turn protection and race mode ------------------------------------------
 
     function raceOn() {
-        return Settings.race() != Settings.RACE_OFF;
+        return Settings.raceOn();
     }
 
+    function partyOn() {
+        return Settings.partyOn();
+    }
+
+    // Turn protection only on the normal ride page (race and party have no turns).
     hidden function guardMode() {
-        return raceOn() ? Settings.GUARD_OFF : Settings.guard();
+        return Settings.race() != Settings.RACE_OFF ? Settings.GUARD_OFF : Settings.guard();
     }
 
     hidden function isTurn(a) {
@@ -275,6 +283,16 @@ class MainDelegate extends WatchUi.InputDelegate {
             } else {
                 view.setPage(Settings.PAGE_RIDE);
             }
+        } else if (partyOn()) {
+            if (k == WatchUi.KEY_UP) {
+                rm.send(Actions.WAVE);
+            } else if (k == WatchUi.KEY_ENTER) {
+                rm.send(Actions.RIDE_ON);
+            } else if (k == WatchUi.KEY_DOWN) {
+                rm.send(Actions.ELBOW);
+            } else {
+                rm.send(Actions.POWERUP);
+            }
         } else if (raceOn()) {
             if (k == WatchUi.KEY_ENTER || k == WatchUi.KEY_ESC) {
                 rm.send(Actions.POWERUP);
@@ -323,6 +341,18 @@ class MainDelegate extends WatchUi.InputDelegate {
             } else {
                 rm.showHint(Rez.Strings.WkHoldHint);
             }
+        } else if (partyOn()) {
+            if (k == WatchUi.KEY_LAP) {
+                rm.send(Actions.WAVE);
+            } else if (k == WatchUi.KEY_START) {
+                rm.send(Actions.RIDE_ON);
+            } else if (k == WatchUi.KEY_UP) {
+                rm.send(Actions.ELBOW);
+            } else if (k == WatchUi.KEY_DOWN) {
+                rm.send(Actions.POWERUP);
+            } else if (k == WatchUi.KEY_ENTER) {
+                rm.send(Actions.NICE);
+            }
         } else if (raceOn()) {
             if (k == WatchUi.KEY_UP && Settings.race() == Settings.RACE_POWER_RIDEON) {
                 rm.send(Actions.RIDE_ON);
@@ -350,7 +380,9 @@ class MainDelegate extends WatchUi.InputDelegate {
             return;
         }
         if (k == WatchUi.KEY_ESC) {
-            if (!raceOn()) {
+            if (partyOn() && $.gBle.isReady() && view.page == Settings.PAGE_RIDE) {
+                $.gRemote.send(Actions.PHOTO);
+            } else if (!raceOn()) {
                 confirmExit();      // race mode: a grab at BACK in a sprint must not end the app
             }
             return;
@@ -360,6 +392,14 @@ class MainDelegate extends WatchUi.InputDelegate {
         }
         var page = view.page;
         if (page == Settings.PAGE_RIDE && raceOn()) {
+            return;
+        }
+        if (page == Settings.PAGE_RIDE && partyOn()) {
+            if (k == WatchUi.KEY_ENTER || k == WatchUi.KEY_START) {
+                $.gRemote.send(Actions.HAMMER);
+            } else if (k == WatchUi.KEY_DOWN && !Style.EDGE) {
+                $.gRemote.send(Actions.NICE);
+            }
             return;
         }
         if (Style.EDGE) {
@@ -406,6 +446,11 @@ class MainDelegate extends WatchUi.InputDelegate {
             } else {
                 $.gRemote.send(a);
             }
+        } else if (partyOn()) {
+            var pa = view.partyActionAt(xy[0], xy[1]);
+            if (pa != null) {
+                $.gRemote.send(pa);
+            }
         } else if (raceOn()) {
             var ra = view.raceActionAt(xy[0], xy[1]);
             if (ra != null) {
@@ -429,7 +474,9 @@ class MainDelegate extends WatchUi.InputDelegate {
         }
         var xy = clickEvent.getCoordinates();
         var page = view.page;
-        if (page == Settings.PAGE_RIDE && raceOn()) {
+        if (page == Settings.PAGE_RIDE && partyOn()) {
+            return true;
+        } else if (page == Settings.PAGE_RIDE && raceOn()) {
             var ra = view.raceActionAt(xy[0], xy[1]);
             if (ra != null) {
                 $.gRemote.send(ra);
@@ -461,8 +508,8 @@ class MainDelegate extends WatchUi.InputDelegate {
             return true;
         }
         if (view.page == Settings.PAGE_RIDE) {
-            if (raceOn()) {
-                return true;        // no turns in race mode
+            if (Settings.race() != Settings.RACE_OFF) {
+                return true;        // no turns in race and party mode
             }
             if (dir == WatchUi.SWIPE_LEFT) {
                 ride(Actions.LEFT);

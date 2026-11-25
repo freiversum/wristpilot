@@ -92,9 +92,9 @@
     <string id="LblPowerA">Power-up</string>
     <string id="LblMore">Mehr</string>
     <string id="WkHoldSkipTouch">Halten: überspringen</string>
-    <string id="MenuRace">Race-Modus</string>
-    <string id="RacePower">Nur Power-up</string>
-    <string id="RacePowerRideOn">Power-up + Ride On</string>
+    <string id="MenuRace">Fahrtseite</string>
+    <string id="RacePower">Race: Power-up</string>
+    <string id="RacePowerRideOn">Race: + Ride On</string>
     <string id="MenuGuard">Fehldruck-Schutz</string>
     <string id="GuardTwice">Zweimal drücken</string>
     <string id="GuardHold">Halten</string>
@@ -103,4 +103,7 @@
     <string id="HoldTurn">Zum Abbiegen halten</string>
     <string id="Holding">Halten ...</string>
     <string id="HoldRelease">Loslassen sendet</string>
+    <string id="ModeNormal">Normal</string>
+    <string id="ModeParty">Party</string>
+    <string id="LblParty">PARTY</string>
 </strings>

@@ -16,11 +16,13 @@ module Settings {
     const PAGE_WORKOUT = 2;
     const PAGE_COUNT = 3;
 
-    // Race mode: the Ride page becomes a race page without turns and U-turn.
-    const RACE_OFF = 0;
-    const RACE_POWER = 1;       // A: power-up only
-    const RACE_POWER_RIDEON = 2; // B: power-up and Ride On
-    const RACE_COUNT = 3;
+    // What the Ride page is (menu "Ride page"; stored under KEY_RACE for older settings):
+    // normal ride page, a race page without turns and U-turn, or the party page for group rides.
+    const RACE_OFF = 0;          // normal ride page
+    const RACE_POWER = 1;        // race A: power-up only
+    const RACE_POWER_RIDEON = 2; // race B: power-up and Ride On
+    const RACE_PARTY = 3;        // party: four social gestures, no turns, no power-up
+    const RACE_COUNT = 4;
 
     // Turn protection in the normal mode: turns and U-turn need a second action.
     const GUARD_OFF = 0;
@@ -97,8 +99,20 @@ module Settings {
             return Rez.Strings.RacePower;
         } else if (v == RACE_POWER_RIDEON) {
             return Rez.Strings.RacePowerRideOn;
+        } else if (v == RACE_PARTY) {
+            return Rez.Strings.ModeParty;
         }
-        return Rez.Strings.Off;
+        return Rez.Strings.ModeNormal;
+    }
+
+    // Race page (A or B), not party.
+    function raceOn() {
+        var r = race();
+        return r == RACE_POWER || r == RACE_POWER_RIDEON;
+    }
+
+    function partyOn() {
+        return race() == RACE_PARTY;
     }
 
     // Protection is on by default (press twice).

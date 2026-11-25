@@ -92,9 +92,9 @@
     <string id="LblPowerA">Power-up</string>
     <string id="LblMore">More</string>
     <string id="WkHoldSkipTouch">Hold to skip</string>
-    <string id="MenuRace">Race mode</string>
-    <string id="RacePower">Power-up only</string>
-    <string id="RacePowerRideOn">Power-up + Ride On</string>
+    <string id="MenuRace">Ride page</string>
+    <string id="RacePower">Race: power-up</string>
+    <string id="RacePowerRideOn">Race: + Ride On</string>
     <string id="MenuGuard">Turn protection</string>
     <string id="GuardTwice">Press twice</string>
     <string id="GuardHold">Hold</string>
@@ -103,4 +103,7 @@
     <string id="HoldTurn">Hold to turn</string>
     <string id="Holding">Hold ...</string>
     <string id="HoldRelease">Release to send</string>
+    <string id="ModeNormal">Normal</string>
+    <string id="ModeParty">Party</string>
+    <string id="LblParty">PARTY</string>
 </strings>

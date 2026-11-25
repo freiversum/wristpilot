@@ -42,8 +42,8 @@ Touch: swipe left/right to turn, swipe up for straight on, tap a quarter for its
 TURN PROTECTION (on by default)
 Turns, straight on and the U-turn are only sent after a second action, so a stray press does not take you off the route: press the same button again within 2 seconds, or choose "Hold" in the menu and hold until the ring is full. Ride On and power-up stay instant. Can be switched off in the menu.
 
-RACE MODE
-A race page with a big power-up and no turns or U-turn, optionally with Ride On. START and BACK both fire the power-up, and holding BACK does not exit. Switch it on in the menu (hold UP).
+RACE AND PARTY
+Menu "Ride page": a race page with a big power-up (START and BACK, optionally Ride On on DOWN), or a party page for group rides: wave, Ride On, elbow flick and power-up on the four buttons.
 
 MORE PAGES
 - Actions: elbow flick, wave, nice, hammer time, bell, photo, camera view, HUD on/off
@@ -96,8 +96,8 @@ Touch: nach links/rechts wischen zum Abbiegen, nach oben für geradeaus, Viertel
 SCHUTZ VOR FEHLDRUCK (ab Werk an)
 Abbiegen, geradeaus und U-Turn gehen erst nach einer zweiten Aktion raus: dieselbe Taste binnen 2 Sekunden nochmal drücken oder (Menü: „Halten“) halten, bis der Ring voll ist. Ride On und Power-up bleiben sofort. Im Menü abschaltbar.
 
-RACE-MODUS
-Eine Rennseite mit großem Power-up, ohne Abbiegen und U-Turn, wahlweise mit Ride On. START und BACK lösen das Power-up aus, BACK halten beendet die App nicht. Einschalten im Menü (UP halten).
+RACE UND PARTY
+Menü „Fahrtseite“: eine Rennseite mit großem Power-up (START und BACK, wahlweise Ride On auf DOWN) oder eine Party-Seite für Gruppenfahrten: Winken, Ride On, Ellbogen-Wink und Power-up auf den vier Tasten.
 
 WEITERE SEITEN
 - Aktionen: Ellbogen-Wink, Winken, Nice, Hammer Time, Klingel, Foto, Kamera, HUD ein/aus

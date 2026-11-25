@@ -106,11 +106,12 @@ protection* = Press twice (default) · Hold · Off.
 The watch itself turns a held UP into the menu key after about a second; with *Hold* the app
 ignores that key while UP is held for a turn and opens the menu at 1.5 s itself.
 
-### Race mode
+### Ride page: normal, race, party
 
-Menu: *Race mode* = Off · Power-up only · Power-up + Ride On. The ride page becomes a race page
-with a big power-up and a red "RACE" under the state dot; no turns, no U-turn, no turn protection.
-Stays on until switched off, also after a restart.
+Menu: *Ride page* = Normal · Race: power-up · Race: + Ride On · Party. Stays as chosen, also after
+a restart. Race and party pages have no turns, no U-turn and no turn protection.
+
+**Race:** a big power-up and a red "RACE" under the state dot.
 
 | Button | Power-up only | Power-up + Ride On |
 |---|---|---|
@@ -120,6 +121,19 @@ Stays on until switched off, also after a restart.
 | hold BACK | nothing (no exit in a sprint; exit through the menu) | nothing |
 | Touch | tap anywhere: power-up | Ride On disc (bottom left): Ride On, elsewhere power-up |
 | Edge | every button but BACK: power-up; one big tile | UP and the bottom tile: Ride On, the rest power-up |
+
+**Party** (group rides): the social gestures sit where the ride actions are, the power-up stays on
+BACK; a violet "PARTY" under the state dot. With the Companion link the Ride On field shows the
+Ride Ons received and the power-up field its type.
+
+| Button | Short | Hold |
+|---|---|---|
+| UP | Wave | Menu |
+| START | Ride On | Hammer Time |
+| DOWN | Elbow flick | Nice |
+| BACK | Power-up | Photo (no exit) |
+| Touch | tap a field (top left wave, top right Ride On, bottom left elbow, bottom right power-up) | – |
+| Edge | LAP wave · START Ride On (hold: Hammer Time) · UP elbow · DOWN power-up · ENTER Nice; tiles: wave, Ride On, elbow, power-up, Nice, Hammer Time, bell | |
 
 ### Edge bike computers
 
@@ -137,7 +151,8 @@ U-turn, More); tap them. Edge devices have no vibration motor and beep instead.
 
 ### Settings menu (hold UP)
 
-Exit app (first, so it is quick to reach) · race mode (off / power-up only / power-up + Ride On) ·
+Exit app (first, so it is quick to reach) · ride page (normal / race: power-up / race: + Ride On /
+party) ·
 turn protection (press twice / hold / off) · vibration / tone on/off · vibrate at junctions · start
 page (Ride/Actions/Workout) · go to Ride/Actions/Workout · choose device · reconnect · bridge (info
 text of the bridge).

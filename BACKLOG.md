@@ -68,6 +68,15 @@ Before the ride: set `companion_capture` (see docs/architecture.md), afterwards 
 
 ## Ideas (2026-11-24)
 
+- [x] **Party mode** for group rides (2026-11-25, variant P1a: gestures on UP/START/DOWN, power-up on
+  BACK; mockup `_intern/mockups/party-mode.html`); checked in the simulator (MIP, AMOLED, Edge)
+- [ ] **Choose the ride page automatically** (Christoph, 2026-11-25): workout -> Workout page, group
+  ride -> party, race -> race, free ride -> normal. Only possible with the Companion link: record a
+  group ride, a race and a workout with `companion_capture` and look for the event/subgroup id and
+  the workout state in the game's messages; the event type (GROUP_RIDE, RACE, GROUP_WORKOUT ...)
+  would then come from Zwift's event API with the same token. Without the Companion link the
+  bridge cannot know, so the menu choice stays
+
 - [x] **Turn protection** (2026-11-25, Christoph): turns and U-turn only after a second action, on by
   default; variants "press twice" (S1) and "hold" (S2), chosen in the menu. Tested on the fēnix 7X Pro
   (27.18) with a dry-run bridge on tinytin, 2026-11-25: both protection modes and both race layouts
