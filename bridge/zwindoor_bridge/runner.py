@@ -121,8 +121,9 @@ class BridgeRunner:
     async def _apply_companion(self) -> None:
         want = self.config.companion and self.token_provider is not None
         if want and not self.companion:
+            capture = Path(self.config.companion_capture).expanduser() if self.config.companion_capture else None
             self.companion = CompanionLink(self.token_provider, self.config.companion_port,
-                                           on_change=self._game_changed)
+                                           on_change=self._game_changed, capture=capture)
             try:
                 await self.companion.start()
             except OSError as e:

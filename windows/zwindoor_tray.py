@@ -243,7 +243,8 @@ class TrayApp:
             Item(self.t["logout"] if self.store.signed_in() else self.t["login"], lambda _i, _it: self._login()),
             Item(self.t["autostart"], self._toggle("autostart"), checked=self._checked("autostart")),
             Menu.SEPARATOR,
-            Item(self.t["test"], Menu(*tests)),
+            # Test actions go through the running bridge loop; without Bluetooth they would do nothing.
+            Item(self.t["test"], Menu(*tests), enabled=self.runner.running),
             Item(self.t["log"], lambda _i, _it: self._open_log()),
             Item(self.t["quit"], lambda icon, _it: self.quit(icon)),
         )

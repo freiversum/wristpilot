@@ -21,6 +21,9 @@
 
 ## Companion link in a real ride
 
+Before the ride: set `companion_capture` (see docs/architecture.md), afterwards read the file with
+`bridge/tools/companion_dump.py --summary`. One ride answers most of the points below.
+
 - [ ] Does the relay accept the launcher token (Windows sign-in, Tretlager)? Response of `PUT /relay/profiles/me/phone`
 - [ ] Does the game connect in plain mode? Otherwise add the secure mode (AES-128-GCM)
 - [ ] Turn messages: where do the junction options come from (action buttons 1010-1012 or `IntersectionAhead`), direction values and `enabled` field
@@ -39,6 +42,6 @@
 
 - [ ] Support Intel USB adapters in the Windows build (Bumble has a driver, firmware not bundled yet)
 - [ ] A setup helper that installs WinUSB for the adapter, so users do not need Zadig
-- [ ] *Test actions* do nothing while Bluetooth is not running – run them anyway (keyboard path) or grey the menu out
+- [x] *Test actions* do nothing while Bluetooth is not running – the menu item is greyed out now (2026-11-25)
 - [x] **Blocker: the fēnix does not connect to the Windows bridge.** Windows advertises a GATT server with a resolvable private address, and the watch refuses to connect to private addresses of unbonded devices (verified 2026-11-24 with the same USB adapter on Linux: public address connects, privacy on does not). Connect IQ has no bonding API. Solved in 0.2.0 with Bumble on a dedicated USB adapter (WinUSB); tested in a Windows 11 VM with a TP-Link UB500 and the fēnix 7X Pro
 - [x] Windows also interleaves a Microsoft CDP beacon ("Share across devices") on the same address; the watch then misses the service UUID. Name "BOX11EN" only comes in the scan response, which the watch ignores (no longer relevant with Bumble)

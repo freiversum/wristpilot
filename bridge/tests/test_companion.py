@@ -187,3 +187,30 @@ async def test_no_token_reports_error():
         assert l.error == "no Zwift sign-in" and not l.registered
     finally:
         await l.stop()
+
+
+# --- capture for the first real ride ---
+
+def test_capture_file_and_dump_tool(tmp_path):
+    import json
+    import subprocess
+    import sys
+    from pathlib import Path
+
+    path = tmp_path / "capture.jsonl"
+    l = cp.CompanionLink(lambda: "token", port=0, address="127.0.0.1", api=FakeApi(), capture=path)
+    junction = {1: [{1: 0, 3: "TURN LEFT", 4: 1}, {1: 2, 3: "TURN RIGHT", 4: 0}]}
+    for cmd in ({2: cp.PACKET, 21: {1: cp.INTERSECTION_AHEAD, 7: junction}},
+                {2: cp.CUSTOMIZE_ACTION_BUTTON, 8: 1010, 9: 1},
+                {2: cp.SOCIAL_PLAYER_ACTION, 16: {3: cp.RIDE_ON_SOCIAL}}):
+        l._capture("game", game_msg(cmd))
+    l._capture("bridge", pb.message({1: 1234, 2: [{1: 1, 2: 22, 10: 1010}], 10: 1}))
+    lines = [json.loads(s) for s in path.read_text().splitlines()]
+    assert [r["dir"] for r in lines] == ["game", "game", "game", "bridge"]
+
+    tool = Path(__file__).resolve().parents[1] / "tools" / "companion_dump.py"
+    out = subprocess.run([sys.executable, str(tool), str(path), "--summary"],
+                         capture_output=True, text=True, check=True).stdout
+    assert "INTERSECTION_AHEAD: 1" in out and "action button 1010: 1" in out
+    assert f"social type {cp.RIDE_ON_SOCIAL}: 1" in out
+    assert "'TURN LEFT': 1" in out and "Enabled values seen: [0, 1]" in out

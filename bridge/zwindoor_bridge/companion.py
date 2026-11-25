@@ -16,11 +16,13 @@ undocumented relay contradicts Zwift's terms of service.
 from __future__ import annotations
 
 import asyncio
+import json
 import logging
 import socket
 import struct
 import time
 from dataclasses import dataclass, field
+from pathlib import Path
 from typing import Callable
 
 from . import actions, pb, zwiftapi
@@ -115,7 +117,7 @@ class CompanionLink:
 
     def __init__(self, token_provider: Callable[[], str | None], port: int = 21587,
                  address: str | None = None, on_change: Callable[[], None] | None = None,
-                 api=zwiftapi) -> None:
+                 api=zwiftapi, capture: Path | None = None) -> None:
         self.token_provider = token_provider   # blocking; returns a valid access token or None
         self.port = port
         self.address = address
@@ -131,6 +133,7 @@ class CompanionLink:
         self._tasks: list[asyncio.Task] = []
         self._seqno = 0       # outer CompanionToGame.seqno
         self._cmd_seqno = 0   # per-command seqno
+        self.capture = capture  # JSON Lines file with every frame (tools/companion_dump.py reads it)
 
     # --- Lifecycle ---
 
@@ -210,7 +213,9 @@ class CompanionLink:
                 size = struct.unpack(">I", await reader.readexactly(4))[0]
                 if size > MAX_FRAME:
                     raise ConnectionError(f"frame of {size} bytes")
-                self.handle_game_message(await reader.readexactly(size))
+                data = await reader.readexactly(size)
+                self._capture("game", data)
+                self.handle_game_message(data)
         except (asyncio.IncompleteReadError, ConnectionError, OSError, pb.DecodeError) as e:
             log.info("Companion: game connection closed (%s)", e.__class__.__name__)
         finally:
@@ -219,6 +224,18 @@ class CompanionLink:
                 self._writer = None
                 self._set_linked(False)
             writer.close()
+
+    def _capture(self, direction: str, data: bytes) -> None:
+        """Append one frame to the capture file: what the game really sends is still unverified."""
+        if not self.capture:
+            return
+        line = json.dumps({"t": round(time.time(), 3), "dir": direction, "hex": data.hex()})
+        try:
+            with self.capture.open("a", encoding="utf-8") as f:
+                f.write(line + "\n")
+        except OSError as e:
+            log.warning("Companion: capture to %s failed (%s), stopped", self.capture, e)
+            self.capture = None
 
     def _set_linked(self, on: bool) -> None:
         if self.state.linked != on:
@@ -249,6 +266,8 @@ class CompanionLink:
             cmds.append({1: self._cmd_seqno, **c})
         self._seqno += 1
         msg = pb.message({1: self.athlete_id, 2: cmds, 10: self._seqno})
+        if cmds:   # heartbeats (no commands) would only fill the file
+            self._capture("bridge", msg)
         try:
             writer.write(frame(msg))
             await writer.drain()

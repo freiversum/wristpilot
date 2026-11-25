@@ -107,3 +107,15 @@ def test_bluetooth_setup_items_only_on_error():
     r.error = "no USB Bluetooth adapter with the WinUSB driver found"
     texts = [item.text for item in app.menu().items]
     assert "Set up a Bluetooth adapter …" in texts and "Start Bluetooth again" in texts
+
+
+def test_test_actions_greyed_out_without_bluetooth():
+    pytest.importorskip("pystray")
+    r = FakeRunner()
+    app = TrayApp(r, lang="en")
+
+    def test_item():
+        return next(item for item in app.menu().items if item.text == "Test actions")
+    assert not test_item().enabled
+    r.running = True
+    assert test_item().enabled

@@ -6,7 +6,14 @@ All notable changes to this project are documented in this file. The format is b
 
 ## [Unreleased]
 
+### Added
+- Bridge: `companion_capture` in `config.json` records every Companion frame as JSON Lines, and
+  `bridge/tools/companion_dump.py` turns a capture into readable frames and a summary of the open
+  questions (junction messages, action buttons, Ride Ons). Prepares the first real ride.
+
 ### Fixed
+- Windows tray: *Test actions* is greyed out while Bluetooth is not running; before, the actions
+  did nothing.
 - Watch app: "Exit app" is now the first item of the settings menu (hold UP). On firmware with a
   task switcher (fēnix 7X Pro 27.18) holding BACK opens the system's app switcher instead of the
   exit confirmation, and the item at the end of the long menu was easy to miss.

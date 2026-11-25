@@ -150,3 +150,24 @@ redirect address) and stores the token with DPAPI. Tretlager hands in the token 
 sign-in. A small protobuf encoder and decoder (`pb.py`) avoids a protobuf dependency.
 
 Open questions about the link are tracked in [BACKLOG.md](../BACKLOG.md).
+
+### Capture for the first real ride
+
+What the game really sends is still unverified. Setting `companion_capture` in the bridge's
+`config.json` to a file path (Windows: `%APPDATA%\Zwindoor\config.json`, Linux:
+`~/.config/zwindoor/config.json`) makes the bridge append every frame from the game and every
+command it sends (no heartbeats) to that file as JSON Lines (`t`, `dir`, `hex`). The change takes
+effect the next time the link starts (switch it off and on, or restart the bridge).
+
+```bash
+python bridge/tools/companion_dump.py capture.jsonl            # every frame, readable
+python bridge/tools/companion_dump.py capture.jsonl --summary  # counts only
+```
+
+The summary lists the command and packet types, action buttons 1010-1012, junction option titles
+with their direction and enabled values, and social action types, i.e. the open questions in the
+backlog. The file contains the Zwift athlete ID and in-game events; it stays on the computer and is
+never uploaded. Leave the setting empty for normal use.
+
+The bridge log already has the time from the watch's write to the acknowledgement per action
+(`Turn left -> OK (12 ms)`); the round trip on the watch adds the BLE connection interval.
