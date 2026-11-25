@@ -83,7 +83,7 @@ class _Backend:
 
 
 class SteeringServer:
-    def __init__(self, port: int, announcer=None, angle: float = 20.0, duration: float = 0.7) -> None:
+    def __init__(self, port: int, announcer=None, angle: float = 12.0, duration: float = 0.45) -> None:
         self.port = port
         self.announcer = announcer
         self.angle = max(1.0, min(MAX_ANGLE, angle))

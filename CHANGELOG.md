@@ -17,6 +17,11 @@ All notable changes to this project are documented in this file. The format is b
 - Watch app: **party mode** for group rides: UP wave, START Ride On, DOWN elbow flick, BACK
   power-up; held: Hammer Time, Nice, photo (no exit). Edge: tiles for wave, Ride On, elbow flick,
   power-up, Nice, Hammer Time and bell. With the Companion link the Ride Ons received are shown.
+- **Steering:** the bridge offers Zwift a virtual Elite Sterzo Smart over DIRCON (Windows, Linux,
+  Tretlager); pair it once in Zwift under *Steering*. On the race page UP and START change lanes
+  (12 degrees for 0.45 s, about four presses across the road; `steering_angle`, `steering_time`
+  in `config.json`), BACK fires the power-up. The Actions page gets *Lane left* and *Lane right*.
+  New protocol action 0x81 (lane) and result 7 (steering not paired in Zwift).
 - Watch app: one menu item *Ride page* (normal, race: power-up, race: + Ride On, party) instead of
   a separate race switch. "Nice" has its own star icon (it shared the thumb with Ride On).
 

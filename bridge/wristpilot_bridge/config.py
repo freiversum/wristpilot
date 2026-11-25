@@ -28,8 +28,10 @@ class Config:
     obc_port: int = 36870
     steering: bool = True           # offer a virtual steering device (Sterzo) to Zwift over DIRCON
     steering_port: int = 36880
-    steering_angle: float = 20.0    # degrees of one lane change
-    steering_time: float = 0.7      # seconds of one lane change
+    # One lane change: angle x time. 12 degrees for 0.45 s = four presses from one edge of the road
+    # to the other (tested in Zwift on 2026-11-25; 20 degrees for 0.7 s needed only two).
+    steering_angle: float = 12.0
+    steering_time: float = 0.45
     bring_to_front: bool = True     # activate the Zwift window if another window has the focus
     hold_ms: int = 40               # time between key press and release
     keys: dict[str, str] = field(default_factory=dict)  # action slug -> key name ("" = no key)

@@ -87,7 +87,7 @@ Before the ride: set `companion_capture` (see docs/architecture.md), afterwards 
   (27.18) with a dry-run bridge on tinytin, 2026-11-25: both protection modes and both race layouts
   work, holding UP for a left turn does not open the menu
 
-- [ ] **Steering:** move left or right within the road (lane position), not just pick a turn at a
+- [x] **Steering:** move left or right within the road (lane position), not just pick a turn at a
   junction. **Proven possible 2026-11-25** on tinytin (Tretlager 0.14.0, Zwift under Wine): a
   virtual Elite Sterzo Smart, offered over DIRCON (mDNS `_wahoo-fitness-tnp._tcp`, name "STERZO
   SMART 5C90", service `347b0001-7635-408b-8918-8ff3949ce592`), is paired by Zwift as steering
@@ -98,6 +98,12 @@ Before the ride: set `companion_capture` (see docs/architecture.md), afterwards 
   existing announcer: Avahi on Linux, zeroconf on Windows), so Windows, Tretlager and the Linux
   bridge get it alike; a new protocol command carries the steering from the watch. Open: how the
   watch steers (mockup first: buttons, tilt, touch), and which ride pages get it
+  **Built 2026-11-25** (variant L1, mockup `_intern/mockups/steering.html`): `steering.py` in the core,
+  lane changes on the race page (UP/START) and as tiles on the Actions page; tested in Zwift on
+  tinytin with the fēnix 7X Pro: 12 degrees for 0.45 s = four presses from edge to edge
+- [ ] The watch does not find a restarted bridge by itself: it keeps writing into the old GATT link
+  and shows "not delivered" until *Reconnect* in the menu. Reconnect after a few failed writes
+- [ ] Race page with lane discs: AMOLED and fēnix 7S Pro not yet checked in the simulator
 - [x] **Race mode** built 2026-11-25 (variants A "power-up only" and B "power-up + Ride On", chosen in
   the menu; mockup `_intern/mockups/race-mode.html`); steering fields left out until steering works.
   Tested on the fēnix 7X Pro with a dry-run bridge (2026-11-25); still to try in a real race. Original idea: a second ride screen for races. Power-up big and in the middle, no turns,

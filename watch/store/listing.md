@@ -43,7 +43,7 @@ TURN PROTECTION (on by default)
 Turns, straight on and the U-turn are only sent after a second action, so a stray press does not take you off the route: press the same button again within 2 seconds, or choose "Hold" in the menu and hold until the ring is full. Ride On and power-up stay instant. Can be switched off in the menu.
 
 RACE AND PARTY
-Menu "Ride page": a race page with a big power-up (START and BACK, optionally Ride On on DOWN), or a party page for group rides: wave, Ride On, elbow flick and power-up on the four buttons.
+Menu "Ride page": a race page with lane changes on UP/START (pair the bridge's steering in Zwift) and the power-up on BACK, or a party page for group rides: wave, Ride On, elbow flick, power-up.
 
 MORE PAGES
 - Actions: elbow flick, wave, nice, hammer time, bell, photo, camera view, HUD on/off
@@ -97,7 +97,7 @@ SCHUTZ VOR FEHLDRUCK (ab Werk an)
 Abbiegen, geradeaus und U-Turn gehen erst nach einer zweiten Aktion raus: dieselbe Taste binnen 2 Sekunden nochmal drücken oder (Menü: „Halten“) halten, bis der Ring voll ist. Ride On und Power-up bleiben sofort. Im Menü abschaltbar.
 
 RACE UND PARTY
-Menü „Fahrtseite“: eine Rennseite mit großem Power-up (START und BACK, wahlweise Ride On auf DOWN) oder eine Party-Seite für Gruppenfahrten: Winken, Ride On, Ellbogen-Wink und Power-up auf den vier Tasten.
+Menü „Fahrtseite“: eine Rennseite mit Spurwechsel auf UP/START (Lenkung der Bridge in Zwift koppeln) und Power-up auf BACK, oder eine Party-Seite für Gruppenfahrten: Winken, Ride On, Ellbogen-Wink, Power-up.
 
 WEITERE SEITEN
 - Aktionen: Ellbogen-Wink, Winken, Nice, Hammer Time, Klingel, Foto, Kamera, HUD ein/aus

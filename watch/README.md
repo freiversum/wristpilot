@@ -111,16 +111,23 @@ ignores that key while UP is held for a turn and opens the menu at 1.5 s itself.
 Menu: *Ride page* = Normal · Race: power-up · Race: + Ride On · Party. Stays as chosen, also after
 a restart. Race and party pages have no turns, no U-turn and no turn protection.
 
-**Race:** a big power-up and a red "RACE" under the state dot.
+**Race:** a big power-up, a red "RACE" under the state dot, and lane changes on UP (left) and
+START (right). Steering goes through a virtual Elite Sterzo that the bridge offers Zwift over
+DIRCON; pair it once in Zwift under *Steering* ("STERZO SMART 5C91"). One press is one lane
+(12 degrees for 0.45 s, about four presses from one edge of the road to the other; bridge
+`config.json`: `steering_angle`, `steering_time`). If Zwift has not paired it, the watch says
+"Steering not paired in Zwift". On the other ride pages lanes are on the Actions page (two tiles).
 
 | Button | Power-up only | Power-up + Ride On |
 |---|---|---|
-| START, BACK | Power-up | Power-up |
-| DOWN | – | Ride On |
+| UP | Lane left | Lane left |
+| START | Lane right | Lane right |
+| BACK | Power-up | Power-up |
+| DOWN | Power-up | Ride On |
 | hold UP | Menu | Menu |
 | hold BACK | nothing (no exit in a sprint; exit through the menu) | nothing |
-| Touch | tap anywhere: power-up | Ride On disc (bottom left): Ride On, elsewhere power-up |
-| Edge | every button but BACK: power-up; one big tile | UP and the bottom tile: Ride On, the rest power-up |
+| Touch | lane discs next to UP/START: lanes, elsewhere power-up | lane discs, Ride On disc (bottom left), elsewhere power-up |
+| Edge | LAP/START lanes, other buttons but BACK power-up; lane tiles on top, one big power-up tile | as left, UP and the bottom tile: Ride On |
 
 **Party** (group rides): the social gestures sit where the ride actions are, the power-up stays on
 BACK; a violet "PARTY" under the state dot. With the Companion link the Ride On field shows the
