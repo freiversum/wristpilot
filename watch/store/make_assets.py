@@ -136,7 +136,7 @@ def hero(lang):
     ImageDraw.Draw(glow).ellipse((820, -180, 1640, 640), fill=(120, 50, 20))
     img = Image.blend(img, glow.filter(ImageFilter.GaussianBlur(120)), 0.35)
     d = ImageDraw.Draw(img)
-    title = "ZWindoor"
+    title = "Wristpilot"
     sub = {"en": "Turn, Ride On and fire\npower-ups from the buttons\nof your Garmin watch.",
            "de": "Abbiegen, Ride On und\nPower-ups mit den Tasten\ndeiner Garmin-Uhr."}[lang]
     d.text((90, 230), title, font=font(96), fill=(255, 255, 255))

@@ -1,9 +1,9 @@
-# ZWindoor
+# Wristpilot
 
 Your Garmin watch or Edge bike computer as a remote for Zwift.
 
 <p align="center">
-  <img src="docs/screenshots/zwindoor-hero.png" alt="ZWindoor on a Garmin AMOLED and a MIP watch: turn left, turn right, Ride On and power-up" width="100%">
+  <img src="docs/screenshots/wristpilot-hero.png" alt="Wristpilot on a Garmin AMOLED and a MIP watch: turn left, turn right, Ride On and power-up" width="100%">
 </p>
 
 Turn left or right at the next junction, go straight on, make a U-turn, give a Ride On or fire
@@ -11,7 +11,7 @@ your power-up – with the buttons of your watch, without letting go of the hand
 camera view and workout controls are one swipe away. Every command is confirmed on your wrist:
 a short vibration when it arrived, a double vibration with the reason when it did not.
 
-ZWindoor is an independent project, not affiliated with Zwift, Inc. or Garmin. Zwift is a
+Wristpilot is an independent project, not affiliated with Zwift, Inc. or Garmin. Zwift is a
 trademark of Zwift, Inc.
 
 ## Supported devices
@@ -38,16 +38,16 @@ trademark of Zwift, Inc.
 ## How it works
 
 A Garmin watch can only act as a Bluetooth client (central). It cannot pose as a Zwift controller
-or as a keyboard. ZWindoor therefore has two parts:
+or as a keyboard. Wristpilot therefore has two parts:
 
 1. **The watch app** on your Garmin device sends your button presses over Bluetooth LE.
-2. **The ZWindoor Bridge** on the computer that runs Zwift receives them and turns them into
+2. **The Wristpilot Bridge** on the computer that runs Zwift receives them and turns them into
    Zwift's keyboard shortcuts. It checks that Zwift is in front before it types anything and
    brings the Zwift window to the front if needed.
 
 The bridge exists in two forms with the same core:
 
-- **ZWindoor Bridge for Windows** – a small program in the notification area, a single .exe. It
+- **Wristpilot Bridge for Windows** – a small program in the notification area, a single .exe. It
   needs a second USB Bluetooth adapter of its own (about 10 euros, see below).
 - **Built into [Tretlager](https://github.com/freiversum/tretlager)** – the Zwift manager for
   Linux, on its page *Watch remote*.
@@ -61,9 +61,9 @@ From the Connect IQ Store (coming soon):
 
 ### Bridge on Windows 10/11
 
-Download `ZWindoorBridge.exe` from the
-[GitHub releases](https://github.com/freiversum/zwindoor/releases) and start it. No installation
-is needed; settings and the log live in `%APPDATA%\Zwindoor\`. A checksum file
+Download `WristpilotBridge.exe` from the
+[GitHub releases](https://github.com/freiversum/wristpilot/releases) and start it. No installation
+is needed; settings and the log live in `%APPDATA%\Wristpilot\`. A checksum file
 (`SHA256SUMS.txt`) is attached to every release.
 
 The program is not code-signed yet, so Windows SmartScreen may warn on the first start.
@@ -86,7 +86,7 @@ To give the adapter back to Windows, open the Device Manager, find it under *Uni
 Bus devices*, choose *Uninstall device* with *Attempt to remove the driver*, and plug it in again.
 
 <p align="center">
-  <img src="docs/screenshots/windows-tray.png" alt="ZWindoor Bridge menu in the Windows notification area with a connected watch: status of Bluetooth, watch and Zwift, last action Ride On, switches for the remote, OpenBikeControl and the Companion link, test actions, log and quit" width="70%">
+  <img src="docs/screenshots/windows-tray.png" alt="Wristpilot Bridge menu in the Windows notification area with a connected watch: status of Bluetooth, watch and Zwift, last action Ride On, switches for the remote, OpenBikeControl and the Companion link, test actions, log and quit" width="70%">
 </p>
 
 The menu shows the state of Bluetooth, the watch and Zwift, and the last action. *Test actions*
@@ -146,7 +146,7 @@ game, without keyboard and without window focus.
 
 - The link uses Zwift's undocumented relay and protocol. **Using it contradicts Zwift's terms of
   service.** It is off by default and you use it at your own risk.
-- It needs your Zwift sign-in. ZWindoor never sees your password; the token is stored only on your
+- It needs your Zwift sign-in. Wristpilot never sees your password; the token is stored only on your
   computer (Windows: encrypted with your Windows account, Tretlager: in your keyring).
 - Zwift allows one "phone" per account. While the link is on, it replaces the Companion app on
   your phone.
@@ -160,7 +160,7 @@ support OpenBikeControl; for Zwift the bridge types keyboard shortcuts.
 
 ## Privacy
 
-ZWindoor collects no data. The watch talks only to the bridge on your own computer over Bluetooth.
+Wristpilot collects no data. The watch talks only to the bridge on your own computer over Bluetooth.
 There are no analytics, no crash reports and no servers of the developer. Only the optional
 Companion link talks to Zwift, under Zwift's own privacy policy. Full text:
 [docs/privacy.md](docs/privacy.md).
@@ -173,12 +173,12 @@ Companion link talks to Zwift, under Zwift's own privacy policy. Full text:
 
 ## Project page
 
-- English: https://linuxundich.de/en/projects/zwindoor/
-- German: https://linuxundich.de/projekte/zwindoor/
+- English: https://linuxundich.de/en/projects/wristpilot/
+- German: https://linuxundich.de/projekte/wristpilot/
 
 ## Use of AI
 
-ZWindoor was developed with AI assistance (Claude). Design decisions, testing on real devices and
+Wristpilot was developed with AI assistance (Claude). Design decisions, testing on real devices and
 releases are done by the author.
 
 ## License

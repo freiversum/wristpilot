@@ -1,4 +1,4 @@
-// BLE central: finds the Zwindoor bridge, connects, subscribes to the status
+// BLE central: finds the Wristpilot bridge, connects, subscribes to the status
 // characteristic and writes commands. The only BleDelegate of the app.
 //
 // Connect IQ allows only ONE outstanding GATT request, so every read/write goes

@@ -1,4 +1,4 @@
-// Zwindoor: Garmin watch as a Zwift remote. Entry point.
+// Wristpilot: Garmin watch as a Zwift remote. Entry point.
 
 import Toybox.Application;
 import Toybox.Lang;
@@ -13,7 +13,7 @@ var gView = null;     // MainView
 var gInput = null;    // MainDelegate
 var gDirty = false;   // something changed, redraw on the next tick
 
-class ZwindoorApp extends Application.AppBase {
+class WristpilotApp extends Application.AppBase {
 
     const TICK = 100;            // ms; drives pings, timeouts, long presses, overlays
     const IDLE_REDRAW = 500;     // ms; animation of the connect screen

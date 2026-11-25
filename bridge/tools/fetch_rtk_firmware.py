@@ -4,7 +4,7 @@ Bumble loads the firmware into Realtek USB adapters (RTL8761B/BU, e.g. TP-Link U
 because Windows' own driver is replaced by WinUSB. The files come from linux-firmware and are
 redistributable in binary form (LICENCE.rtlwifi_firmware.txt, copied next to them).
 
-    python tools/fetch_rtk_firmware.py            # into zwindoor_bridge/firmware/realtek/
+    python tools/fetch_rtk_firmware.py            # into wristpilot_bridge/firmware/realtek/
 """
 
 from __future__ import annotations
@@ -18,7 +18,7 @@ MIRRORS = (   # official linux-firmware mirror first: kernel.org answers 403 to 
     "https://gitlab.com/kernel-firmware/linux-firmware/-/raw/main/",
     "https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/plain/",
 )
-HEADERS = {"User-Agent": "zwindoor-build"}
+HEADERS = {"User-Agent": "wristpilot-build"}
 FILES = {
     "rtl_bt/rtl8761bu_fw.bin": "1d7a9597349ad89344fa16c1913d3e39e9a12e966e417ca16871bc79bbe59edb",
     "rtl_bt/rtl8761bu_config.bin": "6c28a3f07c6a30ed208c4b64862a23f02b7d93543ea980edd24df16bab45095f",
@@ -26,7 +26,7 @@ FILES = {
     "rtl_bt/rtl8761b_config.bin": "6ddeb15f23588053e00cb08d25588bd7cf98d60fa93d9478efcef4ae8064a7ac",
     "LICENSES/LICENCE.rtlwifi_firmware.txt": None,
 }
-TARGET = pathlib.Path(__file__).resolve().parent.parent / "zwindoor_bridge" / "firmware" / "realtek"
+TARGET = pathlib.Path(__file__).resolve().parent.parent / "wristpilot_bridge" / "firmware" / "realtek"
 
 
 def fetch(path: str) -> bytes:

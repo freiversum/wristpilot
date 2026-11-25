@@ -1,4 +1,4 @@
-"""Bluetooth LE peripheral backends: offer the ZWindoor GATT service to the watch.
+"""Bluetooth LE peripheral backends: offer the Wristpilot GATT service to the watch.
 
 A backend calls `on_write(data)` for every write to the command characteristic and sends what that
 coroutine returns as a notification on the status characteristic. `notify(data)` sends unsolicited
@@ -20,7 +20,7 @@ class PeripheralError(Exception):
 class Peripheral:
     name = "none"
 
-    def __init__(self, on_write: OnWrite, info: bytes, local_name: str = "Zwindoor") -> None:
+    def __init__(self, on_write: OnWrite, info: bytes, local_name: str = "Wristpilot") -> None:
         self.on_write = on_write
         self.info = info
         self.local_name = local_name

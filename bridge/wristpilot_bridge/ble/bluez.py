@@ -19,7 +19,7 @@ from . import Peripheral, PeripheralError
 log = logging.getLogger(__name__)
 
 BLUEZ = "org.bluez"
-APP_PATH = "/de/linuxundich/zwindoor"
+APP_PATH = "/de/linuxundich/wristpilot"
 SERVICE_PATH = APP_PATH + "/service0"
 ADV_PATH = APP_PATH + "/advertisement0"
 
@@ -125,7 +125,7 @@ class _ObjectManager(ServiceInterface):
 class BluezPeripheral(Peripheral):
     name = "bluez"
 
-    def __init__(self, on_write, info, local_name="Zwindoor", adapter: str = "") -> None:
+    def __init__(self, on_write, info, local_name="Wristpilot", adapter: str = "") -> None:
         super().__init__(on_write, info, local_name)
         self.adapter = adapter
         self.bus: MessageBus | None = None

@@ -1,4 +1,4 @@
-"""Bridge settings, stored as JSON (Windows: %APPDATA%\\Zwindoor, Linux: ~/.config/zwindoor).
+"""Bridge settings, stored as JSON (Windows: %APPDATA%\\Wristpilot, Linux: ~/.config/wristpilot).
 
 Tretlager passes its own path so that the setting lives with its other state.
 """
@@ -14,9 +14,9 @@ from pathlib import Path
 
 def default_path() -> Path:
     if sys.platform == "win32":
-        base = Path(os.environ.get("APPDATA", Path.home() / "AppData" / "Roaming")) / "Zwindoor"
+        base = Path(os.environ.get("APPDATA", Path.home() / "AppData" / "Roaming")) / "Wristpilot"
     else:
-        base = Path(os.environ.get("XDG_CONFIG_HOME", Path.home() / ".config")) / "zwindoor"
+        base = Path(os.environ.get("XDG_CONFIG_HOME", Path.home() / ".config")) / "wristpilot"
     return base / "config.json"
 
 

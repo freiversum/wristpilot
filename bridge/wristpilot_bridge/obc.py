@@ -67,7 +67,7 @@ class _Client:
 
 
 class ObcServer:
-    def __init__(self, port: int, name: str = "ZWindoor", announcer=None,
+    def __init__(self, port: int, name: str = "Wristpilot", announcer=None,
                  on_haptic: Callable[[int], None] | None = None) -> None:
         self.port = port
         self.name = name
@@ -86,7 +86,7 @@ class ObcServer:
         self._status_task = asyncio.create_task(self._status_loop())
         if self.announcer:
             txt = {"version": "1", "id": self.device_id, "name": self.name,
-                   "service-uuids": OBC_SERVICE_UUID, "manufacturer": "ZWindoor", "model": "Garmin watch remote"}
+                   "service-uuids": OBC_SERVICE_UUID, "manufacturer": "Wristpilot", "model": "Garmin watch remote"}
             try:
                 await self.announcer.publish(self.name, SERVICE_TYPE, self.port, txt)
             except Exception as e:

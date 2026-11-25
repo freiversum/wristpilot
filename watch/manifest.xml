@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
-<!-- ZWindoor: Zwift remote for Garmin watches (Connect IQ watch app, BLE central). -->
+<!-- Wristpilot: Zwift remote for Garmin watches (Connect IQ watch app, BLE central). -->
 <iq:manifest version="3" xmlns:iq="http://www.garmin.com/xml/connectiq">
     <iq:application id="2fbfc6de1add4162b0696c3fef1c1978"
                     type="watch-app"
                     name="@Strings.AppName"
-                    entry="ZwindoorApp"
+                    entry="WristpilotApp"
                     launcherIcon="@Drawables.LauncherIcon"
                     minApiLevel="3.1.0">
         <iq:products>

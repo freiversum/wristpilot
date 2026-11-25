@@ -2,7 +2,7 @@
 
 Same route as Tretlager: the Zwift sign-in page opens in the user's browser (password manager,
 Google/Apple sign-in work there); afterwards Zwift redirects to launcher.zwift.com/launcher?code=…,
-which shows an error page – the user copies that address into a small dialog. ZWindoor never sees
+which shows an error page – the user copies that address into a small dialog. Wristpilot never sees
 the password. The token is stored encrypted with DPAPI (only this Windows user can read it).
 """
 
@@ -19,8 +19,8 @@ import webbrowser
 from ctypes import wintypes
 from pathlib import Path
 
-from zwindoor_bridge import zwiftapi
-from zwindoor_bridge.config import default_path
+from wristpilot_bridge import zwiftapi
+from wristpilot_bridge.config import default_path
 
 log = logging.getLogger(__name__)
 MARGIN = 300

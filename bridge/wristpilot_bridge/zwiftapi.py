@@ -21,7 +21,7 @@ API = "https://us-or-rly101.zwift.com"
 REALM = "https://secure.zwift.com/auth/realms/zwift/protocol/openid-connect"
 CLIENT_ID = "Game_Launcher"
 REDIRECT = "https://launcher.zwift.com/launcher"
-HEADERS = {"Source": "Game Client", "User-Agent": "Zwindoor"}
+HEADERS = {"Source": "Game Client", "User-Agent": "Wristpilot"}
 TIMEOUT = 15
 
 

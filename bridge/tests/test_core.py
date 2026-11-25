@@ -2,13 +2,13 @@ import asyncio
 
 import pytest
 
-from zwindoor_bridge import actions, keys
-from zwindoor_bridge.config import Config
-from zwindoor_bridge.engine import PING, Engine
-from zwindoor_bridge.obc import ObcServer, parse_app_info
-from zwindoor_bridge.protocol import (MSG_ACK, MSG_STATE, Command, Result, State, decode_command,
+from wristpilot_bridge import actions, keys
+from wristpilot_bridge.config import Config
+from wristpilot_bridge.engine import PING, Engine
+from wristpilot_bridge.obc import ObcServer, parse_app_info
+from wristpilot_bridge.protocol import (MSG_ACK, MSG_STATE, Command, Result, State, decode_command,
                                       encode_command)
-from zwindoor_bridge.sinks import RecordingSink
+from wristpilot_bridge.sinks import RecordingSink
 
 
 def cmd(action, value=1, seq=7):
@@ -121,7 +121,7 @@ async def test_poll_state_only_on_change():
 
 async def test_blocked_display_does_not_stall(monkeypatch):
     import threading
-    from zwindoor_bridge import engine as eng
+    from wristpilot_bridge import engine as eng
     monkeypatch.setattr(eng, "SINK_TIMEOUT", 0.2)
     gate = threading.Event()
 
@@ -204,9 +204,9 @@ def test_slugs_are_unique():
 
 def test_runner_stop_after_failed_start():
     """Quit must work when Bluetooth failed at start (the loop is already closed)."""
-    from zwindoor_bridge.ble import Peripheral, PeripheralError
-    from zwindoor_bridge.runner import BridgeRunner
-    from zwindoor_bridge.sinks import RecordingSink
+    from wristpilot_bridge.ble import Peripheral, PeripheralError
+    from wristpilot_bridge.runner import BridgeRunner
+    from wristpilot_bridge.sinks import RecordingSink
 
     class Broken(Peripheral):
         def __init__(self, on_write, info, adapter=""):
@@ -229,8 +229,8 @@ def test_runner_stop_after_failed_start():
 
 
 def test_adapter_with_colon_selects_bumble():
-    from zwindoor_bridge.ble import default_peripheral
-    from zwindoor_bridge.ble.bumble_backend import BumblePeripheral
+    from wristpilot_bridge.ble import default_peripheral
+    from wristpilot_bridge.ble.bumble_backend import BumblePeripheral
 
     async def on_write(_data):
         return None
@@ -240,10 +240,10 @@ def test_adapter_with_colon_selects_bumble():
 
 def test_bumble_advertising_fits_and_carries_uuid_and_name():
     pytest.importorskip("bumble")
-    from zwindoor_bridge.ble.bumble_backend import advertising_data
-    from zwindoor_bridge.protocol import SERVICE_UUID
-    data = advertising_data("ZWindoor")
+    from wristpilot_bridge.ble.bumble_backend import advertising_data
+    from wristpilot_bridge.protocol import SERVICE_UUID
+    data = advertising_data("Wristpilot")
     assert len(data) <= 31
     assert bytes.fromhex(SERVICE_UUID.replace("-", ""))[::-1] in data
-    assert b"ZWindoor" in data
+    assert b"Wristpil" in data   # shortened: 8 characters fit next to the 128-bit UUID
     assert len(advertising_data("A very long bridge name")) <= 31

@@ -21,7 +21,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from zwindoor_bridge import companion as cp, pb  # noqa: E402
+from wristpilot_bridge import companion as cp, pb  # noqa: E402
 
 GC_NAMES = {cp.CLEAR_POWER_UP: "CLEAR_POWER_UP", cp.SET_POWER_UP: "SET_POWER_UP",
             cp.ACTIVATE_POWER_UP: "ACTIVATE_POWER_UP", cp.CUSTOMIZE_ACTION_BUTTON: "CUSTOMIZE_ACTION_BUTTON",

@@ -33,7 +33,7 @@ def _buffer(data: bytes):
 class WinRTPeripheral(Peripheral):
     name = "winrt"
 
-    def __init__(self, on_write, info, local_name="ZWindoor", adapter: str = "") -> None:
+    def __init__(self, on_write, info, local_name="Wristpilot", adapter: str = "") -> None:
         super().__init__(on_write, info, local_name)
         self.loop: asyncio.AbstractEventLoop | None = None
         self.provider = None

@@ -1,4 +1,4 @@
-"""Pretend to be the watch: scan for the ZWindoor service, connect, send commands, print the answers.
+"""Pretend to be the watch: scan for the Wristpilot service, connect, send commands, print the answers.
 
     python tools/fake_watch.py                  # left, right, ride on, power-up + pings
     python tools/fake_watch.py --count 50       # latency series with "left"
@@ -18,7 +18,7 @@ from pathlib import Path
 from bleak import BleakClient, BleakScanner
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from zwindoor_bridge import actions, protocol  # noqa: E402
+from wristpilot_bridge import actions, protocol  # noqa: E402
 
 DEMO = [(actions.STEER_LEFT, 1), (actions.STEER_RIGHT, 1), (actions.EMOTE, actions.EMOTE_RIDE_ON),
         (actions.POWERUP, 1), (actions.CAMERA, actions.CAMERA_NEXT), (0x7E, 1)]
@@ -37,7 +37,7 @@ async def main() -> int:
         dev = await BleakScanner.find_device_by_filter(
             lambda d, adv: protocol.SERVICE_UUID in [u.lower() for u in adv.service_uuids], timeout=a.timeout)
     if not dev:
-        print("no ZWindoor bridge found")
+        print("no Wristpilot bridge found")
         return 1
     print(f"found {dev.name} {dev.address}")
     replies: asyncio.Queue = asyncio.Queue()

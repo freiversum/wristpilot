@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- English (default) UI strings. Keep ids in sync with the other language file. -->
 <strings>
-    <string id="AppName">ZWindoor</string>
+    <string id="AppName">Wristpilot</string>
     <string id="LblLeft">LEFT</string>
     <string id="LblRight">RIGHT</string>
     <string id="LblRideOn">RIDE ON</string>
@@ -70,7 +70,7 @@
     <string id="MenuExit">Exit app</string>
     <string id="On">On</string>
     <string id="Off">Off</string>
-    <string id="ExitQuestion">Exit ZWindoor?</string>
+    <string id="ExitQuestion">Exit Wristpilot?</string>
     <string id="WkHoldSkip">hold DOWN: skip</string>
     <string id="WkHoldHint">Hold to skip</string>
     <string id="PuNone">NO POWER-UP</string>

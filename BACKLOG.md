@@ -6,13 +6,13 @@
 - [ ] Edge app on a real Edge bike computer; so far only checked in the simulator (1040, 540, 1050)
 - [ ] Windows bridge on real hardware: SendInput into ZwiftApp.exe, firewall prompt for the Companion port (21587)
 - [ ] Keep the connection for 60 minutes, measure latency from button press to acknowledgement on the watch
-- [ ] Heart rate broadcast of the watch to Zwift alongside the ZWindoor connection
+- [ ] Heart rate broadcast of the watch to Zwift alongside the Wristpilot connection
 - [ ] Keyboard "straight on": the up arrow opens Zwift's action menu since 2025 – check in the game
 - [x] fēnix 7X Pro: holding BACK opens the system's app switcher instead of the exit confirmation, and
   *Exit app* was not found in the settings menu (2026-11-24). *Exit app* is now the first menu item;
   exiting that way works on the watch (2026-11-25)
-- [ ] fēnix 7X Pro (27.18): after holding BACK the switcher lists ZWindoor at the top, and selecting
-  it says the app cannot be opened ("close ZWindoor and try again"); only a restart of the watch
+- [ ] fēnix 7X Pro (27.18): after holding BACK the switcher lists Wristpilot at the top, and selecting
+  it says the app cannot be opened ("close Wristpilot and try again"); only a restart of the watch
   clears it. **Firmware bug, not ours** (2026-11-25): the watch ends the app with a plain `onStop`
   (no `:suspend`, no `onInactive`), lists it anyway, and Garmin's unchanged SDK sample "Timer"
   fails the same way. Selecting another app in the switcher works. Similar report: CIQQA-3801 in

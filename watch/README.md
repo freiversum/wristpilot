@@ -1,7 +1,7 @@
-# ZWindoor – watch app (Connect IQ)
+# Wristpilot – watch app (Connect IQ)
 
 Watch app for Garmin watches and Edge bike computers. The device connects as a BLE central to
-the ZWindoor Bridge (`../bridge/zwindoor_bridge/`) and writes commands into its GATT service. The
+the Wristpilot Bridge (`../bridge/wristpilot_bridge/`) and writes commands into its GATT service. The
 bridge turns them into Zwift keyboard shortcuts (or Companion commands) and acknowledges every
 command. Protocol: [docs/architecture.md](../docs/architecture.md).
 
@@ -28,7 +28,7 @@ watch/
 ├── source-build/             Build.mc: release build, no demo data
 ├── source-demo/              Build.mc: demo build, pretends to be connected
 └── source/
-    ├── ZwindoorApp.mc        entry point, global objects, one 100 ms timer for everything
+    ├── WristpilotApp.mc        entry point, global objects, one 100 ms timer for everything
     ├── Protocol.mc           UUIDs, message types, result codes, action IDs (from protocol.py/actions.py)
     ├── Actions.mc            logical UI actions -> [ID, value, text, colour, icon]
     ├── BleManager.mc         the only BleDelegate: profile, scan, connect, GATT queue, ping
@@ -130,7 +130,7 @@ text of the bridge).
    info …b939).
 2. After `onProfileRegister` (at the latest after 3 s) start scanning.
 3. `onScanResults`: a match is a result whose `getServiceUuids()` contains the service or whose
-   name contains "Zwindoor" -> stop scanning, `pairDevice`. Every device seen goes into the device
+   name contains "Wristpilot" -> stop scanning, `pairDevice`. Every device seen goes into the device
    list (sorted by RSSI). After 10 s without a match the connect screen points to the list (some
    watches receive empty advertising data).
 4. `onConnectedStateChanged` -> `getService`/`getCharacteristic`, write the CCCD `[0x01, 0x00]`,
@@ -150,7 +150,7 @@ See [docs/building.md](../docs/building.md) for the SDK, the developer key and t
 Short version:
 
 ```
-monkeyc -d fenix7xpro -f monkey.jungle -o bin/zwindoor.prg -y developer_key.der
+monkeyc -d fenix7xpro -f monkey.jungle -o bin/wristpilot.prg -y developer_key.der
 ```
 
 | Jungle file | Purpose |
@@ -165,7 +165,7 @@ Launcher icons: `../.venv/bin/python tools/make_icon.py`.
 
 ```
 connectiq &                                  # start the simulator
-monkeydo bin/zwindoor.prg fenix7xpro         # load the app for a device
+monkeydo bin/wristpilot.prg fenix7xpro         # load the app for a device
 ```
 
 - BLE in the simulator only works with a Nordic nRF52 DK or nRF52840 dongle with Garmin's firmware
@@ -179,7 +179,7 @@ monkeydo bin/zwindoor.prg fenix7xpro         # load the app for a device
 
 ## Sideloading onto the watch
 
-Copy `bin/zwindoor.prg` over USB (MTP) to `GARMIN/Apps/`, unplug the watch; it installs the app,
+Copy `bin/wristpilot.prg` over USB (MTP) to `GARMIN/Apps/`, unplug the watch; it installs the app,
 which then appears in the app menu. Crash logs: `GARMIN/Apps/LOGS/CIQ_LOG.YML` (with file and
 line).
 

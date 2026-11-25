@@ -4,14 +4,14 @@
 
 Connect IQ apps can use Bluetooth LE only in the central role (scan, connect, read and write
 GATT). A watch cannot advertise, so it cannot pose as a Zwift Click/Play, a BLE keyboard or an
-OpenBikeControl controller. ZWindoor turns the roles around: a program on the Zwift computer acts
+OpenBikeControl controller. Wristpilot turns the roles around: a program on the Zwift computer acts
 as a BLE peripheral with its own GATT service, and the watch connects to it.
 
 ```
 Garmin watch / Edge (Connect IQ, BLE central)
    |  GATT write: command [seq, action, value]
    v
-zwindoor_bridge (Python core: protocol, action table, engine, acknowledgements)
+wristpilot_bridge (Python core: protocol, action table, engine, acknowledgements)
    |  BLE peripheral: BlueZ over D-Bus (Linux) | Bumble on a dedicated USB adapter (Windows)
    |
    +-- Output A: keyboard  -> Zwift window
@@ -43,16 +43,16 @@ responses.
 
 | Path | Content |
 |---|---|
-| `bridge/zwindoor_bridge/protocol.py` | wire protocol between watch and bridge |
-| `bridge/zwindoor_bridge/actions.py` | action table: OpenBikeControl button IDs to Zwift keyboard shortcuts |
-| `bridge/zwindoor_bridge/engine.py` | handles commands: focus check, bring Zwift to the front, typing, acknowledgement |
-| `bridge/zwindoor_bridge/keys.py` | logical key names to X11 keysyms, Windows scan codes and evdev codes |
-| `bridge/zwindoor_bridge/sinks/` | keyboard outputs: `windows.py` (SendInput), `xtest.py` (X11/XWayland, Wine), `uinput.py` |
-| `bridge/zwindoor_bridge/ble/` | GATT peripheral: `bluez.py` (BlueZ over dbus-fast), `bumble_backend.py` (own BLE stack on a dedicated USB adapter, default on Windows), `winrt_backend.py` (Windows API, kept for tests: Garmin watches do not connect to it), `bless_backend.py` (macOS) |
-| `bridge/zwindoor_bridge/obc.py`, `announce.py` | OpenBikeControl server and its mDNS announcement (Avahi on Linux, python-zeroconf on Windows) |
-| `bridge/zwindoor_bridge/companion.py`, `pb.py`, `zwiftapi.py` | Zwift Companion link, minimal protobuf codec, Zwift web calls |
-| `bridge/zwindoor_bridge/config.py` | settings as JSON (`%APPDATA%\Zwindoor\config.json`, `~/.config/zwindoor/config.json`) |
-| `bridge/zwindoor_bridge/runner.py`, `__main__.py` | event loop in its own thread, command line |
+| `bridge/wristpilot_bridge/protocol.py` | wire protocol between watch and bridge |
+| `bridge/wristpilot_bridge/actions.py` | action table: OpenBikeControl button IDs to Zwift keyboard shortcuts |
+| `bridge/wristpilot_bridge/engine.py` | handles commands: focus check, bring Zwift to the front, typing, acknowledgement |
+| `bridge/wristpilot_bridge/keys.py` | logical key names to X11 keysyms, Windows scan codes and evdev codes |
+| `bridge/wristpilot_bridge/sinks/` | keyboard outputs: `windows.py` (SendInput), `xtest.py` (X11/XWayland, Wine), `uinput.py` |
+| `bridge/wristpilot_bridge/ble/` | GATT peripheral: `bluez.py` (BlueZ over dbus-fast), `bumble_backend.py` (own BLE stack on a dedicated USB adapter, default on Windows), `winrt_backend.py` (Windows API, kept for tests: Garmin watches do not connect to it), `bless_backend.py` (macOS) |
+| `bridge/wristpilot_bridge/obc.py`, `announce.py` | OpenBikeControl server and its mDNS announcement (Avahi on Linux, python-zeroconf on Windows) |
+| `bridge/wristpilot_bridge/companion.py`, `pb.py`, `zwiftapi.py` | Zwift Companion link, minimal protobuf codec, Zwift web calls |
+| `bridge/wristpilot_bridge/config.py` | settings as JSON (`%APPDATA%\Wristpilot\config.json`, `~/.config/wristpilot/config.json`) |
+| `bridge/wristpilot_bridge/runner.py`, `__main__.py` | event loop in its own thread, command line |
 | `bridge/tests/` | tests (pytest), including a simulated game over TCP |
 | `bridge/tools/fake_watch.py` | plays the watch over bleak (needs a second computer) |
 | `windows/` | tray program for Windows (pystray), Zwift sign-in (`zwiftlogin.py`), build script |
@@ -60,9 +60,9 @@ responses.
 | `tools/sync-tretlager.sh` | copies the core into Tretlager |
 
 One core, two shells: the Windows tray program and the *Watch remote* page in
-[Tretlager](https://github.com/freiversum/tretlager) both use the package `zwindoor_bridge`. Only
+[Tretlager](https://github.com/freiversum/tretlager) both use the package `wristpilot_bridge`. Only
 the radio backend and the keyboard output differ. Tretlager carries a vendored copy of the core
-(`tretlager/zwindoor/`).
+(`tretlager/wristpilot/`).
 
 ## Protocol watch <-> bridge
 
@@ -72,12 +72,12 @@ GATT service `ae279be2-4f9c-4165-ab88-060ee241b936`:
 |---|---|---|---|
 | Command | `...b937` | watch -> bridge, write | `[seq, action, value]` |
 | Status | `...b938` | bridge -> watch, read / notify | see below |
-| Info | `...b939` | read | UTF-8 text `ZWindoor <version> · <host>` |
+| Info | `...b939` | read | UTF-8 text `Wristpilot <version> · <host>` |
 
 Command fields:
 
 - `seq` – 0-255, wraps; echoed in the acknowledgement
-- `action` – OpenBikeControl button ID (table: `python -m zwindoor_bridge --list-actions`)
+- `action` – OpenBikeControl button ID (table: `python -m wristpilot_bridge --list-actions`)
 - `value` – 1 = press (default); emote, camera view or screenshot type for those actions
 
 Status messages:
@@ -121,7 +121,7 @@ With `--obc` (or the switch in the tray program or Tretlager) the bridge also ac
   `[0x04, ...]` (app info with supported buttons)
 
 Because the watch already speaks OpenBikeControl button IDs, no second action table is needed.
-ZWindoor-specific actions (bell, photo, video) use the app-specific range 0x80-0x9F or app-specific
+Wristpilot-specific actions (bell, photo, video) use the app-specific range 0x80-0x9F or app-specific
 values.
 
 ## Zwift Companion link
@@ -154,8 +154,8 @@ Open questions about the link are tracked in [BACKLOG.md](../BACKLOG.md).
 ### Capture for the first real ride
 
 What the game really sends is still unverified. Setting `companion_capture` in the bridge's
-`config.json` to a file path (Windows: `%APPDATA%\Zwindoor\config.json`, Linux:
-`~/.config/zwindoor/config.json`) makes the bridge append every frame from the game and every
+`config.json` to a file path (Windows: `%APPDATA%\Wristpilot\config.json`, Linux:
+`~/.config/wristpilot/config.json`) makes the bridge append every frame from the game and every
 command it sends (no heartbeats) to that file as JSON Lines (`t`, `dir`, `hex`). The change takes
 effect the next time the link starts (switch it off and on, or restart the bridge).
 

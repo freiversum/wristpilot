@@ -2,7 +2,7 @@
 
 The watch sends OpenBikeControl (OBC) button IDs so that the same command works for Zwift
 (keyboard) and for trainer apps that speak OBC. Values 0x02-0x1F of Emote/Camera are
-"app-specific" in OBC; ZWindoor uses them as listed here.
+"app-specific" in OBC; Wristpilot uses them as listed here.
 
 Zwift shortcuts: Zwift Insider, "Zwift Keyboard Shortcuts", as of 2025-08-04.
 """

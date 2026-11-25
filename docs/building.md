@@ -1,4 +1,4 @@
-# Building ZWindoor
+# Building Wristpilot
 
 ## Bridge core (Python)
 
@@ -22,7 +22,7 @@ The GitHub Actions workflow `.github/workflows/ci.yml` runs both on every push t
 
 ```bash
 cd bridge
-../.venv/bin/python -m zwindoor_bridge --dry-run -v
+../.venv/bin/python -m wristpilot_bridge --dry-run -v
 ```
 
 | Option | Effect |
@@ -33,7 +33,7 @@ cd bridge
 | `--list-actions` | print the action table and exit |
 | `-v` | verbose log |
 
-Settings are read from `~/.config/zwindoor/config.json` (Windows: `%APPDATA%\Zwindoor\config.json`).
+Settings are read from `~/.config/wristpilot/config.json` (Windows: `%APPDATA%\Wristpilot\config.json`).
 
 `bridge/tools/fake_watch.py` plays the watch over [bleak](https://github.com/hbldh/bleak) and
 measures latency. It needs a second computer or Bluetooth adapter, since an adapter cannot connect
@@ -41,7 +41,7 @@ to itself.
 
 ## Windows program
 
-`windows/build.ps1` builds `ZWindoorBridge.exe` as a single file with
+`windows/build.ps1` builds `WristpilotBridge.exe` as a single file with
 [Nuitka](https://nuitka.net). On Windows with Python 3.11+ installed, in the folder `windows\`:
 
 ```
@@ -49,8 +49,8 @@ powershell -ExecutionPolicy Bypass -File build.ps1
 ```
 
 The script creates its own virtual environment (`.venv-build`), installs the bridge with the
-`tray` extra plus Nuitka, writes `zwindoor.ico` (`make_ico.py`) and builds
-`windows\dist\ZWindoorBridge.exe`.
+`tray` extra plus Nuitka, writes `wristpilot.ico` (`make_ico.py`) and builds
+`windows\dist\WristpilotBridge.exe`.
 
 Releases are built by GitHub Actions: pushing a tag `vX.Y.Z` runs
 `.github/workflows/release.yml` on a Windows runner, which builds the .exe, writes
@@ -73,10 +73,10 @@ hand (`workflow_dispatch`); the files are then available as a build artifact.
 
    ```
    # one device, for the simulator or sideloading
-   monkeyc -d fenix7xpro -f monkey.jungle -o bin/zwindoor.prg -y developer_key.der
+   monkeyc -d fenix7xpro -f monkey.jungle -o bin/wristpilot.prg -y developer_key.der
 
    # store package for all devices in manifest.xml
-   monkeyc -e -r -f monkey.jungle -o dist/ZWindoor.iq -y developer_key.der
+   monkeyc -e -r -f monkey.jungle -o dist/Wristpilot.iq -y developer_key.der
    ```
 
 | Jungle file | Purpose |
@@ -97,9 +97,9 @@ More about the app, the simulator and sideloading: [watch/README.md](../watch/RE
 With both repositories cloned side by side:
 
 ```bash
-tools/sync-tretlager.sh                 # default target: ../tretlager/tretlager/zwindoor
-tools/sync-tretlager.sh /path/to/tretlager/tretlager/zwindoor
+tools/sync-tretlager.sh                 # default target: ../tretlager/tretlager/wristpilot
+tools/sync-tretlager.sh /path/to/tretlager/tretlager/wristpilot
 ```
 
-The script copies `bridge/zwindoor_bridge/` (without `__main__.py`) and writes a `VENDORED.md`
+The script copies `bridge/wristpilot_bridge/` (without `__main__.py`) and writes a `VENDORED.md`
 with the version. Run Tretlager's tests afterwards and commit there.

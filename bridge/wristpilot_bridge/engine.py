@@ -51,7 +51,7 @@ class Engine:
         self.state_listeners: list[Callable[[State], None]] = []
         # All sink calls run on one worker thread: X11 connections are not thread-safe, and a
         # blocked display (Plasma's consent dialog for XTest) must not stall the Bluetooth loop.
-        self._worker = ThreadPoolExecutor(1, thread_name_prefix="zwindoor-sink")
+        self._worker = ThreadPoolExecutor(1, thread_name_prefix="wristpilot-sink")
         self.blocked = False            # last sink call timed out (shown in the shells)
 
     async def _call(self, fn, *args):

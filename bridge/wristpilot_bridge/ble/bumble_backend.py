@@ -56,7 +56,7 @@ def advertising_data(name: str) -> bytes:
 class BumblePeripheral(Peripheral):
     name = "bumble"
 
-    def __init__(self, on_write, info, local_name="ZWindoor", transport: str = "") -> None:
+    def __init__(self, on_write, info, local_name="Wristpilot", transport: str = "") -> None:
         super().__init__(on_write, info, local_name)
         self.transport_spec = transport or DEFAULT_TRANSPORT
         self.transport = None

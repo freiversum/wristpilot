@@ -1,4 +1,4 @@
-"""ZWindoor Bridge for Windows: a tray program around the bridge core.
+"""Wristpilot Bridge for Windows: a tray program around the bridge core.
 
 One icon in the notification area. Its menu shows the state (Bluetooth, watch, Zwift, last action)
 and holds the switches: remote on/off, OpenBikeControl on the network, bring Zwift to the front,
@@ -18,13 +18,13 @@ import time
 import webbrowser
 from pathlib import Path
 
-from zwindoor_bridge import __version__, actions
-from zwindoor_bridge.config import Config, default_path
-from zwindoor_bridge.protocol import Result, State
-from zwindoor_bridge.runner import BridgeRunner
+from wristpilot_bridge import __version__, actions
+from wristpilot_bridge.config import Config, default_path
+from wristpilot_bridge.protocol import Result, State
+from wristpilot_bridge.runner import BridgeRunner
 from zwiftlogin import TokenStore, sign_in
 
-APP = "ZWindoor"
+APP = "Wristpilot"
 RUN_KEY = r"Software\Microsoft\Windows\CurrentVersion\Run"
 ORANGE = (255, 122, 47)
 GREEN = (47, 191, 113)
@@ -46,7 +46,7 @@ TEXTS = {
         "logout": "Sign out of Zwift", "comp_linked": "Companion: connected to the game",
         "comp_wait": "Companion: waiting for Zwift", "comp_login": "Companion: sign in to Zwift first",
         "comp_error": "Companion: {}",
-        "login_title": "ZWindoor – Zwift sign-in",
+        "login_title": "Wristpilot – Zwift sign-in",
         "login_prompt": "Sign in to Zwift in the browser. Zwift then shows an error page on launcher.zwift.com –\n"
                         "copy the whole address from the address bar and paste it here:",
         "login_ok": "Signed in. The Companion link starts now.",
@@ -66,7 +66,7 @@ TEXTS = {
         "logout": "Bei Zwift abmelden", "comp_linked": "Companion: mit dem Spiel verbunden",
         "comp_wait": "Companion: wartet auf Zwift", "comp_login": "Companion: erst bei Zwift anmelden",
         "comp_error": "Companion: {}",
-        "login_title": "ZWindoor – Zwift-Anmeldung",
+        "login_title": "Wristpilot – Zwift-Anmeldung",
         "login_prompt": "Im Browser bei Zwift anmelden. Danach zeigt Zwift eine Fehlerseite auf launcher.zwift.com –\n"
                         "die ganze Adresse aus der Adresszeile kopieren und hier einfügen:",
         "login_ok": "Angemeldet. Die Companion-Verbindung startet jetzt.",
@@ -74,7 +74,7 @@ TEXTS = {
     },
 }
 
-SETUP_URL = "https://github.com/freiversum/zwindoor#bridge-on-windows-1011"
+SETUP_URL = "https://github.com/freiversum/wristpilot#bridge-on-windows-1011"
 
 TEST_ACTIONS = [  # (action, value) shown in the "Test actions" submenu
     (actions.STEER_LEFT, 1), (actions.STEER_RIGHT, 1), (actions.UP, 1), (actions.U_TURN, 1),
@@ -92,7 +92,7 @@ def language() -> str:
 
 
 def log_path() -> Path:
-    return default_path().with_name("zwindoor.log")
+    return default_path().with_name("wristpilot.log")
 
 
 def setup_logging() -> None:
@@ -124,11 +124,11 @@ def set_autostart(on: bool) -> None:
 
 
 def single_instance() -> bool:
-    """False if another ZWindoor bridge already runs in this session (named mutex)."""
+    """False if another Wristpilot bridge already runs in this session (named mutex)."""
     if sys.platform != "win32":
         return True
     import ctypes
-    ctypes.windll.kernel32.CreateMutexW(None, False, "Local\\ZWindoorBridge")
+    ctypes.windll.kernel32.CreateMutexW(None, False, "Local\\WristpilotBridge")
     return ctypes.windll.kernel32.GetLastError() != 183  # ERROR_ALREADY_EXISTS
 
 
@@ -301,7 +301,7 @@ def main() -> int:
     setup_logging()
     if not single_instance():
         return 0
-    logging.info("ZWindoor Bridge %s starting", __version__)
+    logging.info("Wristpilot Bridge %s starting", __version__)
     app = TrayApp(BridgeRunner(Config.load()))
     app.run()
     return 0

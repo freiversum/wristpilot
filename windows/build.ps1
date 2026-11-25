@@ -1,7 +1,7 @@
-# Builds the ZWindoor Bridge for Windows as a single .exe (Nuitka, onefile).
+# Builds the Wristpilot Bridge for Windows as a single .exe (Nuitka, onefile).
 # Run on Windows (or in GitHub Actions, see .github/workflows/release.yml), in the folder windows\:
 #   powershell -ExecutionPolicy Bypass -File build.ps1
-# Result: windows\dist\ZWindoorBridge.exe
+# Result: windows\dist\WristpilotBridge.exe
 
 $ErrorActionPreference = "Stop"
 $PSNativeCommandUseErrorActionPreference = $true   # a failing pip/nuitka call stops the build
@@ -19,19 +19,19 @@ $venvPy = ".venv-build\Scripts\python.exe"
 & $venvPy make_ico.py
 & $venvPy ..\bridge\tools\fetch_rtk_firmware.py   # Realtek firmware for Bumble (UB500 and similar)
 
-$version = (& $venvPy -c "import zwindoor_bridge; print(zwindoor_bridge.__version__)").Trim()
+$version = (& $venvPy -c "import wristpilot_bridge; print(wristpilot_bridge.__version__)").Trim()
 
 & $venvPy -m nuitka `
   --onefile `
   --assume-yes-for-downloads `
   --windows-console-mode=disable `
-  --windows-icon-from-ico=zwindoor.ico `
+  --windows-icon-from-ico=wristpilot.ico `
   --company-name="linuxundich" `
-  --product-name="ZWindoor Bridge" `
+  --product-name="Wristpilot Bridge" `
   --file-version=$version `
   --product-version=$version `
   --file-description="Garmin watch remote for Zwift" `
-  --include-package=zwindoor_bridge `
+  --include-package=wristpilot_bridge `
   --include-package=winrt `
   --include-package-data=winrt `
   --include-package=zeroconf `
@@ -50,12 +50,12 @@ $version = (& $venvPy -c "import zwindoor_bridge; print(zwindoor_bridge.__versio
   --include-module=usb1 `
   --include-package=libusb_package `
   --include-package-data=libusb_package `
-  --include-data-dir=..\bridge\zwindoor_bridge\firmware=zwindoor_bridge\firmware `
+  --include-data-dir=..\bridge\wristpilot_bridge\firmware=wristpilot_bridge\firmware `
   --include-package=pystray `
   --include-module=zwiftlogin `
   --enable-plugin=tk-inter `
   --output-dir=dist `
-  --output-filename=ZWindoorBridge.exe `
-  zwindoor_tray.py
+  --output-filename=WristpilotBridge.exe `
+  wristpilot_tray.py
 
-Get-Item dist\ZWindoorBridge.exe | Select-Object Name, Length
+Get-Item dist\WristpilotBridge.exe | Select-Object Name, Length

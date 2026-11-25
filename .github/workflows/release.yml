@@ -18,25 +18,25 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Build ZWindoorBridge.exe
+      - name: Build WristpilotBridge.exe
         shell: pwsh
         run: ./windows/build.ps1
       - name: Checksum
         shell: pwsh
         run: |
-          $h = (Get-FileHash windows/dist/ZWindoorBridge.exe -Algorithm SHA256).Hash.ToLower()
-          "$h  ZWindoorBridge.exe" | Out-File -Encoding ascii windows/dist/SHA256SUMS.txt
+          $h = (Get-FileHash windows/dist/WristpilotBridge.exe -Algorithm SHA256).Hash.ToLower()
+          "$h  WristpilotBridge.exe" | Out-File -Encoding ascii windows/dist/SHA256SUMS.txt
           Get-Content windows/dist/SHA256SUMS.txt
       - uses: actions/upload-artifact@v4
         with:
-          name: ZWindoorBridge
+          name: WristpilotBridge
           path: |
-            windows/dist/ZWindoorBridge.exe
+            windows/dist/WristpilotBridge.exe
             windows/dist/SHA256SUMS.txt
       - name: Attach to release
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            windows/dist/ZWindoorBridge.exe
+            windows/dist/WristpilotBridge.exe
             windows/dist/SHA256SUMS.txt

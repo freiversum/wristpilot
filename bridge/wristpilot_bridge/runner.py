@@ -61,7 +61,7 @@ class BridgeRunner:
         self.engine = Engine(sink, self.config)
         self.engine.listeners += [lambda ev: [cb(ev) for cb in self.on_event]]
         self.engine.state_listeners += [lambda s: [cb(s) for cb in self.on_state]]
-        info = f"ZWindoor {__version__} · {socket.gethostname()}".encode()
+        info = f"Wristpilot {__version__} · {socket.gethostname()}".encode()
         self.peripheral = self._peripheral_factory(self.engine.handle_write, info, adapter=self.config.adapter)
         try:
             await self.peripheral.start()
@@ -164,7 +164,7 @@ class BridgeRunner:
     def start_thread(self) -> None:
         if self.thread and self.thread.is_alive():
             return
-        self.thread = threading.Thread(target=self.run, name="zwindoor-bridge", daemon=True)
+        self.thread = threading.Thread(target=self.run, name="wristpilot-bridge", daemon=True)
         self.thread.start()
 
     def stop(self, timeout: float = 5.0) -> None:

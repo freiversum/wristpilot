@@ -18,7 +18,7 @@ log = logging.getLogger(__name__)
 class BlessPeripheral(Peripheral):
     name = "bless"
 
-    def __init__(self, on_write, info, local_name="Zwindoor") -> None:
+    def __init__(self, on_write, info, local_name="Wristpilot") -> None:
         super().__init__(on_write, info, local_name)
         self.server = None
         self.loop: asyncio.AbstractEventLoop | None = None

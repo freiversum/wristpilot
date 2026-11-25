@@ -1,4 +1,4 @@
-"""Command line: `python -m zwindoor_bridge [--obc] [--dry-run] [--test ACTION]`."""
+"""Command line: `python -m wristpilot_bridge [--obc] [--dry-run] [--test ACTION]`."""
 
 from __future__ import annotations
 
@@ -13,7 +13,7 @@ from .sinks import RecordingSink
 
 
 def main(argv: list[str] | None = None) -> int:
-    p = argparse.ArgumentParser(prog="zwindoor-bridge", description="Garmin watch -> Zwift remote bridge")
+    p = argparse.ArgumentParser(prog="wristpilot-bridge", description="Garmin watch -> Zwift remote bridge")
     p.add_argument("--obc", action="store_true", help="also offer an OpenBikeControl controller on the network")
     p.add_argument("--dry-run", action="store_true", help="log actions instead of typing them")
     p.add_argument("--adapter", default=None, help="BlueZ adapter (hci1) or Bumble transport on a dedicated adapter (usb:0, hci-socket:1)")

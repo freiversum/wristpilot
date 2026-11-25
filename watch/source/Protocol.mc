@@ -1,11 +1,11 @@
-// Wire protocol between watch and Zwindoor bridge.
-// Source of truth: bridge/zwindoor_bridge/protocol.py, actions.py, engine.py.
+// Wire protocol between watch and Wristpilot bridge.
+// Source of truth: bridge/wristpilot_bridge/protocol.py, actions.py, engine.py.
 
 import Toybox.Lang;
 
 module Protocol {
 
-    // GATT service "Zwindoor"
+    // GATT service "Wristpilot"
     const SERVICE_UUID = "ae279be2-4f9c-4165-ab88-060ee241b936";
     const COMMAND_UUID = "ae279be2-4f9c-4165-ab88-060ee241b937"; // write: [seq, action, value]
     const STATUS_UUID  = "ae279be2-4f9c-4165-ab88-060ee241b938"; // read / notify
@@ -13,7 +13,7 @@ module Protocol {
 
     // Advertised local name of the bridge (the bridge may drop it if the
     // advertisement gets too long, then only the service UUID is left).
-    const BRIDGE_NAME = "Zwindoor";
+    const BRIDGE_NAME = "Wristpil";   // prefix: the Bumble bridge shortens the name to fit 31 bytes
 
     // Status message types (first byte of a status notification)
     const MSG_ACK    = 0x01; // [0x01, seq, result]

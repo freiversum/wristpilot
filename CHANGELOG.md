@@ -6,6 +6,15 @@ All notable changes to this project are documented in this file. The format is b
 
 ## [Unreleased]
 
+### Changed
+- **ZWindoor is now called Wristpilot.** The name no longer leans on Zwift's, and the app also
+  works with other platforms through OpenBikeControl. Everything is renamed: watch app, bridge
+  (`wristpilot_bridge`, `wristpilot-bridge`), Windows program (`WristpilotBridge.exe`), settings
+  folder (`%APPDATA%\Wristpilot`, `~/.config/wristpilot`) and the repository
+  (github.com/freiversum/wristpilot). The bridge advertises as "Wristpilot" (shortened to
+  "Wristpil" in the advertising packet, which has room for 8 characters next to the service UUID).
+  Settings and the Zwift sign-in of ZWindoor are not taken over.
+
 ### Added
 - Bridge: `companion_capture` in `config.json` records every Companion frame as JSON Lines, and
   `bridge/tools/companion_dump.py` turns a capture into readable frames and a summary of the open
@@ -105,6 +114,7 @@ First release.
   feedback is now a tone, and the menu item is called "Vibration / tone".
 - Edge with touch: the workout hint says "Hold to skip" instead of "hold DOWN: skip".
 
-[Unreleased]: https://github.com/freiversum/zwindoor/compare/v0.1.1...HEAD
-[0.1.1]: https://github.com/freiversum/zwindoor/compare/v0.1.0...v0.1.1
-[0.1.0]: https://github.com/freiversum/zwindoor/releases/tag/v0.1.0
+[Unreleased]: https://github.com/freiversum/wristpilot/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/freiversum/wristpilot/compare/v0.1.1...v0.2.0
+[0.1.1]: https://github.com/freiversum/wristpilot/compare/v0.1.0...v0.1.1
+[0.1.0]: https://github.com/freiversum/wristpilot/releases/tag/v0.1.0

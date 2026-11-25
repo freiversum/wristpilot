@@ -2,12 +2,12 @@
 
 import pytest
 
-from zwindoor_bridge import actions
-from zwindoor_bridge.config import Config
-from zwindoor_bridge.engine import Event
-from zwindoor_bridge.protocol import Result, State
-from zwindoor_bridge.runner import BridgeRunner
-from zwindoor_tray import TEST_ACTIONS, TrayApp, make_icon
+from wristpilot_bridge import actions
+from wristpilot_bridge.config import Config
+from wristpilot_bridge.engine import Event
+from wristpilot_bridge.protocol import Result, State
+from wristpilot_bridge.runner import BridgeRunner
+from wristpilot_tray import TEST_ACTIONS, TrayApp, make_icon
 
 
 class FakeRunner(BridgeRunner):
@@ -59,7 +59,7 @@ def test_toggle_updates_config():
 
 def test_token_store_refresh(tmp_path, monkeypatch):
     import time
-    from zwindoor_bridge import zwiftapi
+    from wristpilot_bridge import zwiftapi
     from zwiftlogin import TokenStore
     store = TokenStore(tmp_path / "t.bin")
     assert store.access_token() is None and not store.signed_in()
@@ -91,7 +91,7 @@ def test_companion_status_line():
 
 
 def test_parse_redirect():
-    from zwindoor_bridge import zwiftapi
+    from wristpilot_bridge import zwiftapi
     url = "https://launcher.zwift.com/launcher?state=abc&session_state=x&code=XYZ"
     assert zwiftapi.parse_redirect(url, "abc") == "XYZ"
     with pytest.raises(zwiftapi.ZwiftApiError):

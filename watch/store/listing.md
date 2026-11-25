@@ -1,17 +1,17 @@
-# ZWindoor – Connect IQ Store listing
+# Wristpilot – Connect IQ Store listing
 
 Texts for the developer dashboard (apps.garmin.com/developer), English and German. Descriptions are
 limited to 4000 characters and Markdown is not rendered, so the texts below are plain. "Zwift" is
-only used descriptively ("for Zwift"), never in the name, no Zwift logo; the note that ZWindoor is not
+only used descriptively ("for Zwift"), never in the name, no Zwift logo; the note that Wristpilot is not
 affiliated with Zwift or Garmin is included (review guidelines §3a, §4a).
 
-**URLs:** download and setup https://linuxundich.de/en/projects/zwindoor/ (German:
-/projekte/zwindoor/), support https://github.com/freiversum/zwindoor/issues, privacy policy
-(dashboard field) https://linuxundich.de/en/projects/zwindoor/privacy/ (German: /projekte/zwindoor/datenschutz/).
+**URLs:** download and setup https://linuxundich.de/en/projects/wristpilot/ (German:
+/projekte/wristpilot/), support https://github.com/freiversum/wristpilot/issues, privacy policy
+(dashboard field) https://linuxundich.de/en/projects/wristpilot/privacy/ (German: /projekte/wristpilot/datenschutz/).
 
 ## Name
 
-ZWindoor
+Wristpilot
 
 ## Category (suggestion)
 
@@ -21,11 +21,11 @@ Tools / Utilities (Watch App)
 
 ## Description – English
 
-ZWindoor turns your Garmin watch or Edge bike computer into a remote for indoor cycling in Zwift. Turn left or right at junctions, go straight on, make a U-turn, give a Ride On or fire your power-up – with the buttons of your watch, without letting go of the handlebar.
+Wristpilot turns your Garmin watch or Edge bike computer into a remote for indoor cycling in Zwift. Turn left or right at junctions, go straight on, make a U-turn, give a Ride On or fire your power-up – with the buttons of your watch, without letting go of the handlebar.
 
 REQUIRES A COMPANION PROGRAM ON YOUR COMPUTER
-The watch cannot control Zwift directly. ZWindoor connects over Bluetooth to the free ZWindoor Bridge on the computer that runs Zwift, which turns your button presses into Zwift's keyboard shortcuts. Download and setup: https://linuxundich.de/en/projects/zwindoor/
-- Windows 10/11: ZWindoor Bridge (small tray program) with a second USB Bluetooth adapter of its own, e.g. TP-Link UB500 (about 10 euros). Windows' own Bluetooth uses changing addresses that Garmin watches do not connect to.
+The watch cannot control Zwift directly. Wristpilot connects over Bluetooth to the free Wristpilot Bridge on the computer that runs Zwift, which turns your button presses into Zwift's keyboard shortcuts. Download and setup: https://linuxundich.de/en/projects/wristpilot/
+- Windows 10/11: Wristpilot Bridge (small tray program) with a second USB Bluetooth adapter of its own, e.g. TP-Link UB500 (about 10 euros). Windows' own Bluetooth uses changing addresses that Garmin watches do not connect to.
 - Linux: built into Tretlager (Zwift on Linux).
 Without the bridge the app only shows "Searching bridge".
 
@@ -35,7 +35,7 @@ BUTTONS (blind operation – left buttons for left, right buttons for right)
 - DOWN: Ride On (hold: straight on)
 - BACK: power-up (hold: exit)
 
-On some watches (fēnix 7 Pro with firmware 27.x, fēnix 8) holding BACK opens the system app switcher instead. Exit through the menu then (hold UP, "Exit app" is the first item), and do not reopen ZWindoor from the switcher: the watch firmware cannot reopen it from there until the watch is restarted.
+On some watches (fēnix 7 Pro with firmware 27.x, fēnix 8) holding BACK opens the system app switcher instead. Exit through the menu then (hold UP, "Exit app" is the first item), and do not reopen Wristpilot from the switcher: the watch firmware cannot reopen it from there until the watch is restarted.
 
 Touch: swipe left/right to turn, swipe up for straight on, tap a quarter for its action. Swipe down for more pages.
 
@@ -59,21 +59,21 @@ DISPLAYS
 MIP watches (fenix 7 Pro family) get four bold fields that stay readable in sunlight; AMOLED watches (fenix 8, 8 Pro, 9, 9 Pro, E, epix Pro) get coloured buttons next to the physical keys; Edge bike computers get the tile layout.
 
 PRIVACY
-ZWindoor collects no data. The watch talks only to the bridge on your own computer via Bluetooth; nothing is sent to the developer or to Garmin.
+Wristpilot collects no data. The watch talks only to the bridge on your own computer via Bluetooth; nothing is sent to the developer or to Garmin.
 
-ZWindoor is an independent project. It is not affiliated with, endorsed or sponsored by Zwift, Inc. or Garmin. Zwift is a trademark of Zwift, Inc.
+Wristpilot is an independent project. It is not affiliated with, endorsed or sponsored by Zwift, Inc. or Garmin. Zwift is a trademark of Zwift, Inc.
 
-Support: https://github.com/freiversum/zwindoor/issues
+Support: https://github.com/freiversum/wristpilot/issues
 
 ---
 
 ## Description – German
 
-ZWindoor macht deine Garmin-Uhr oder deinen Edge-Radcomputer zur Fernbedienung für das Indoor-Training mit Zwift. An Abzweigungen links oder rechts abbiegen, geradeaus fahren, wenden, ein Ride On geben oder das Power-up zünden – mit den Tasten der Uhr, ohne den Lenker loszulassen.
+Wristpilot macht deine Garmin-Uhr oder deinen Edge-Radcomputer zur Fernbedienung für das Indoor-Training mit Zwift. An Abzweigungen links oder rechts abbiegen, geradeaus fahren, wenden, ein Ride On geben oder das Power-up zünden – mit den Tasten der Uhr, ohne den Lenker loszulassen.
 
 BRAUCHT EIN PROGRAMM AUF DEM COMPUTER
-Die Uhr kann Zwift nicht direkt steuern. ZWindoor verbindet sich per Bluetooth mit der kostenlosen ZWindoor Bridge auf dem Rechner, auf dem Zwift läuft. Die Bridge macht aus deinen Tastendrücken Zwifts Tastenkürzel. Download und Einrichtung: https://linuxundich.de/projekte/zwindoor/
-- Windows 10/11: ZWindoor Bridge (kleines Programm im Infobereich) mit einem zweiten, eigenen USB-Bluetooth-Stick, z. B. TP-Link UB500 (rund 10 Euro). Das Bluetooth von Windows nutzt wechselnde Adressen, mit denen sich Garmin-Uhren nicht verbinden.
+Die Uhr kann Zwift nicht direkt steuern. Wristpilot verbindet sich per Bluetooth mit der kostenlosen Wristpilot Bridge auf dem Rechner, auf dem Zwift läuft. Die Bridge macht aus deinen Tastendrücken Zwifts Tastenkürzel. Download und Einrichtung: https://linuxundich.de/projekte/wristpilot/
+- Windows 10/11: Wristpilot Bridge (kleines Programm im Infobereich) mit einem zweiten, eigenen USB-Bluetooth-Stick, z. B. TP-Link UB500 (rund 10 Euro). Das Bluetooth von Windows nutzt wechselnde Adressen, mit denen sich Garmin-Uhren nicht verbinden.
 - Linux: in Tretlager eingebaut (Zwift unter Linux).
 Ohne Bridge zeigt die App nur „Suche Bridge“.
 
@@ -83,7 +83,7 @@ TASTEN (blind bedienbar – linke Tasten für links, rechte für rechts)
 - DOWN: Ride On (halten: geradeaus)
 - BACK: Power-up (halten: beenden)
 
-Auf manchen Uhren (fēnix 7 Pro mit Firmware 27.x, fēnix 8) öffnet BACK halten stattdessen den App-Umschalter des Systems. Dann über das Menü beenden (UP halten, „App beenden“ ist der erste Eintrag) und ZWindoor nicht aus dem Umschalter wieder öffnen: Die Firmware der Uhr kann die App von dort erst nach einem Neustart der Uhr wieder öffnen.
+Auf manchen Uhren (fēnix 7 Pro mit Firmware 27.x, fēnix 8) öffnet BACK halten stattdessen den App-Umschalter des Systems. Dann über das Menü beenden (UP halten, „App beenden“ ist der erste Eintrag) und Wristpilot nicht aus dem Umschalter wieder öffnen: Die Firmware der Uhr kann die App von dort erst nach einem Neustart der Uhr wieder öffnen.
 
 Touch: nach links/rechts wischen zum Abbiegen, nach oben für geradeaus, Viertel antippen für seine Aktion. Nach unten wischen für weitere Seiten.
 
@@ -107,11 +107,11 @@ DISPLAYS
 MIP-Uhren (fēnix-7-Pro-Familie) bekommen vier kräftige Felder, die auch in der Sonne lesbar bleiben; AMOLED-Uhren (fēnix 8, 8 Pro, 9, 9 Pro, E, epix Pro) bekommen farbige Schaltflächen neben den Tasten; Edge-Radcomputer das Kachel-Layout.
 
 DATENSCHUTZ
-ZWindoor sammelt keine Daten. Die Uhr spricht per Bluetooth nur mit der Bridge auf deinem eigenen Rechner; nichts geht an den Entwickler oder an Garmin.
+Wristpilot sammelt keine Daten. Die Uhr spricht per Bluetooth nur mit der Bridge auf deinem eigenen Rechner; nichts geht an den Entwickler oder an Garmin.
 
-ZWindoor ist ein unabhängiges Projekt und steht in keiner Verbindung zu Zwift, Inc. oder Garmin. Zwift ist eine Marke der Zwift, Inc.
+Wristpilot ist ein unabhängiges Projekt und steht in keiner Verbindung zu Zwift, Inc. oder Garmin. Zwift ist eine Marke der Zwift, Inc.
 
-Support: https://github.com/freiversum/zwindoor/issues
+Support: https://github.com/freiversum/wristpilot/issues
 
 ---
 

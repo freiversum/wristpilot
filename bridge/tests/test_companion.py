@@ -5,11 +5,11 @@ import struct
 
 import pytest
 
-from zwindoor_bridge import actions, companion as cp, pb
-from zwindoor_bridge.config import Config
-from zwindoor_bridge.engine import Engine
-from zwindoor_bridge.protocol import Result, State
-from zwindoor_bridge.sinks import RecordingSink
+from wristpilot_bridge import actions, companion as cp, pb
+from wristpilot_bridge.config import Config
+from wristpilot_bridge.engine import Engine
+from wristpilot_bridge.protocol import Result, State
+from wristpilot_bridge.sinks import RecordingSink
 
 
 # --- protobuf ---

@@ -20,7 +20,7 @@ class UinputSink(KeySink):
         except ImportError as e:
             raise SinkError("python-evdev is not installed") from e
         try:
-            self.ui = UInput({ecodes.EV_KEY: sorted({k.evdev for k in KEYS.values()})}, name="Zwindoor remote")
+            self.ui = UInput({ecodes.EV_KEY: sorted({k.evdev for k in KEYS.values()})}, name="Wristpilot remote")
         except OSError as e:
             raise SinkError(f"/dev/uinput: {e}") from e
         self.ecodes = ecodes
