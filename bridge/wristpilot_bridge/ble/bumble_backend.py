@@ -53,6 +53,18 @@ def advertising_data(name: str) -> bytes:
     return bytes(AdvertisingData(fields))
 
 
+def scan_response_data(name: str) -> bytes:
+    """Name + service UUID again in the scan response. Bumble leaves it empty by default, and some
+    scanners (phones, the fēnix scan bug) show the name from the scan response only -> "unknown"."""
+    from bumble.core import UUID, AdvertisingData
+    uuid = bytes(UUID(protocol.SERVICE_UUID).to_bytes(force_128=True))
+    raw = name.encode()[: 31 - (2 + len(uuid)) - 2]
+    kind = (AdvertisingData.COMPLETE_LOCAL_NAME if raw == name.encode()
+            else AdvertisingData.SHORTENED_LOCAL_NAME)
+    return bytes(AdvertisingData([(kind, raw),
+                                  (AdvertisingData.COMPLETE_LIST_OF_128_BIT_SERVICE_CLASS_UUIDS, uuid)]))
+
+
 class BumblePeripheral(Peripheral):
     name = "bumble"
 
@@ -100,6 +112,7 @@ class BumblePeripheral(Peripheral):
             await self.device.power_on()
             await self.device.start_advertising(own_address_type=OwnAddressType.PUBLIC,
                                                 advertising_data=advertising_data(self.local_name),
+                                                scan_response_data=scan_response_data(self.local_name),
                                                 auto_restart=True)
         except Exception as e:
             await self.stop()

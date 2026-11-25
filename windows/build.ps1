@@ -51,6 +51,7 @@ $version = (& $venvPy -c "import wristpilot_bridge; print(wristpilot_bridge.__ve
   --include-package=libusb_package `
   --include-package-data=libusb_package `
   --include-data-dir=..\bridge\wristpilot_bridge\firmware=wristpilot_bridge\firmware `
+  --include-data-files=..\bridge\wristpilot_bridge\firmware\realtek\*.bin=wristpilot_bridge\firmware\realtek\ `
   --include-package=pystray `
   --include-module=zwiftlogin `
   --enable-plugin=tk-inter `

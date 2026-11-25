@@ -29,6 +29,11 @@ All notable changes to this project are documented in this file. The format is b
 - Watch app: handles being sent to the background by the task switcher on devices that support
   it (`onInactive`/`onActive`, fēnix 8 and newer): a long press that was running is dropped and the
   screen is redrawn on return.
+- Windows build: the Realtek firmware (`rtl8761bu_fw.bin` and friends) is packed into the .exe
+  again. Nuitka's `--include-data-dir` left the `.bin` files out, so Bumble ran the UB500 on its
+  ROM firmware.
+- Windows bridge: the scan response carries the name "Wristpilot" and the service UUID. It was empty,
+  so scanners that read the name from the scan response listed the bridge as "unknown".
 
 ## [0.2.0] - 2026-11-24
 

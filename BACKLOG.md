@@ -65,3 +65,15 @@ Before the ride: set `companion_capture` (see docs/architecture.md), afterwards 
 - [x] *Test actions* do nothing while Bluetooth is not running – the menu item is greyed out now (2026-11-25)
 - [x] **Blocker: the fēnix does not connect to the Windows bridge.** Windows advertises a GATT server with a resolvable private address, and the watch refuses to connect to private addresses of unbonded devices (verified 2026-11-24 with the same USB adapter on Linux: public address connects, privacy on does not). Connect IQ has no bonding API. Solved in 0.2.0 with Bumble on a dedicated USB adapter (WinUSB); tested in a Windows 11 VM with a TP-Link UB500 and the fēnix 7X Pro
 - [x] Windows also interleaves a Microsoft CDP beacon ("Share across devices") on the same address; the watch then misses the service UUID. Name "BOX11EN" only comes in the scan response, which the watch ignores (no longer relevant with Bumble)
+
+## Ideas (2026-11-24)
+
+- [ ] **Steering:** move left or right within the road (lane position), not just pick a turn at a
+  junction. Find out how Zwift takes steering input: keyboard (arrow keys while riding?), a BLE
+  steering device (Sterzo, Zwift Play) the bridge would emulate, or the Companion link. Then decide
+  how the watch sends it (hold UP/DOWN, tilt, swipe)
+- [ ] **Race mode:** a second ride screen for races. Power-up big and in the middle, no turns,
+  no braking, no U-turn, so a stray press cannot cost the race. Steering to the left or right edge
+  of the road if steering works (see above). Reached from the menu or as start page
+- [ ] **Button layout in the settings:** choose which action sits on which button and tile, per page
+  (ride, race, actions). Defaults stay as they are; settings on the watch and in Garmin Connect

@@ -247,3 +247,14 @@ def test_bumble_advertising_fits_and_carries_uuid_and_name():
     assert bytes.fromhex(SERVICE_UUID.replace("-", ""))[::-1] in data
     assert b"Wristpil" in data   # shortened: 8 characters fit next to the 128-bit UUID
     assert len(advertising_data("A very long bridge name")) <= 31
+
+
+def test_bumble_scan_response_carries_name():
+    pytest.importorskip("bumble")
+    from wristpilot_bridge.ble.bumble_backend import scan_response_data
+    from wristpilot_bridge.protocol import SERVICE_UUID
+    data = scan_response_data("Wristpilot")
+    assert len(data) <= 31
+    assert b"Wristpilot" in data
+    assert bytes.fromhex(SERVICE_UUID.replace("-", ""))[::-1] in data
+    assert len(scan_response_data("A very long bridge name for the scan response")) <= 31
