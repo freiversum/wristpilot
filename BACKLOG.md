@@ -18,6 +18,7 @@
   fails the same way. Selecting another app in the switcher works. Similar report: CIQQA-3801 in
   the Garmin forum. Left to do: post our case there (draft in `_intern/garmin-forum-task-switcher.md`),
   and in the store description say "exit through the menu (hold UP), do not reopen from the switcher"
+  (store text done in `watch/store/listing.md`, 2026-11-25)
 
 ## Companion link in a real ride
 

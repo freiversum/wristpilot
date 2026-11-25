@@ -34,6 +34,9 @@ BUTTONS (blind operation – left buttons for left, right buttons for right)
 - START: turn right (hold: U-turn)
 - DOWN: Ride On (hold: straight on)
 - BACK: power-up (hold: exit)
+
+On some watches (fēnix 7 Pro with firmware 27.x, fēnix 8) holding BACK opens the system app switcher instead. Exit through the menu then (hold UP, "Exit app" is the first item), and do not reopen ZWindoor from the switcher: the watch firmware cannot reopen it from there until the watch is restarted.
+
 Touch: swipe left/right to turn, swipe up for straight on, tap a quarter for its action. Swipe down for more pages.
 
 MORE PAGES
@@ -79,6 +82,9 @@ TASTEN (blind bedienbar – linke Tasten für links, rechte für rechts)
 - START: rechts abbiegen (halten: U-Turn)
 - DOWN: Ride On (halten: geradeaus)
 - BACK: Power-up (halten: beenden)
+
+Auf manchen Uhren (fēnix 7 Pro mit Firmware 27.x, fēnix 8) öffnet BACK halten stattdessen den App-Umschalter des Systems. Dann über das Menü beenden (UP halten, „App beenden“ ist der erste Eintrag) und ZWindoor nicht aus dem Umschalter wieder öffnen: Die Firmware der Uhr kann die App von dort erst nach einem Neustart der Uhr wieder öffnen.
+
 Touch: nach links/rechts wischen zum Abbiegen, nach oben für geradeaus, Viertel antippen für seine Aktion. Nach unten wischen für weitere Seiten.
 
 WEITERE SEITEN
