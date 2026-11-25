@@ -1,6 +1,6 @@
 // The one view of the app. Draws, depending on the connection and the current page:
-// connect screen, "Ride" (four quadrants, MIP layout), "Actions" (8 tiles),
-// "Workout", plus the feedback overlay on top.
+// connect screen, "Ride" (four quadrants, MIP layout) or the race page in race mode,
+// "Actions" (8 tiles), "Workout", plus the feedback overlay on top.
 // All coordinates are designed for 280 x 280 and scaled with the screen width.
 
 import Toybox.Graphics;
@@ -37,7 +37,7 @@ class MainView extends WatchUi.View {
         lblRight = WatchUi.loadResource(Rez.Strings.LblRight);
         lblRideOn = WatchUi.loadResource(Rez.Strings.LblRideOn);
         lblPower = WatchUi.loadResource(Rez.Strings.LblPower);
-        if (Style.AMOLED) {
+        if (Style.AMOLED || Style.EDGE) {      // Edge: race page uses the mixed-case names
             lblLeftA = WatchUi.loadResource(Rez.Strings.LblLeftA);
             lblRightA = WatchUi.loadResource(Rez.Strings.LblRightA);
             lblRideOnA = WatchUi.loadResource(Rez.Strings.LblRideOnA);
@@ -75,6 +75,8 @@ class MainView extends WatchUi.View {
             drawActions(dc);
         } else if (page == Settings.PAGE_WORKOUT) {
             drawWorkout(dc);
+        } else if (Settings.race() != Settings.RACE_OFF) {
+            drawRace(dc, now);
         } else {
             drawRide(dc, now);
         }
@@ -144,6 +146,138 @@ class MainView extends WatchUi.View {
             Icons.draw(dc, :up, cx, divY, 9 * s, upCol);
         }
 
+        drawStatus(dc, now);
+    }
+
+    // --- Race page ------------------------------------------------------------
+    // No turns, no U-turn. Power-up big in the middle; in the "power-up + Ride On" variant a
+    // Ride On field sits next to DOWN (watch) or at the bottom (Edge).
+
+    hidden function raceRideOn() {
+        return Settings.race() == Settings.RACE_POWER_RIDEON;
+    }
+
+    // [x, y, r] of the power-up disc and the Ride On disc (round screens)
+    hidden function raceDiscs() {
+        if (raceRideOn()) {
+            return [[cx + 8 * s, cy + 4 * s, 58 * s], [cx - 78 * s, cy + 62 * s, 26 * s]];
+        }
+        return [[cx, cy + 14 * s, 70 * s], null];
+    }
+
+    // [[action, x, y, w, h], ...] on the Edge
+    hidden function raceTiles() {
+        var top = (h * 0.11).toNumber();
+        var gap = (w * 0.025).toNumber();
+        var tw = w - 2 * gap;
+        if (!raceRideOn()) {
+            return [[Actions.POWERUP, gap, top + gap, tw, h - top - 2 * gap]];
+        }
+        var rideH = ((h - top) * 0.22).toNumber();
+        var powH = h - top - rideH - 3 * gap;
+        return [[Actions.POWERUP, gap, top + gap, tw, powH],
+                [Actions.RIDE_ON, gap, top + 2 * gap + powH, tw, rideH]];
+    }
+
+    // Which race action a touch at (x, y) means (null = none).
+    function raceActionAt(x, y) {
+        if (Style.EDGE) {
+            var tiles = raceTiles();
+            for (var i = 0; i < tiles.size(); i++) {
+                var t = tiles[i];
+                if (x >= t[1] && x < t[1] + t[3] && y >= t[2] && y < t[2] + t[4]) {
+                    return t[0];
+                }
+            }
+            return null;
+        }
+        var d = raceDiscs()[1];
+        if (d != null) {
+            var dx = x - d[0];
+            var dy = y - d[1];
+            var rr = d[2] + 18 * s;
+            if (dx * dx + dy * dy <= rr * rr) {
+                return Actions.RIDE_ON;
+            }
+        }
+        return Actions.POWERUP;
+    }
+
+    function drawRace(dc, now) {
+        var r = $.gRemote;
+        var powerText = Style.AMOLED || Style.EDGE ? lblPowerA : lblPower;
+        var powerOn = true;
+        if (r.linked()) {
+            powerText = r.powerupLabel();
+            powerOn = (r.game & Protocol.GAME_POWERUP) != 0;
+        }
+        var rideText = (Style.AMOLED || Style.EDGE) ? lblRideOnA : lblRideOn;
+        if (r.linked() && r.rideOns > 0) {
+            rideText = rideText + " · " + r.rideOns.toString();
+        }
+        if (Style.EDGE) {
+            var tiles = raceTiles();
+            var rad = (w * 0.04).toNumber();
+            for (var i = 0; i < tiles.size(); i++) {
+                var t = tiles[i];
+                var pow = t[0] == Actions.POWERUP;
+                var col = pow ? (powerOn ? A_ORANGE : A_GREY) : A_GREEN;
+                dc.setColor(pow ? (powerOn ? 0x1A0D05 : 0x111111) : 0x06180C, Graphics.COLOR_TRANSPARENT);
+                dc.fillRoundedRectangle(t[1], t[2], t[3], t[4], rad);
+                dc.setColor(col, Graphics.COLOR_TRANSPARENT);
+                dc.setPenWidth(3);
+                dc.drawRoundedRectangle(t[1], t[2], t[3], t[4], rad);
+                dc.setPenWidth(1);
+                if (pow) {
+                    Icons.draw(dc, :bolt, t[1] + t[3] / 2, t[2] + t[4] * 0.42, t[3] * 0.18, col);
+                    dc.setColor(col, Graphics.COLOR_TRANSPARENT);
+                    dc.drawText(t[1] + t[3] / 2, t[2] + t[4] * 0.78, Graphics.FONT_MEDIUM, powerText,
+                        Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+                } else {
+                    Icons.draw(dc, :thumb, t[1] + t[3] * 0.25, t[2] + t[4] / 2, t[4] * 0.22, col);
+                    dc.setColor(col, Graphics.COLOR_TRANSPARENT);
+                    dc.drawText(t[1] + t[3] * 0.40, t[2] + t[4] / 2, Graphics.FONT_SMALL, rideText,
+                        Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
+                }
+            }
+        } else {
+            var discs = raceDiscs();
+            var p = discs[0];
+            var pr = p[2];
+            if (Style.AMOLED) {
+                dc.setColor(powerOn ? TINT_ORANGE : TINT_GREY, Graphics.COLOR_TRANSPARENT);
+                dc.fillCircle(p[0], p[1], pr);
+                dc.setColor(powerOn ? A_ORANGE : A_GREY, Graphics.COLOR_TRANSPARENT);
+                dc.setPenWidth((5 * s).toNumber());
+                dc.drawCircle(p[0], p[1], pr);
+                dc.setPenWidth(1);
+                Icons.draw(dc, :bolt, p[0], p[1] - pr * 0.18, pr * 0.42, powerOn ? A_ORANGE : A_GREY);
+                dc.setColor(powerOn ? A_ORANGE : A_GREY, Graphics.COLOR_TRANSPARENT);
+            } else {
+                // MIP: solid orange disc, black content, readable in sunlight
+                dc.setColor(powerOn ? Actions.COLOR_ORANGE : Actions.COLOR_GREY, Graphics.COLOR_TRANSPARENT);
+                dc.fillCircle(p[0], p[1], pr);
+                Icons.draw(dc, :bolt, p[0], p[1] - pr * 0.18, pr * 0.42, Actions.COLOR_BLACK);
+                dc.setColor(Actions.COLOR_BLACK, Graphics.COLOR_TRANSPARENT);
+            }
+            dc.drawText(p[0], p[1] + pr * 0.52, r.linked() ? Graphics.FONT_XTINY : Graphics.FONT_SMALL, powerText,
+                Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+            var d = discs[1];
+            if (d != null) {
+                dc.setColor(Style.AMOLED ? TINT_GREEN : Actions.COLOR_GREEN, Graphics.COLOR_TRANSPARENT);
+                dc.fillCircle(d[0], d[1], d[2]);
+                Icons.draw(dc, :thumb, d[0], d[1], d[2] * 0.5, Style.AMOLED ? A_GREEN : Actions.COLOR_BLACK);
+                if (r.linked() && r.rideOns > 0) {
+                    dc.setColor(Style.AMOLED ? A_GREEN : Actions.COLOR_GREEN, Graphics.COLOR_TRANSPARENT);
+                    dc.drawText(d[0], d[1] - d[2] - 10 * s, Graphics.FONT_XTINY, r.rideOns.toString(),
+                        Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+                }
+            }
+        }
+        // "RACE" under the status line
+        dc.setColor(Actions.COLOR_RED, Graphics.COLOR_TRANSPARENT);
+        dc.drawText(cx, Style.EDGE ? (h * 0.11).toNumber() - 2 : (48 * s).toNumber(), Graphics.FONT_XTINY,
+            WatchUi.loadResource(Rez.Strings.LblRace), Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
         drawStatus(dc, now);
     }
 
@@ -584,14 +718,33 @@ class MainView extends WatchUi.View {
             color = Actions.COLOR_GREY;
             icon = :skip;
             name = WatchUi.loadResource(rm.fbText);
+        } else if (phase == Feedback.ARMED) {
+            name = name + "?";
+            sub = WatchUi.loadResource(rm.fbText);
+        } else if (phase == Feedback.HOLD) {
+            sub = WatchUi.loadResource(rm.fbProgress >= 1.0 ? Rez.Strings.HoldRelease : Rez.Strings.Holding);
         }
 
         var ry = cy - 30 * s;
         var rr = 50 * s;
         dc.setColor(color, Graphics.COLOR_TRANSPARENT);
-        if (phase == Feedback.SENDING) {
+        if (phase == Feedback.SENDING || phase == Feedback.ARMED) {
             dc.setPenWidth(4);
             dc.drawCircle(cx, ry, rr);
+            dc.setPenWidth(1);
+            Icons.draw(dc, icon, cx, ry, 28 * s, color);
+        } else if (phase == Feedback.HOLD) {
+            // grey ring, filled clockwise from 12 o'clock as the key is held
+            dc.setColor(0x555555, Graphics.COLOR_TRANSPARENT);
+            dc.setPenWidth((6 * s).toNumber());
+            dc.drawCircle(cx, ry, rr);
+            dc.setColor(color, Graphics.COLOR_TRANSPARENT);
+            var deg = (rm.fbProgress * 360).toNumber();
+            if (deg >= 360) {
+                dc.drawCircle(cx, ry, rr);
+            } else if (deg > 0) {
+                dc.drawArc(cx, ry, rr, Graphics.ARC_CLOCKWISE, 90, (450 - deg) % 360);
+            }
             dc.setPenWidth(1);
             Icons.draw(dc, icon, cx, ry, 28 * s, color);
         } else {

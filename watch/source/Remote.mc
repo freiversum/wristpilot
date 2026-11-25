@@ -14,6 +14,8 @@ module Feedback {
     const TIMEOUT   = 4; // no ack within Protocol.ACK_TIMEOUT
     const NOT_CONN  = 5; // no connection to the bridge
     const HINT      = 6; // plain hint text (e.g. "hold to skip")
+    const ARMED     = 7; // turn protection: action marked, waiting for the second press
+    const HOLD      = 8; // turn protection: key held, ring filling (fbProgress 0..1)
 }
 
 class Remote {
@@ -32,7 +34,8 @@ class Remote {
     var fbAction = null;       // logical action (Actions.*)
     var fbResult = 0;
     var fbLatency = 0;
-    var fbText = null;         // resource id for HINT
+    var fbText = null;         // resource id for HINT / ARMED
+    var fbProgress = 0.0;      // HOLD: 0..1
     hidden var fbSeq = -1;
     hidden var fbSentAt = 0;
     hidden var fbUntil = 0;
@@ -68,6 +71,29 @@ class Remote {
     function showHint(textRes) {
         fbText = textRes;
         show(Feedback.HINT, System.getTimer(), ERROR_DURATION);
+    }
+
+    // Turn protection, "press twice": the action is marked until `window` ms have passed.
+    function showArmed(action, window) {
+        fbAction = action;
+        fbText = Rez.Strings.ArmAgain;
+        show(Feedback.ARMED, System.getTimer(), window);
+        buzz([40, 40], Attention.TONE_KEY);
+    }
+
+    // Turn protection, "hold": refreshed by the input tick while the key is held.
+    function showHold(action, progress) {
+        fbAction = action;
+        fbProgress = progress > 1.0 ? 1.0 : progress;
+        show(Feedback.HOLD, System.getTimer(), 400);
+    }
+
+    // Remove a marked action or a hold ring (not the feedback of a sent command).
+    function clearPending() {
+        if (fbPhase == Feedback.ARMED || fbPhase == Feedback.HOLD) {
+            fbPhase = Feedback.NONE;
+            $.gDirty = true;
+        }
     }
 
     hidden function show(phase, now, duration) {

@@ -8,11 +8,25 @@ module Settings {
     const KEY_VIBE = "vibe";
     const KEY_JUNCTION_VIBE = "junctionVibe";
     const KEY_START_PAGE = "startPage";
+    const KEY_RACE = "race";
+    const KEY_GUARD = "guard";
 
     const PAGE_RIDE = 0;
     const PAGE_ACTIONS = 1;
     const PAGE_WORKOUT = 2;
     const PAGE_COUNT = 3;
+
+    // Race mode: the Ride page becomes a race page without turns and U-turn.
+    const RACE_OFF = 0;
+    const RACE_POWER = 1;       // A: power-up only
+    const RACE_POWER_RIDEON = 2; // B: power-up and Ride On
+    const RACE_COUNT = 3;
+
+    // Turn protection in the normal mode: turns and U-turn need a second action.
+    const GUARD_OFF = 0;
+    const GUARD_TWICE = 1;      // S1: same key (or gesture) twice within ARM_WINDOW
+    const GUARD_HOLD = 2;       // S2: hold until the ring is full
+    const GUARD_COUNT = 3;
 
     function get(key, fallback) {
         var v = null;
@@ -67,5 +81,42 @@ module Settings {
             return Rez.Strings.PageWorkout;
         }
         return Rez.Strings.PageRide;
+    }
+
+    function race() {
+        var v = get(KEY_RACE, RACE_OFF);
+        return (v instanceof Number && v >= 0 && v < RACE_COUNT) ? v : RACE_OFF;
+    }
+
+    function setRace(v) {
+        set(KEY_RACE, v);
+    }
+
+    function raceName(v) {
+        if (v == RACE_POWER) {
+            return Rez.Strings.RacePower;
+        } else if (v == RACE_POWER_RIDEON) {
+            return Rez.Strings.RacePowerRideOn;
+        }
+        return Rez.Strings.Off;
+    }
+
+    // Protection is on by default (press twice).
+    function guard() {
+        var v = get(KEY_GUARD, GUARD_TWICE);
+        return (v instanceof Number && v >= 0 && v < GUARD_COUNT) ? v : GUARD_TWICE;
+    }
+
+    function setGuard(v) {
+        set(KEY_GUARD, v);
+    }
+
+    function guardName(v) {
+        if (v == GUARD_TWICE) {
+            return Rez.Strings.GuardTwice;
+        } else if (v == GUARD_HOLD) {
+            return Rez.Strings.GuardHold;
+        }
+        return Rez.Strings.Off;
     }
 }

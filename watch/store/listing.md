@@ -39,6 +39,12 @@ On some watches (fēnix 7 Pro with firmware 27.x, fēnix 8) holding BACK opens t
 
 Touch: swipe left/right to turn, swipe up for straight on, tap a quarter for its action. Swipe down for more pages.
 
+TURN PROTECTION (on by default)
+Turns, straight on and the U-turn are only sent after a second action, so a stray press does not take you off the route: press the same button again within 2 seconds, or choose "Hold" in the menu and hold until the ring is full. Ride On and power-up stay instant. Can be switched off in the menu.
+
+RACE MODE
+A race page with a big power-up and no turns or U-turn, optionally with Ride On. START and BACK both fire the power-up, and holding BACK does not exit. Switch it on in the menu (hold UP).
+
 MORE PAGES
 - Actions: elbow flick, wave, nice, hammer time, bell, photo, camera view, HUD on/off
 - Workout: easier, harder, skip interval
@@ -86,6 +92,12 @@ TASTEN (blind bedienbar – linke Tasten für links, rechte für rechts)
 Auf manchen Uhren (fēnix 7 Pro mit Firmware 27.x, fēnix 8) öffnet BACK halten stattdessen den App-Umschalter des Systems. Dann über das Menü beenden (UP halten, „App beenden“ ist der erste Eintrag) und Wristpilot nicht aus dem Umschalter wieder öffnen: Die Firmware der Uhr kann die App von dort erst nach einem Neustart der Uhr wieder öffnen.
 
 Touch: nach links/rechts wischen zum Abbiegen, nach oben für geradeaus, Viertel antippen für seine Aktion. Nach unten wischen für weitere Seiten.
+
+SCHUTZ VOR FEHLDRUCK (ab Werk an)
+Abbiegen, geradeaus und U-Turn gehen erst nach einer zweiten Aktion raus, damit ein versehentlicher Druck dich nicht von der Strecke bringt: dieselbe Taste innerhalb von 2 Sekunden nochmal drücken, oder im Menü „Halten“ wählen und halten, bis der Ring voll ist. Ride On und Power-up bleiben sofort. Im Menü abschaltbar.
+
+RACE-MODUS
+Eine Rennseite mit großem Power-up, ohne Abbiegen und U-Turn, wahlweise mit Ride On. START und BACK lösen das Power-up aus, BACK halten beendet die App nicht. Einschalten im Menü (UP halten).
 
 WEITERE SEITEN
 - Aktionen: Ellbogen-Wink, Winken, Nice, Hammer Time, Klingel, Foto, Kamera, HUD ein/aus

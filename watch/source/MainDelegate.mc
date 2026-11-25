@@ -16,6 +16,16 @@
 // Workout page:  UP easier, START harder, DOWN long = skip interval, BACK -> Ride;
 //                tap left/right half = easier/harder, hold bottom area = skip.
 // Connect screen: START (or tap) = device list, BACK = exit question.
+//
+// Turn protection (Settings.guard(), normal mode only; Ride On, power-up and the other pages are
+// never delayed):
+//   press twice: a turn, straight on or U-turn is first marked (overlay, short tick) and only sent
+//                when the same key, gesture or tile comes again within ARM_WINDOW.
+//   hold:        turns need a hold of HOLD_TURN ms (ring), sent on release; U-turn and the menu move
+//                to HOLD_LONG. Taps and swipes for turns only show a hint.
+// Race mode (Settings.race()): the Ride page has no turns. BACK and START fire the power-up
+// (Edge: every key but BACK), DOWN gives a Ride On in the "power-up + Ride On" variant, holding
+// BACK does not exit (only the menu does).
 
 import Toybox.Lang;
 import Toybox.System;
@@ -25,6 +35,9 @@ class MainDelegate extends WatchUi.InputDelegate {
 
     const LONG_PRESS = 600;     // ms
     const ECHO_WINDOW = 300;    // ms: onKey right after our own release/touch is ignored
+    const ARM_WINDOW = 2000;    // ms: turn protection "press twice"
+    const HOLD_TURN = 600;      // ms: turn protection "hold", turn
+    const HOLD_LONG = 1500;     // ms: turn protection "hold", U-turn / menu
 
     hidden var view;
     hidden var keyDown = null;
@@ -34,6 +47,8 @@ class MainDelegate extends WatchUi.InputDelegate {
     hidden var lastReleaseAt = 0;
     hidden var lastTouchAt = 0;
     hidden var lastMenuAt = -10000;
+    hidden var armedAction = null;
+    hidden var armedAt = 0;
 
     function initialize(v) {
         InputDelegate.initialize();
@@ -45,7 +60,11 @@ class MainDelegate extends WatchUi.InputDelegate {
     function onKeyPressed(keyEvent) {
         var k = keyEvent.getKey();
         if (k == WatchUi.KEY_MENU) {
-            openMenu();
+            // The watch turns a held UP into KEY_MENU (about 1 s). With "hold" protection UP is
+            // held to turn left; the menu then opens from tick() at HOLD_LONG instead.
+            if (!(keyDown == WatchUi.KEY_UP && holdTurnKey(WatchUi.KEY_UP))) {
+                openMenu();
+            }
             return true;
         }
         if (!isOurKey(k)) {
@@ -66,7 +85,16 @@ class MainDelegate extends WatchUi.InputDelegate {
             return false;
         }
         if (keyDown == k && !keyConsumed) {
-            shortPress(k);
+            if (holdTurnKey(k)) {
+                $.gRemote.clearPending();
+                if (System.getTimer() - keyDownAt >= HOLD_TURN) {
+                    rideHeld(holdTurnAction(k));
+                } else {
+                    shortPress(k);      // too short: shows "hold to turn"
+                }
+            } else {
+                shortPress(k);
+            }
         }
         keyDown = null;
         keyConsumed = false;
@@ -80,7 +108,9 @@ class MainDelegate extends WatchUi.InputDelegate {
     function onKey(keyEvent) {
         var k = keyEvent.getKey();
         if (k == WatchUi.KEY_MENU) {
-            openMenu();
+            if (!(keyDown == WatchUi.KEY_UP && holdTurnKey(WatchUi.KEY_UP))) {
+                openMenu();
+            }
             return true;
         }
         if (!isOurKey(k)) {
@@ -109,10 +139,99 @@ class MainDelegate extends WatchUi.InputDelegate {
 
     // Called every 100 ms by the app timer.
     function tick(now) {
-        if (keyDown != null && !keyConsumed && now - keyDownAt >= LONG_PRESS) {
+        if (keyDown == null || keyConsumed) {
+            return;
+        }
+        var held = now - keyDownAt;
+        if (holdTurnKey(keyDown)) {
+            if (held >= HOLD_LONG && holdHasLong(keyDown)) {
+                keyConsumed = true;
+                $.gRemote.clearPending();
+                longPress(keyDown);
+            } else {
+                $.gRemote.showHold(holdTurnAction(keyDown), held / HOLD_TURN.toFloat());
+            }
+        } else if (held >= LONG_PRESS) {
             keyConsumed = true;
             longPress(keyDown);
         }
+    }
+
+    // --- Turn protection and race mode ------------------------------------------
+
+    function raceOn() {
+        return Settings.race() != Settings.RACE_OFF;
+    }
+
+    hidden function guardMode() {
+        return raceOn() ? Settings.GUARD_OFF : Settings.guard();
+    }
+
+    hidden function isTurn(a) {
+        return a == Actions.LEFT || a == Actions.RIGHT || a == Actions.STRAIGHT || a == Actions.U_TURN;
+    }
+
+    // A Ride action from a short press, tap or swipe, through the turn protection.
+    hidden function ride(a) {
+        var rm = $.gRemote;
+        if (!isTurn(a)) {
+            armedAction = null;
+            rm.send(a);
+            return;
+        }
+        var g = guardMode();
+        if (g == Settings.GUARD_OFF) {
+            armedAction = null;
+            rm.send(a);
+        } else if (g == Settings.GUARD_HOLD) {
+            rm.showHint(Rez.Strings.HoldTurn);
+        } else {
+            var now = System.getTimer();
+            if (armedAction == a && now - armedAt <= ARM_WINDOW) {
+                armedAction = null;
+                rm.send(a);
+            } else {
+                armedAction = a;
+                armedAt = now;
+                rm.showArmed(a, ARM_WINDOW);
+            }
+        }
+    }
+
+    // A Ride action from a hold. With "hold" protection the hold is the confirmation.
+    hidden function rideHeld(a) {
+        if (guardMode() == Settings.GUARD_HOLD) {
+            armedAction = null;
+            $.gRemote.send(a);
+        } else {
+            ride(a);
+        }
+    }
+
+    // Keys that turn by holding ("hold" protection, Ride page).
+    hidden function holdTurnKey(k) {
+        if (guardMode() != Settings.GUARD_HOLD || !$.gBle.isReady() || view.page != Settings.PAGE_RIDE) {
+            return false;
+        }
+        if (Style.EDGE) {
+            return k == WatchUi.KEY_LAP || k == WatchUi.KEY_START || k == WatchUi.KEY_ENTER;
+        }
+        return k == WatchUi.KEY_UP || k == WatchUi.KEY_ENTER;
+    }
+
+    hidden function holdTurnAction(k) {
+        if (Style.EDGE) {
+            return k == WatchUi.KEY_LAP ? Actions.LEFT : (k == WatchUi.KEY_START ? Actions.RIGHT : Actions.STRAIGHT);
+        }
+        return k == WatchUi.KEY_UP ? Actions.LEFT : Actions.RIGHT;
+    }
+
+    // Does the key have a second action at HOLD_LONG (menu, U-turn)?
+    hidden function holdHasLong(k) {
+        if (Style.EDGE) {
+            return k == WatchUi.KEY_START;
+        }
+        return true;
     }
 
     // Forget a held key (e.g. when another view was pushed on top).
@@ -156,15 +275,21 @@ class MainDelegate extends WatchUi.InputDelegate {
             } else {
                 view.setPage(Settings.PAGE_RIDE);
             }
+        } else if (raceOn()) {
+            if (k == WatchUi.KEY_ENTER || k == WatchUi.KEY_ESC) {
+                rm.send(Actions.POWERUP);
+            } else if (k == WatchUi.KEY_DOWN && Settings.race() == Settings.RACE_POWER_RIDEON) {
+                rm.send(Actions.RIDE_ON);
+            }
         } else {
             if (k == WatchUi.KEY_UP) {
-                rm.send(Actions.LEFT);
+                ride(Actions.LEFT);
             } else if (k == WatchUi.KEY_ENTER) {
-                rm.send(Actions.RIGHT);
+                ride(Actions.RIGHT);
             } else if (k == WatchUi.KEY_DOWN) {
-                rm.send(Actions.RIDE_ON);
+                ride(Actions.RIDE_ON);
             } else {
-                rm.send(Actions.POWERUP);
+                ride(Actions.POWERUP);
             }
         }
     }
@@ -198,17 +323,23 @@ class MainDelegate extends WatchUi.InputDelegate {
             } else {
                 rm.showHint(Rez.Strings.WkHoldHint);
             }
+        } else if (raceOn()) {
+            if (k == WatchUi.KEY_UP && Settings.race() == Settings.RACE_POWER_RIDEON) {
+                rm.send(Actions.RIDE_ON);
+            } else {
+                rm.send(Actions.POWERUP);
+            }
         } else {
             if (k == WatchUi.KEY_LAP) {
-                rm.send(Actions.LEFT);
+                ride(Actions.LEFT);
             } else if (k == WatchUi.KEY_START) {
-                rm.send(Actions.RIGHT);
+                ride(Actions.RIGHT);
             } else if (k == WatchUi.KEY_ENTER) {
-                rm.send(Actions.STRAIGHT);
+                ride(Actions.STRAIGHT);
             } else if (k == WatchUi.KEY_UP) {
-                rm.send(Actions.RIDE_ON);
+                ride(Actions.RIDE_ON);
             } else if (k == WatchUi.KEY_DOWN) {
-                rm.send(Actions.POWERUP);
+                ride(Actions.POWERUP);
             }
         }
     }
@@ -219,16 +350,21 @@ class MainDelegate extends WatchUi.InputDelegate {
             return;
         }
         if (k == WatchUi.KEY_ESC) {
-            confirmExit();
+            if (!raceOn()) {
+                confirmExit();      // race mode: a grab at BACK in a sprint must not end the app
+            }
             return;
         }
         if (!$.gBle.isReady()) {
             return;
         }
         var page = view.page;
+        if (page == Settings.PAGE_RIDE && raceOn()) {
+            return;
+        }
         if (Style.EDGE) {
             if (page == Settings.PAGE_RIDE && k == WatchUi.KEY_START) {
-                $.gRemote.send(Actions.U_TURN);
+                rideHeld(Actions.U_TURN);
             } else if (page == Settings.PAGE_WORKOUT && k == WatchUi.KEY_DOWN) {
                 $.gRemote.send(Actions.SKIP);
             }
@@ -236,9 +372,9 @@ class MainDelegate extends WatchUi.InputDelegate {
         }
         if (page == Settings.PAGE_RIDE) {
             if (k == WatchUi.KEY_ENTER) {
-                $.gRemote.send(Actions.U_TURN);
+                rideHeld(Actions.U_TURN);
             } else if (k == WatchUi.KEY_DOWN) {
-                $.gRemote.send(Actions.STRAIGHT);
+                rideHeld(Actions.STRAIGHT);
             }
         } else if (page == Settings.PAGE_WORKOUT) {
             if (k == WatchUi.KEY_DOWN) {
@@ -270,12 +406,17 @@ class MainDelegate extends WatchUi.InputDelegate {
             } else {
                 $.gRemote.send(a);
             }
+        } else if (raceOn()) {
+            var ra = view.raceActionAt(xy[0], xy[1]);
+            if (ra != null) {
+                $.gRemote.send(ra);
+            }
         } else {
             var act = view.rideActionAt(xy[0], xy[1]);
             if (act == Actions.MORE) {
                 view.setPage(Settings.PAGE_ACTIONS);
             } else {
-                $.gRemote.send(act);
+                ride(act);
             }
         }
         return true;
@@ -288,7 +429,15 @@ class MainDelegate extends WatchUi.InputDelegate {
         }
         var xy = clickEvent.getCoordinates();
         var page = view.page;
-        if (page == Settings.PAGE_RIDE && !Style.EDGE) {
+        if (page == Settings.PAGE_RIDE && raceOn()) {
+            var ra = view.raceActionAt(xy[0], xy[1]);
+            if (ra != null) {
+                $.gRemote.send(ra);
+            }
+        } else if (page == Settings.PAGE_RIDE && guardMode() == Settings.GUARD_HOLD
+                && isTurn(view.rideActionAt(xy[0], xy[1]))) {
+            rideHeld(view.rideActionAt(xy[0], xy[1]));
+        } else if (page == Settings.PAGE_RIDE && !Style.EDGE) {
             $.gRemote.send(Actions.POWERUP);
         } else if (page == Settings.PAGE_WORKOUT && view.workoutActionAt(xy[0], xy[1]) == Actions.SKIP) {
             $.gRemote.send(Actions.SKIP);
@@ -312,12 +461,15 @@ class MainDelegate extends WatchUi.InputDelegate {
             return true;
         }
         if (view.page == Settings.PAGE_RIDE) {
+            if (raceOn()) {
+                return true;        // no turns in race mode
+            }
             if (dir == WatchUi.SWIPE_LEFT) {
-                $.gRemote.send(Actions.LEFT);
+                ride(Actions.LEFT);
             } else if (dir == WatchUi.SWIPE_RIGHT) {
-                $.gRemote.send(Actions.RIGHT);
+                ride(Actions.RIGHT);
             } else if (dir == WatchUi.SWIPE_UP) {
-                $.gRemote.send(Actions.STRAIGHT);
+                ride(Actions.STRAIGHT);
             }
         } else if (dir == WatchUi.SWIPE_UP) {
             view.setPage(view.page - 1);

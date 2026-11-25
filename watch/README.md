@@ -91,6 +91,36 @@ skip.
 
 **Connect:** START or tap = device list, BACK = exit confirmation, hold UP = menu.
 
+### Turn protection (default: press twice)
+
+Turns, straight on and the U-turn need a second action, so a stray press does not take you off
+the route. Ride On, power-up, the Actions and Workout pages are never delayed. Menu: *Turn
+protection* = Press twice (default) · Hold · Off.
+
+| Mode | Turns and straight on | U-turn | Menu |
+|---|---|---|---|
+| Press twice | first press (or tap, swipe, tile) marks the action ("Turn left? Again to send", short tick), the same press again within 2 s sends it; another action cancels | hold START twice | hold UP |
+| Hold | hold UP/START (Edge: LAP/START/ENTER) until the ring is full (0.6 s), sent on release; a short press only shows "Hold to turn"; touch: hold the field or tile | hold START 1.5 s | hold UP 1.5 s |
+| Off | as in the tables above | hold START | hold UP |
+
+The watch itself turns a held UP into the menu key after about a second; with *Hold* the app
+ignores that key while UP is held for a turn and opens the menu at 1.5 s itself.
+
+### Race mode
+
+Menu: *Race mode* = Off · Power-up only · Power-up + Ride On. The ride page becomes a race page
+with a big power-up and a red "RACE" under the state dot; no turns, no U-turn, no turn protection.
+Stays on until switched off, also after a restart.
+
+| Button | Power-up only | Power-up + Ride On |
+|---|---|---|
+| START, BACK | Power-up | Power-up |
+| DOWN | – | Ride On |
+| hold UP | Menu | Menu |
+| hold BACK | nothing (no exit in a sprint; exit through the menu) | nothing |
+| Touch | tap anywhere: power-up | Ride On disc (bottom left): Ride On, elsewhere power-up |
+| Edge | every button but BACK: power-up; one big tile | UP and the bottom tile: Ride On, the rest power-up |
+
 ### Edge bike computers
 
 LAP (bottom left) and START (bottom right) work on every model. The button-only models
@@ -107,7 +137,8 @@ U-turn, More); tap them. Edge devices have no vibration motor and beep instead.
 
 ### Settings menu (hold UP)
 
-Exit app (first, so it is quick to reach) · vibration / tone on/off · vibrate at junctions · start
+Exit app (first, so it is quick to reach) · race mode (off / power-up only / power-up + Ride On) ·
+turn protection (press twice / hold / off) · vibration / tone on/off · vibrate at junctions · start
 page (Ride/Actions/Workout) · go to Ride/Actions/Workout · choose device · reconnect · bridge (info
 text of the bridge).
 

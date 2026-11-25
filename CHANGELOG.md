@@ -6,6 +6,15 @@ All notable changes to this project are documented in this file. The format is b
 
 ## [Unreleased]
 
+### Added
+- Watch app: **turn protection**, on by default. Turns, straight on and the U-turn need a second
+  action: *press twice* (the same button, tap or swipe again within 2 s; the first press shows
+  "Turn left? Again to send") or *hold* (hold until the ring is full, 0.6 s; U-turn and menu at
+  1.5 s). Ride On and power-up stay instant. Menu: *Turn protection*.
+- Watch app: **race mode** with two layouts, chosen in the menu: *power-up only* (one big
+  power-up, START and BACK fire it) and *power-up + Ride On* (DOWN gives a Ride On). No turns, no
+  U-turn, and holding BACK does not exit. Watches (MIP, AMOLED) and Edge.
+
 ## [0.3.0] - 2026-11-25
 
 ### Changed

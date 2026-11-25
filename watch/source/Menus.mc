@@ -11,6 +11,10 @@ function openSettingsMenu(view) {
     // Exit comes first: on firmware with a task switcher, holding BACK no longer reaches the app,
     // so the menu is the way out and must not hide at the end of a long list.
     menu.addItem(new WatchUi.MenuItem(Rez.Strings.MenuExit, null, :exit, null));
+    menu.addItem(new WatchUi.MenuItem(Rez.Strings.MenuRace,
+        Settings.raceName(Settings.race()), :race, null));
+    menu.addItem(new WatchUi.MenuItem(Rez.Strings.MenuGuard,
+        Settings.guardName(Settings.guard()), :guard, null));
     menu.addItem(new WatchUi.ToggleMenuItem(Rez.Strings.MenuVibe,
         { :enabled => Rez.Strings.On, :disabled => Rez.Strings.Off },
         :vibe, Settings.vibrationOn(), null));
@@ -47,6 +51,19 @@ class SettingsMenuDelegate extends WatchUi.Menu2InputDelegate {
             Settings.setVibration((item as WatchUi.ToggleMenuItem).isEnabled());
         } else if (id == :junctionVibe) {
             Settings.setJunctionVibration((item as WatchUi.ToggleMenuItem).isEnabled());
+        } else if (id == :race) {
+            var r = (Settings.race() + 1) % Settings.RACE_COUNT;
+            Settings.setRace(r);
+            item.setSubLabel(Settings.raceName(r));
+            WatchUi.requestUpdate();
+        } else if (id == :guard) {
+            // order on the watch: press twice (default) -> hold -> off -> press twice
+            var g = Settings.guard();
+            g = (g == Settings.GUARD_TWICE) ? Settings.GUARD_HOLD
+                : ((g == Settings.GUARD_HOLD) ? Settings.GUARD_OFF : Settings.GUARD_TWICE);
+            Settings.setGuard(g);
+            item.setSubLabel(Settings.guardName(g));
+            WatchUi.requestUpdate();
         } else if (id == :startPage) {
             var p = (Settings.startPage() + 1) % Settings.PAGE_COUNT;
             Settings.setStartPage(p);

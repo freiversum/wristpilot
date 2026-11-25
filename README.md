@@ -128,6 +128,14 @@ anywhere for the power-up. Swipe down for the next page.
 On touch models, tap the tiles: Left, Straight on, Right, Ride On, Power-up, U-turn and More.
 ENTER, UP, DOWN and BACK exist on the button-only models (Edge 530/540/550, MTB).
 
+### Turn protection and race mode
+
+- **Turn protection** (on by default): turns, straight on and the U-turn are only sent after a
+  second action, either the same button again within 2 s or, if you prefer, a hold until the
+  ring is full. Ride On and power-up stay instant. Switch it in the menu (hold UP).
+- **Race mode:** a race page with a big power-up button and no turns or U-turn, optionally with
+  Ride On. START and BACK both fire the power-up; holding BACK does not exit.
+
 ### More pages
 
 - **Actions:** elbow flick, wave, Nice, Hammer Time, bell, photo, camera view, HUD on/off
