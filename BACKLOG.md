@@ -35,7 +35,7 @@ Done in the code, Tretlager and the project pages (local commits). Left to do:
   that is in progress there
 - [x] Project pages: live on 2026-11-25 (DE + EN) (slug changes to
   `/projekte/wristpilot/`); `lui-tag-redirects` 1.4.0 test/live for the old DE address; an /en/
-  redirect for `/en/projects/zwindoor/…` is still missing (404); Wristpilot is not a lui-projects card
+  redirect for `/en/projects/zwindoor/…` live since lui-tag-redirects 1.5.0; Wristpilot is not a lui-projects card
 - [x] Store: beta 1.0.1 uploaded as "Wristpilot" with new text, hero and Edge screenshot (2026-11-25)
 - [ ] Install the beta 1.0.1 from the store on the watch and test it
 
