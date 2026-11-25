@@ -124,8 +124,9 @@ def _mip_palette():
     return pal
 
 
-def hero(lang):
-    w, h = 1440, 720
+def hero(lang, w=1440, h=720):
+    """Store hero (1440x720); with w, h the same picture on a larger canvas (project page: 1500x1000)."""
+    dx, dy = (w - 1440) // 2, (h - 720) // 2
     img = Image.new("RGB", (w, h), DEEP)
     d = ImageDraw.Draw(img)
     for y in range(h):
@@ -133,16 +134,17 @@ def hero(lang):
         d.line((0, y, w, y), fill=(int(18 + 20 * t), int(24 + 14 * t), int(38 + 30 * t)))
     # subtle orange glow on the right
     glow = Image.new("RGB", (w, h), (0, 0, 0))
-    ImageDraw.Draw(glow).ellipse((820, -180, 1640, 640), fill=(120, 50, 20))
+    ImageDraw.Draw(glow).ellipse((820 + dx, -180 + dy, 1640 + dx, 640 + dy), fill=(120, 50, 20))
     img = Image.blend(img, glow.filter(ImageFilter.GaussianBlur(120)), 0.35)
     d = ImageDraw.Draw(img)
     title = "Wristpilot"
     sub = {"en": "Turn, Ride On and fire\npower-ups from the buttons\nof your Garmin watch.",
            "de": "Abbiegen, Ride On und\nPower-ups mit den Tasten\ndeiner Garmin-Uhr."}[lang]
-    d.text((90, 230), title, font=font(96), fill=(255, 255, 255))
-    d.multiline_text((94, 380), sub, font=font(34, bold=False), fill=(214, 220, 230), spacing=14)
-    d.rectangle((94, 352, 214, 358), fill=ORANGE)
+    d.text((90 + dx, 230 + dy), title, font=font(96), fill=(255, 255, 255))
+    d.multiline_text((94 + dx, 380 + dy), sub, font=font(34, bold=False), fill=(214, 220, 230), spacing=14)
+    d.rectangle((94 + dx, 352 + dy, 214 + dx, 358 + dy), fill=ORANGE)
     for (cx, cy, r), name in (((1010, 350, 200), "amoled-01-ride"), ((1290, 450, 140), "01-ride")):
+        cx, cy = cx + dx, cy + dy
         disp = display_only(Image.open(RAW / f"{name}.png")).resize((2 * r, 2 * r), Image.LANCZOS)
         ring = ImageDraw.Draw(img)
         ring.ellipse((cx - r - 14, cy - r - 14, cx + r + 14, cy + r + 14), fill=(52, 54, 60))
@@ -179,6 +181,7 @@ def main():
     print("store-icon", save_small(store_icon(), OUT / "store-icon.png", 300_000) // 1024, "KB")
     for lang in ("en", "de"):
         print("hero", lang, save_small(hero(lang), OUT / f"hero-{lang}.png", 2_000_000) // 1024, "KB")
+        hero(lang, 1500, 1000).save(OUT / f"hero-3x2-{lang}.webp", quality=88)   # project page (3:2)
     device_icon().save(OUT / "device-icon-amoled.png")
     device_icon(mip=True).save(OUT / "device-icon-mip.png")
     print("device icons ok")
