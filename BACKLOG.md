@@ -69,9 +69,9 @@ Before the ride: set `companion_capture` (see docs/architecture.md), afterwards 
 ## Ideas (2026-11-24)
 
 - [x] **Turn protection** (2026-11-25, Christoph): turns and U-turn only after a second action, on by
-  default; variants "press twice" (S1) and "hold" (S2), chosen in the menu. Check on the real watch
-  that holding UP for a left turn does not open the menu (the app ignores the system's menu key
-  while UP is held for a turn)
+  default; variants "press twice" (S1) and "hold" (S2), chosen in the menu. Tested on the fēnix 7X Pro
+  (27.18) with a dry-run bridge on tinytin, 2026-11-25: both protection modes and both race layouts
+  work, holding UP for a left turn does not open the menu
 
 - [ ] **Steering:** move left or right within the road (lane position), not just pick a turn at a
   junction. Find out how Zwift takes steering input: keyboard (arrow keys while riding?), a BLE
@@ -79,7 +79,7 @@ Before the ride: set `companion_capture` (see docs/architecture.md), afterwards 
   how the watch sends it (hold UP/DOWN, tilt, swipe)
 - [x] **Race mode** built 2026-11-25 (variants A "power-up only" and B "power-up + Ride On", chosen in
   the menu; mockup `_intern/mockups/race-mode.html`); steering fields left out until steering works.
-  Test on the watch in a real race. Original idea: a second ride screen for races. Power-up big and in the middle, no turns,
+  Tested on the fēnix 7X Pro with a dry-run bridge (2026-11-25); still to try in a real race. Original idea: a second ride screen for races. Power-up big and in the middle, no turns,
   no braking, no U-turn, so a stray press cannot cost the race. Steering to the left or right edge
   of the road if steering works (see above). Reached from the menu or as start page
 - [ ] **Button layout in the settings:** choose which action sits on which button and tile, per page
