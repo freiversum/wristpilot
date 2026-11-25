@@ -6,6 +6,8 @@ All notable changes to this project are documented in this file. The format is b
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-11-25
+
 ### Changed
 - **ZWindoor is now called Wristpilot.** The name no longer leans on Zwift's, and the app also
   works with other platforms through OpenBikeControl. Everything is renamed: watch app, bridge
@@ -119,7 +121,8 @@ First release.
   feedback is now a tone, and the menu item is called "Vibration / tone".
 - Edge with touch: the workout hint says "Hold to skip" instead of "hold DOWN: skip".
 
-[Unreleased]: https://github.com/freiversum/wristpilot/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/freiversum/wristpilot/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/freiversum/wristpilot/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/freiversum/wristpilot/compare/v0.1.1...v0.2.0
 [0.1.1]: https://github.com/freiversum/wristpilot/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/freiversum/wristpilot/releases/tag/v0.1.0
