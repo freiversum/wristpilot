@@ -6,6 +6,14 @@ All notable changes to this project are documented in this file. The format is b
 
 ## [Unreleased]
 
+### Fixed
+- Watch app: "Exit app" is now the first item of the settings menu (hold UP). On firmware with a
+  task switcher (fēnix 7X Pro 27.18) holding BACK opens the system's app switcher instead of the
+  exit confirmation, and the item at the end of the long menu was easy to miss.
+- Watch app: handles being sent to the background by the task switcher on devices that support
+  it (`onInactive`/`onActive`, fēnix 8 and newer): a long press that was running is dropped and the
+  screen is redrawn on return.
+
 ## [0.2.0] - 2026-11-24
 
 ### Changed

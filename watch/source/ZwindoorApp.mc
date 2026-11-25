@@ -53,6 +53,24 @@ class ZwindoorApp extends Application.AppBase {
         }
     }
 
+    // Task switcher on devices with API 4.2.3 lifecycle support (fenix 8, Venu 3, ...): the app goes
+    // to the background without onStop. A long press that started before must not fire later, and
+    // the screen has to be redrawn when the app comes back. (The fenix 7 Pro, firmware 27.18, does
+    // not call these: holding BACK ends the app with a plain onStop.)
+    function onInactive(state) {
+        if ($.gInput != null) {
+            $.gInput.resetKeys();
+        }
+    }
+
+    function onActive(state) {
+        if ($.gInput != null) {
+            $.gInput.resetKeys();
+        }
+        $.gDirty = true;
+        WatchUi.requestUpdate();
+    }
+
     function getInitialView() {
         $.gView = new MainView();
         $.gInput = new MainDelegate($.gView);

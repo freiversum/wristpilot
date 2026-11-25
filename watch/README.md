@@ -69,7 +69,7 @@ triggers on release, a long press after 600 ms while holding.
 | UP (left, 9 o'clock) | Turn left | Settings menu |
 | START (right, 2 o'clock) | Turn right | U-turn |
 | DOWN (left, 8 o'clock) | Ride On | Straight on |
-| BACK (right, 4 o'clock) | Power-up | Exit confirmation |
+| BACK (right, 4 o'clock) | Power-up | Exit confirmation (on firmware with a task switcher, e.g. fēnix 7 Pro 27.x and fēnix 8, the system takes this for its app switcher; exit through the menu) |
 | LIGHT | left to the system | |
 
 | Touch | Action |
@@ -83,7 +83,7 @@ triggers on release, a long press after 600 ms while holding.
 MIP and AMOLED watches share the same controls; only the drawing differs.
 
 **Actions:** UP/DOWN move the selection, START sends, BACK returns to Ride, hold UP for the menu,
-hold BACK to exit. Tapping a tile sends at once.
+exit through the menu. Tapping a tile sends at once.
 
 **Workout:** UP = easier, START = harder, **hold DOWN = skip interval** (a short DOWN only shows
 the hint), BACK = Ride. Touch: left half easier, right half harder, **hold** the bottom area to
@@ -107,8 +107,9 @@ U-turn, More); tap them. Edge devices have no vibration motor and beep instead.
 
 ### Settings menu (hold UP)
 
-Vibration / tone on/off · vibrate at junctions · start page (Ride/Actions/Workout) · go to
-Ride/Actions/Workout · choose device · reconnect · bridge (info text of the bridge) · exit.
+Exit app (first, so it is quick to reach) · vibration / tone on/off · vibrate at junctions · start
+page (Ride/Actions/Workout) · go to Ride/Actions/Workout · choose device · reconnect · bridge (info
+text of the bridge).
 
 ### Feedback
 

@@ -8,6 +8,9 @@ import Toybox.WatchUi;
 
 function openSettingsMenu(view) {
     var menu = new WatchUi.Menu2({ :title => Rez.Strings.AppName });
+    // Exit comes first: on firmware with a task switcher, holding BACK no longer reaches the app,
+    // so the menu is the way out and must not hide at the end of a long list.
+    menu.addItem(new WatchUi.MenuItem(Rez.Strings.MenuExit, null, :exit, null));
     menu.addItem(new WatchUi.ToggleMenuItem(Rez.Strings.MenuVibe,
         { :enabled => Rez.Strings.On, :disabled => Rez.Strings.Off },
         :vibe, Settings.vibrationOn(), null));
@@ -25,7 +28,6 @@ function openSettingsMenu(view) {
     if (info != null) {
         menu.addItem(new WatchUi.MenuItem(Rez.Strings.MenuInfo, info, :info, null));
     }
-    menu.addItem(new WatchUi.MenuItem(Rez.Strings.MenuExit, null, :exit, null));
     WatchUi.pushView(menu, new SettingsMenuDelegate(view), WatchUi.SLIDE_UP);
 }
 
