@@ -20,6 +20,25 @@
   and in the store description say "exit through the menu (hold UP), do not reopen from the switcher"
   (store text done in `watch/store/listing.md`, 2026-11-25)
 
+## Rename to Wristpilot (2026-11-25)
+
+Done in the code, Tretlager and the project pages (local commits). Left to do:
+
+- [ ] Trademark check "Wristpilot" in TMview (classes 9 and 28)
+- [ ] Rename the GitHub repository to `freiversum/wristpilot` (settings), then
+  `git remote set-url origin git@github.com:freiversum/wristpilot.git`; new description, topics,
+  social preview
+- [ ] Watch test on tinytin: watch finds the bridge as "Wristpil"/"Wristpilot", all actions OK
+- [ ] New simulator captures where the old name is on screen: connect screen (`raw/05-connect.png`)
+  and Edge 1040 (`raw/edge1040-*.png`, title bar); then `make_assets.py`, and the project page
+  images `wristpilot-feedback.webp` and `wristpilot-edge.webp`
+- [ ] Release 0.3.0 (tag, Actions builds `WristpilotBridge.exe`), Tretlager release
+- [ ] Project pages: `lui-deploy projects-page test`, then live (slug changes to
+  `/projekte/wristpilot/`); `lui-tag-redirects` 1.4.0 test/live for the old DE address; an /en/
+  redirect for `/en/projects/zwindoor/…` is still missing; repository in the lui-projects backend
+  card
+- [ ] Store: beta 1.0.1 with the new name, images and privacy URL
+
 ## Companion link in a real ride
 
 Before the ride: set `companion_capture` (see docs/architecture.md), afterwards read the file with
