@@ -88,9 +88,16 @@ Before the ride: set `companion_capture` (see docs/architecture.md), afterwards 
   work, holding UP for a left turn does not open the menu
 
 - [ ] **Steering:** move left or right within the road (lane position), not just pick a turn at a
-  junction. Find out how Zwift takes steering input: keyboard (arrow keys while riding?), a BLE
-  steering device (Sterzo, Zwift Play) the bridge would emulate, or the Companion link. Then decide
-  how the watch sends it (hold UP/DOWN, tilt, swipe)
+  junction. **Proven possible 2026-11-25** on tinytin (Tretlager 0.14.0, Zwift under Wine): a
+  virtual Elite Sterzo Smart, offered over DIRCON (mDNS `_wahoo-fitness-tnp._tcp`, name "STERZO
+  SMART 5C90", service `347b0001-7635-408b-8918-8ff3949ce592`), is paired by Zwift as steering
+  device and the avatar steers. Zwift only subscribed to the angle characteristic `347b0030-…`
+  (float32 little-endian, degrees, ±25 tested, 10 per second) and wrote no handshake to `…0031`.
+  Experiment code: Tretlager branch `sim-rider` (local only, `~/.cache/tretlager-sim-rider`).
+  Plan: the Wristpilot core offers the Sterzo itself over DIRCON (own port, mDNS through the
+  existing announcer: Avahi on Linux, zeroconf on Windows), so Windows, Tretlager and the Linux
+  bridge get it alike; a new protocol command carries the steering from the watch. Open: how the
+  watch steers (mockup first: buttons, tilt, touch), and which ride pages get it
 - [x] **Race mode** built 2026-11-25 (variants A "power-up only" and B "power-up + Ride On", chosen in
   the menu; mockup `_intern/mockups/race-mode.html`); steering fields left out until steering works.
   Tested on the fēnix 7X Pro with a dry-run bridge (2026-11-25); still to try in a real race. Original idea: a second ride screen for races. Power-up big and in the middle, no turns,
