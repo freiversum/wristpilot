@@ -89,12 +89,12 @@ TASTEN (blind bedienbar – linke Tasten für links, rechte für rechts)
 - DOWN: Ride On (halten: geradeaus)
 - BACK: Power-up (halten: beenden)
 
-Auf manchen Uhren (fēnix 7 Pro mit Firmware 27.x, fēnix 8) öffnet BACK halten stattdessen den App-Umschalter des Systems. Dann über das Menü beenden (UP halten, „App beenden“ ist der erste Eintrag) und Wristpilot nicht aus dem Umschalter wieder öffnen: Die Firmware der Uhr kann die App von dort erst nach einem Neustart der Uhr wieder öffnen.
+Öffnet BACK halten den App-Umschalter (fēnix 7 Pro mit Firmware 27.x, fēnix 8), über das Menü beenden (UP halten, „App beenden“) und Wristpilot nicht aus dem Umschalter öffnen: Die Firmware kann das erst nach einem Neustart der Uhr.
 
 Touch: nach links/rechts wischen zum Abbiegen, nach oben für geradeaus, Viertel antippen für seine Aktion. Nach unten wischen für weitere Seiten.
 
 SCHUTZ VOR FEHLDRUCK (ab Werk an)
-Abbiegen, geradeaus und U-Turn gehen erst nach einer zweiten Aktion raus, damit ein versehentlicher Druck dich nicht von der Strecke bringt: dieselbe Taste innerhalb von 2 Sekunden nochmal drücken, oder im Menü „Halten“ wählen und halten, bis der Ring voll ist. Ride On und Power-up bleiben sofort. Im Menü abschaltbar.
+Abbiegen, geradeaus und U-Turn gehen erst nach einer zweiten Aktion raus: dieselbe Taste binnen 2 Sekunden nochmal drücken oder (Menü: „Halten“) halten, bis der Ring voll ist. Ride On und Power-up bleiben sofort. Im Menü abschaltbar.
 
 RACE-MODUS
 Eine Rennseite mit großem Power-up, ohne Abbiegen und U-Turn, wahlweise mit Ride On. START und BACK lösen das Power-up aus, BACK halten beendet die App nicht. Einschalten im Menü (UP halten).
@@ -107,7 +107,7 @@ RÜCKMELDUNG AM HANDGELENK
 Jeder Befehl wird von der Bridge bestätigt: kurze Vibration, wenn er angekommen ist, doppelte Vibration mit Grund, wenn Zwift nicht im Vordergrund war oder nicht läuft.
 
 OPTIONAL: ZWIFT-COMPANION-VERBINDUNG
-Die Bridge kann sich auch so mit Zwift verbinden wie die Zwift Companion App. Dann zeigt die Uhr den nächsten Abzweig mit den möglichen Richtungen, das bereitliegende Power-up und die erhaltenen Ride Ons, und die Befehle funktionieren ohne Tastatur. Solange das an ist, ersetzt es die Companion App auf dem Smartphone. Die Verbindung ist nicht offiziell dokumentiert; bitte die Hinweise in der Bridge lesen, bevor du sie einschaltest.
+Die Bridge kann sich wie die Zwift Companion App mit Zwift verbinden. Dann zeigt die Uhr den nächsten Abzweig, das bereitliegende Power-up und die erhaltenen Ride Ons, und die Befehle laufen ohne Tastatur. Die Verbindung ist nicht offiziell dokumentiert; bitte vorher die Hinweise in der Bridge lesen.
 
 AUCH FÜR ANDERE APPS
 Die Bridge kann die Uhr im Netzwerk als OpenBikeControl-Controller anbieten, für Trainings-Apps wie MyWhoosh, TrainingPeaks Virtual oder Incyclist.
