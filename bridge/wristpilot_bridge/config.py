@@ -26,6 +26,10 @@ class Config:
     keyboard: bool = True           # type Zwift shortcuts
     obc: bool = False               # also offer the watch as an OpenBikeControl controller on the network
     obc_port: int = 36870
+    steering: bool = True           # offer a virtual steering device (Sterzo) to Zwift over DIRCON
+    steering_port: int = 36880
+    steering_angle: float = 20.0    # degrees of one lane change
+    steering_time: float = 0.7      # seconds of one lane change
     bring_to_front: bool = True     # activate the Zwift window if another window has the focus
     hold_ms: int = 40               # time between key press and release
     keys: dict[str, str] = field(default_factory=dict)  # action slug -> key name ("" = no key)

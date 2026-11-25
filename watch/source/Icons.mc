@@ -47,6 +47,13 @@ module Icons {
             // motion lines
             dc.drawLine(x - 0.95 * r, y - 0.6 * r, x - 0.75 * r, y - 0.2 * r);
             dc.drawLine(x - 0.95 * r, y - 0.05 * r, x - 0.75 * r, y + 0.35 * r);
+        } else if (sym == :laneLeft || sym == :laneRight) {
+            // lane change: straight up from the bottom, then diagonally to the side, arrow head
+            var d = (sym == :laneLeft) ? -1 : 1;
+            dc.setPenWidth(pen + 1);
+            dc.drawLine(x - d * 0.35 * r, y + 0.9 * r, x - d * 0.35 * r, y + 0.1 * r);
+            dc.drawLine(x - d * 0.35 * r, y + 0.1 * r, x + d * 0.45 * r, y - 0.6 * r);
+            poly(dc, x, y, r, [[d * 0.75, -0.9], [d * 0.05, -0.75], [d * 0.6, -0.2]]);
         } else if (sym == :star) {
             poly(dc, x, y, r, [[0.0, -1.0], [0.24, -0.33], [0.95, -0.31], [0.38, 0.12], [0.59, 0.81],
                 [0.0, 0.4], [-0.59, 0.81], [-0.38, 0.12], [-0.95, -0.31], [-0.24, -0.33]]);

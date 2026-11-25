@@ -29,6 +29,9 @@ def test_command_roundtrip():
 
 def test_every_action_has_a_known_key():
     for a in actions.ACTIONS:
+        if a.id == actions.LANE:
+            assert a.key == ""   # steering goes through the virtual Sterzo, not the keyboard
+            continue
         assert a.key == "camera" or keys.lookup(a.key), a
 
 

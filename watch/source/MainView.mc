@@ -162,9 +162,14 @@ class MainView extends WatchUi.View {
     // [x, y, r] of the power-up disc and the Ride On disc (round screens)
     hidden function raceDiscs() {
         if (raceRideOn()) {
-            return [[cx + 8 * s, cy + 4 * s, 58 * s], [cx - 78 * s, cy + 62 * s, 26 * s]];
+            return [[cx + 18 * s, cy + 28 * s, 54 * s], [cx - 74 * s, cy + 64 * s, 24 * s]];
         }
-        return [[cx, cy + 14 * s, 70 * s], null];
+        return [[cx + 6 * s, cy + 30 * s, 58 * s], null];
+    }
+
+    // [x, y, r] of the lane-change discs: left next to UP (9 o'clock), right next to START (2 o'clock)
+    hidden function laneDiscs() {
+        return [[cx - 84 * s, cy - 26 * s, 24 * s], [cx + 74 * s, cy - 66 * s, 24 * s]];
     }
 
     // [[action, x, y, w, h], ...] on the Edge
@@ -172,13 +177,17 @@ class MainView extends WatchUi.View {
         var top = (h * 0.11).toNumber();
         var gap = (w * 0.025).toNumber();
         var tw = w - 2 * gap;
+        var w2 = (w - 3 * gap) / 2;
+        var laneH = ((h - top) * 0.20).toNumber();
+        var y1 = top + gap + laneH + gap;
+        var lanes = [[Actions.LANE_L, gap, top + gap, w2, laneH], [Actions.LANE_R, 2 * gap + w2, top + gap, w2, laneH]];
         if (!raceRideOn()) {
-            return [[Actions.POWERUP, gap, top + gap, tw, h - top - 2 * gap]];
+            return lanes.addAll([[Actions.POWERUP, gap, y1, tw, h - y1 - gap]]);
         }
-        var rideH = ((h - top) * 0.22).toNumber();
-        var powH = h - top - rideH - 3 * gap;
-        return [[Actions.POWERUP, gap, top + gap, tw, powH],
-                [Actions.RIDE_ON, gap, top + 2 * gap + powH, tw, rideH]];
+        var rideH = ((h - top) * 0.18).toNumber();
+        var powH = h - y1 - rideH - 2 * gap;
+        return lanes.addAll([[Actions.POWERUP, gap, y1, tw, powH],
+                             [Actions.RIDE_ON, gap, y1 + powH + gap, tw, rideH]]);
     }
 
     // Which race action a touch at (x, y) means (null = none).
@@ -192,6 +201,15 @@ class MainView extends WatchUi.View {
                 }
             }
             return null;
+        }
+        var lanes = laneDiscs();
+        for (var i = 0; i < 2; i++) {
+            var lx = x - lanes[i][0];
+            var ly = y - lanes[i][1];
+            var lr = lanes[i][2] + 16 * s;
+            if (lx * lx + ly * ly <= lr * lr) {
+                return i == 0 ? Actions.LANE_L : Actions.LANE_R;
+            }
         }
         var d = raceDiscs()[1];
         if (d != null) {
@@ -222,6 +240,18 @@ class MainView extends WatchUi.View {
             var rad = (w * 0.04).toNumber();
             for (var i = 0; i < tiles.size(); i++) {
                 var t = tiles[i];
+                if (t[0] == Actions.LANE_L || t[0] == Actions.LANE_R) {
+                    dc.setColor(A_CYAN, Graphics.COLOR_TRANSPARENT);
+                    dc.setPenWidth(2);
+                    dc.drawRoundedRectangle(t[1], t[2], t[3], t[4], rad);
+                    dc.setPenWidth(1);
+                    var linfo = Actions.info(t[0]);
+                    Icons.draw(dc, linfo[4], t[1] + t[3] / 2, t[2] + t[4] * 0.40, t[4] * 0.24, A_CYAN);
+                    dc.setColor(A_CYAN, Graphics.COLOR_TRANSPARENT);
+                    dc.drawText(t[1] + t[3] / 2, t[2] + t[4] * 0.82, Graphics.FONT_XTINY, WatchUi.loadResource(linfo[2]),
+                        Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+                    continue;
+                }
                 var pow = t[0] == Actions.POWERUP;
                 var col = pow ? (powerOn ? A_ORANGE : A_GREY) : A_GREEN;
                 dc.setColor(pow ? (powerOn ? 0x1A0D05 : 0x111111) : 0x06180C, Graphics.COLOR_TRANSPARENT);
@@ -243,6 +273,20 @@ class MainView extends WatchUi.View {
                 }
             }
         } else {
+            var lanes = laneDiscs();
+            for (var i = 0; i < 2; i++) {
+                var l = lanes[i];
+                var lsym = i == 0 ? :laneLeft : :laneRight;
+                if (Style.AMOLED) {
+                    dc.setColor(TINT_CYAN, Graphics.COLOR_TRANSPARENT);
+                    dc.fillCircle(l[0], l[1], l[2]);
+                    Icons.draw(dc, lsym, l[0], l[1], l[2] * 0.6, A_CYAN);
+                } else {
+                    dc.setColor(Actions.COLOR_CYAN, Graphics.COLOR_TRANSPARENT);
+                    dc.fillCircle(l[0], l[1], l[2]);
+                    Icons.draw(dc, lsym, l[0], l[1], l[2] * 0.6, Actions.COLOR_BLACK);
+                }
+            }
             var discs = raceDiscs();
             var p = discs[0];
             var pr = p[2];
@@ -659,14 +703,16 @@ class MainView extends WatchUi.View {
 
     // --- Actions -----------------------------------------------------------
 
-    // [x, y, size] of tile i (two rows of four)
+    // [x, y, size] of tile i (rows of four; the last, shorter row is centred)
     function tileRect(i) {
-        var t = (56 * s).toNumber();
+        var t = (46 * s).toNumber();
         var g = (6 * s).toNumber();
-        var x0 = cx - (4 * t + 3 * g) / 2;
-        var y0 = (76 * s).toNumber();
+        var y0 = (60 * s).toNumber();
+        var n = Actions.ACTION_TILES.size();
         var col = i % 4;
         var row = i / 4;
+        var inRow = (row == (n - 1) / 4) ? n - row * 4 : 4;
+        var x0 = cx - (inRow * t + (inRow - 1) * g) / 2;
         return [x0 + col * (t + g), y0 + row * (t + g), t];
     }
 
@@ -691,7 +737,7 @@ class MainView extends WatchUi.View {
             }
         }
         var sel = Actions.info(tiles[selected]);
-        drawLabel(dc, cx, (222 * s).toNumber(), Graphics.FONT_SMALL, WatchUi.loadResource(sel[2]));
+        drawLabel(dc, cx, (238 * s).toNumber(), Graphics.FONT_TINY, WatchUi.loadResource(sel[2]));
         drawDots(dc);
     }
 

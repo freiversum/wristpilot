@@ -21,6 +21,7 @@ from .companion import CompanionLink
 from .config import Config
 from .engine import Engine, Event
 from .obc import ObcServer
+from .steering import SteeringServer
 from .protocol import Command, State, encode_command, encode_haptic
 from .sinks import KeySink, default_sink
 
@@ -43,6 +44,7 @@ class BridgeRunner:
         self.peripheral: Peripheral | None = None
         self.obc: ObcServer | None = None
         self.companion: CompanionLink | None = None
+        self.steering: SteeringServer | None = None
         self.token_provider = token_provider   # blocking; Zwift access token for the Companion link
         self.loop: asyncio.AbstractEventLoop | None = None
         self.thread: threading.Thread | None = None
@@ -67,6 +69,7 @@ class BridgeRunner:
             await self.peripheral.start()
             await self._apply_obc()
             await self._apply_companion()
+            await self._apply_steering()
             self.running, self.error = True, ""
             self._changed()
             watch = False
@@ -96,6 +99,9 @@ class BridgeRunner:
             if self.companion:
                 await self.companion.stop()
                 self.companion = None
+            if self.steering:
+                await self.steering.stop()
+                self.steering = None
             await self.peripheral.stop()
             self.engine.close()
             sink.close()
@@ -135,6 +141,28 @@ class BridgeRunner:
         if self.engine:
             self.engine.companion = self.companion
             self._game_changed()
+
+    async def _apply_steering(self) -> None:
+        want = self.config.steering
+        if want and not self.steering:
+            # own announcer (one mDNS entry each); none when a test injected its own announcer
+            self.steering = SteeringServer(self.config.steering_port,
+                                           announcer=None if self._announcer else default_announcer(),
+                                           angle=self.config.steering_angle,
+                                           duration=self.config.steering_time)
+            try:
+                await self.steering.start()
+            except OSError as e:
+                log.warning("steering: port %d: %s", self.config.steering_port, e)
+                self.steering = None
+        elif not want and self.steering:
+            await self.steering.stop()
+            self.steering = None
+        elif self.steering:
+            self.steering.angle = self.config.steering_angle
+            self.steering.duration = self.config.steering_time
+        if self.engine:
+            self.engine.steering = self.steering
 
     def _game_changed(self) -> None:
         """Push the game state to the watch at once (junctions do not wait for the next poll)."""
@@ -191,6 +219,7 @@ class BridgeRunner:
         self.config.save(self.config_path)
         self._submit(self._apply_obc())
         self._submit(self._apply_companion())
+        self._submit(self._apply_steering())
         self._changed()
 
     def test_action(self, action: int, value: int = 1) -> Future | None:

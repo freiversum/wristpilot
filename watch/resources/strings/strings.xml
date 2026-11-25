@@ -106,4 +106,7 @@
     <string id="ModeNormal">Normal</string>
     <string id="ModeParty">Party</string>
     <string id="LblParty">PARTY</string>
+    <string id="ActLaneLeft">Lane left</string>
+    <string id="ActLaneRight">Lane right</string>
+    <string id="Res7">Steering not paired in Zwift</string>
 </strings>

@@ -45,6 +45,7 @@ class Result(IntEnum):
     OUTPUT_FAILED = 4
     DISABLED = 5         # remote switched off in the bridge
     MALFORMED = 6
+    NO_STEERING = 7      # lane change, but Zwift has not paired the bridge's steering device
 
 
 class State(IntFlag):

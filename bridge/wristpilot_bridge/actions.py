@@ -26,6 +26,9 @@ CAMERA = 0x40
 HUD = 0x44
 POWERUP = 0x50
 BELL = 0x80  # app-specific range 0x80-0x9F
+LANE = 0x81  # app-specific: lane change through the virtual steering device (steering.py)
+LANE_LEFT = 0x01
+LANE_RIGHT = 0x02
 
 # Emote values (OBC: 0x01 = cycle, 0x02-0x1F app-specific)
 EMOTE_RIDE_ON = 0x01
@@ -66,6 +69,9 @@ ACTIONS: tuple[Action, ...] = (
     Action(EMOTE, EMOTE_NICE, "f5", "Nice", "Nice"),
     Action(EMOTE, EMOTE_TOAST, "f7", "I'm toast", "I'm toast"),
     Action(BELL, ANY, "f8", "Bell", "Klingel"),
+    # no key: Zwift steers only through a steering device; the bridge offers one (steering.py)
+    Action(LANE, LANE_LEFT, "", "Lane left", "Spur links"),
+    Action(LANE, LANE_RIGHT, "", "Lane right", "Spur rechts"),
     Action(SCREENSHOT, SHOT_PHOTO, "f10", "Photo", "Foto"),
     Action(SCREENSHOT, SHOT_VIDEO, "f9", "Video clip", "Video-Clip"),
     Action(CAMERA, CAMERA_NEXT, "camera", "Next camera view", "Nächste Kamera"),

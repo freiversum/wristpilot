@@ -33,10 +33,12 @@ module Actions {
     const HARDER   = 14;
     const EASIER   = 15;
     const SKIP     = 16;
+    const LANE_L   = 17;    // lane change left (race page, Actions page)
+    const LANE_R   = 18;
     const MORE     = 99;    // Edge: "more" tile, opens the Actions page (not sent to the bridge)
 
     // Tiles of the "Actions" page, in display order (two rows of four).
-    const ACTION_TILES = [ELBOW, WAVE, NICE, HAMMER, BELL, PHOTO, CAMERA, HUD];
+    const ACTION_TILES = [ELBOW, WAVE, NICE, HAMMER, BELL, PHOTO, CAMERA, HUD, LANE_L, LANE_R];
 
     // [bridge action id, value, label resource, colour, icon symbol]
     function info(a) {
@@ -58,6 +60,8 @@ module Actions {
             case HARDER:   return [Protocol.ACT_HARDER, Protocol.VAL_PRESS, Rez.Strings.ActHarder, COLOR_ORANGE, :plus];
             case EASIER:   return [Protocol.ACT_EASIER, Protocol.VAL_PRESS, Rez.Strings.ActEasier, COLOR_CYAN, :minus];
             case SKIP:     return [Protocol.ACT_SKIP_INTERVAL, Protocol.VAL_PRESS, Rez.Strings.ActSkip, COLOR_WHITE, :skip];
+            case LANE_L:   return [Protocol.ACT_LANE, Protocol.LANE_LEFT, Rez.Strings.ActLaneLeft, COLOR_CYAN, :laneLeft];
+            case LANE_R:   return [Protocol.ACT_LANE, Protocol.LANE_RIGHT, Rez.Strings.ActLaneRight, COLOR_CYAN, :laneRight];
         }
         return null;
     }
@@ -71,6 +75,7 @@ module Actions {
             case Protocol.RESULT_OUTPUT_FAILED:  return Rez.Strings.Res4;
             case Protocol.RESULT_DISABLED:       return Rez.Strings.Res5;
             case Protocol.RESULT_MALFORMED:      return Rez.Strings.Res6;
+            case Protocol.RESULT_NO_STEERING:    return Rez.Strings.Res7;
         }
         return Rez.Strings.ResOther;
     }

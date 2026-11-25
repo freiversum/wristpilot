@@ -41,6 +41,7 @@ module Protocol {
     const RESULT_OUTPUT_FAILED  = 4;
     const RESULT_DISABLED       = 5;
     const RESULT_MALFORMED      = 6;
+    const RESULT_NO_STEERING   = 7;   // lane change, but Zwift has not paired the steering device
 
     // State flags
     const STATE_ZWIFT_RUNNING = 0x01;
@@ -65,6 +66,7 @@ module Protocol {
     const ACT_HUD           = 0x44;
     const ACT_POWERUP       = 0x50;
     const ACT_BELL          = 0x80;
+    const ACT_LANE          = 0x81; // lane change through the bridge's virtual steering device
 
     // Values
     const VAL_PRESS        = 0x01;
@@ -77,6 +79,8 @@ module Protocol {
     const SHOT_PHOTO       = 0x01;
     const SHOT_VIDEO       = 0x02;
     const CAMERA_NEXT      = 0x01;
+    const LANE_LEFT        = 0x01;
+    const LANE_RIGHT       = 0x02;
 
     // Timing (ms)
     const PING_INTERVAL = 5000;

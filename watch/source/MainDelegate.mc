@@ -23,9 +23,9 @@
 //                when the same key, gesture or tile comes again within ARM_WINDOW.
 //   hold:        turns need a hold of HOLD_TURN ms (ring), sent on release; U-turn and the menu move
 //                to HOLD_LONG. Taps and swipes for turns only show a hint.
-// Race mode (Settings.race()): the Ride page has no turns. BACK and START fire the power-up
-// (Edge: every key but BACK), DOWN gives a Ride On in the "power-up + Ride On" variant, holding
-// BACK does not exit (only the menu does).
+// Race mode (Settings.race()): the Ride page has no turns. UP and START change the lane (virtual
+// steering device in the bridge), BACK fires the power-up, DOWN too ("power-up only") or gives a
+// Ride On ("+ Ride On"); holding BACK does not exit (only the menu does). Edge: LAP/START lanes.
 // Party mode (Settings.partyOn(), group rides): UP wave (hold: menu), START Ride On (hold: Hammer
 // Time), DOWN elbow flick (hold: Nice), BACK power-up (hold: photo, no exit). Touch: tap a field,
 // hold the screen = photo (some firmware takes the BACK and DOWN holds for itself).
@@ -295,10 +295,14 @@ class MainDelegate extends WatchUi.InputDelegate {
                 rm.send(Actions.POWERUP);
             }
         } else if (raceOn()) {
-            if (k == WatchUi.KEY_ENTER || k == WatchUi.KEY_ESC) {
-                rm.send(Actions.POWERUP);
+            if (k == WatchUi.KEY_UP) {
+                rm.send(Actions.LANE_L);
+            } else if (k == WatchUi.KEY_ENTER) {
+                rm.send(Actions.LANE_R);
             } else if (k == WatchUi.KEY_DOWN && Settings.race() == Settings.RACE_POWER_RIDEON) {
                 rm.send(Actions.RIDE_ON);
+            } else {
+                rm.send(Actions.POWERUP);
             }
         } else {
             if (k == WatchUi.KEY_UP) {
@@ -355,7 +359,11 @@ class MainDelegate extends WatchUi.InputDelegate {
                 rm.send(Actions.NICE);
             }
         } else if (raceOn()) {
-            if (k == WatchUi.KEY_UP && Settings.race() == Settings.RACE_POWER_RIDEON) {
+            if (k == WatchUi.KEY_LAP) {
+                rm.send(Actions.LANE_L);
+            } else if (k == WatchUi.KEY_START) {
+                rm.send(Actions.LANE_R);
+            } else if (k == WatchUi.KEY_UP && Settings.race() == Settings.RACE_POWER_RIDEON) {
                 rm.send(Actions.RIDE_ON);
             } else {
                 rm.send(Actions.POWERUP);

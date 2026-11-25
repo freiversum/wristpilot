@@ -106,4 +106,7 @@
     <string id="ModeNormal">Normal</string>
     <string id="ModeParty">Party</string>
     <string id="LblParty">PARTY</string>
+    <string id="ActLaneLeft">Spur links</string>
+    <string id="ActLaneRight">Spur rechts</string>
+    <string id="Res7">Lenkung in Zwift nicht gekoppelt</string>
 </strings>

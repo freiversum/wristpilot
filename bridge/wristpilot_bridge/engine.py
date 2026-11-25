@@ -37,11 +37,13 @@ class Event:
 
 
 class Engine:
-    def __init__(self, sink: KeySink, config: Config | None = None, obc=None, companion=None) -> None:
+    def __init__(self, sink: KeySink, config: Config | None = None, obc=None, companion=None,
+                 steering=None) -> None:
         self.sink = sink
         self.config = config or Config()
         self.obc = obc                       # obc.ObcServer or None
         self.companion = companion           # companion.CompanionLink or None
+        self.steering = steering             # steering.SteeringServer or None
         self._last_game: bytes | None = None
         self.camera = actions.CameraCycle()
         self.last_write = 0.0
@@ -152,6 +154,11 @@ class Engine:
             return Result.DISABLED
         if action is None:
             return Result.UNKNOWN_ACTION
+        if action.id == actions.LANE:
+            if not self.steering:
+                return Result.NO_STEERING
+            ok = self.steering.lane(-1 if action.value == actions.LANE_LEFT else 1)
+            return Result.OK if ok else Result.NO_STEERING
         delivered = False
         if self.config.obc and self.obc and self.obc.clients:
             delivered = await self.obc.button(cmd.action, cmd.value)
