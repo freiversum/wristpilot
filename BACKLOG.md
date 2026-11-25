@@ -24,20 +24,20 @@
 
 Done in the code, Tretlager and the project pages (local commits). Left to do:
 
-- [ ] Trademark check "Wristpilot" in TMview (classes 9 and 28)
-- [ ] Rename the GitHub repository to `freiversum/wristpilot` (settings), then
-  `git remote set-url origin git@github.com:freiversum/wristpilot.git`; new description, topics,
-  social preview
+- [x] Trademark check "Wristpilot" in TMview: no entry for "wristpilot" or "wrist pilot" (2026-11-25)
+- [x] GitHub repository renamed to `freiversum/wristpilot`, remote, homepage and social preview
+  (`docs/social-preview.png`) updated (2026-11-25)
 - [ ] Watch test on tinytin: watch finds the bridge as "Wristpil"/"Wristpilot", all actions OK
-- [ ] New simulator captures where the old name is on screen: connect screen (`raw/05-connect.png`)
+- [x] New simulator captures where the old name is on screen: connect screen (`raw/05-connect.png`)
   and Edge 1040 (`raw/edge1040-*.png`, title bar); then `make_assets.py`, and the project page
   images `wristpilot-feedback.webp` and `wristpilot-edge.webp`
-- [ ] Release 0.3.0 (tag, Actions builds `WristpilotBridge.exe`), Tretlager release
-- [ ] Project pages: `lui-deploy projects-page test`, then live (slug changes to
+- [x] Release 0.3.0 (2026-11-25); Tretlager has the 0.3.0 core, its release comes with the Wine work
+  that is in progress there
+- [x] Project pages: live on 2026-11-25 (DE + EN) (slug changes to
   `/projekte/wristpilot/`); `lui-tag-redirects` 1.4.0 test/live for the old DE address; an /en/
-  redirect for `/en/projects/zwindoor/…` is still missing; repository in the lui-projects backend
-  card
-- [ ] Store: beta 1.0.1 with the new name, images and privacy URL
+  redirect for `/en/projects/zwindoor/…` is still missing (404); Wristpilot is not a lui-projects card
+- [x] Store: beta 1.0.1 uploaded as "Wristpilot" with new text, hero and Edge screenshot (2026-11-25)
+- [ ] Install the beta 1.0.1 from the store on the watch and test it
 
 ## Companion link in a real ride
 

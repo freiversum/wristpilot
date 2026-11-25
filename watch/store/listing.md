@@ -61,7 +61,7 @@ MIP watches (fenix 7 Pro family) get four bold fields that stay readable in sunl
 PRIVACY
 Wristpilot collects no data. The watch talks only to the bridge on your own computer via Bluetooth; nothing is sent to the developer or to Garmin.
 
-Wristpilot is an independent project. It is not affiliated with, endorsed or sponsored by Zwift, Inc. or Garmin. Zwift is a trademark of Zwift, Inc.
+Wristpilot is an independent project. It is not affiliated with, endorsed or sponsored by Zwift, Inc. or Garmin. Zwift is a trademark of Zwift, Inc. Formerly called ZWindoor.
 
 Support: https://github.com/freiversum/wristpilot/issues
 
@@ -109,13 +109,19 @@ MIP-Uhren (fēnix-7-Pro-Familie) bekommen vier kräftige Felder, die auch in der
 DATENSCHUTZ
 Wristpilot sammelt keine Daten. Die Uhr spricht per Bluetooth nur mit der Bridge auf deinem eigenen Rechner; nichts geht an den Entwickler oder an Garmin.
 
-Wristpilot ist ein unabhängiges Projekt und steht in keiner Verbindung zu Zwift, Inc. oder Garmin. Zwift ist eine Marke der Zwift, Inc.
+Wristpilot ist ein unabhängiges Projekt und steht in keiner Verbindung zu Zwift, Inc. oder Garmin. Zwift ist eine Marke der Zwift, Inc. Früher hieß die App ZWindoor.
 
 Support: https://github.com/freiversum/wristpilot/issues
 
 ---
 
 ## What's new
+
+1.0.1 (beta, 2026-11-25):
+
+EN: New name: ZWindoor is now Wristpilot. "Exit app" is now the first item of the settings menu (hold UP); on the fēnix 7 Pro with firmware 27.x holding BACK opens the system app switcher instead of exiting.
+
+1.0.0:
 
 EN: First release for watches and Edge bike computers: turn left/right/straight, U-turn, Ride On, power-up, emotes, camera, workout controls; MIP and AMOLED layouts; optional Zwift Companion link (junction and power-up on the watch).
 
